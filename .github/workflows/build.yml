@@ -85,6 +85,7 @@ jobs:
         env:
           CARGO_BUILD_TARGET: ${{ matrix.target }}
           RUSTFLAGS: '-C target-feature=+crt-static'
+          _CL_: '/MT'
         run: |
           cargo build --locked --release --lib
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

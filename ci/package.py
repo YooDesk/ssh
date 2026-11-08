@@ -10,6 +10,7 @@ import struct
 import subprocess
 import tempfile
 import zipfile
+from windows_crt import verify as verify_windows_dependencies
 
 PUBLIC_EXPORTS={'yd_plugin_v1'}
 
@@ -41,6 +42,7 @@ def verify_binary(path, platform):
         offset = struct.unpack_from("<I", data, 0x3C)[0]
         if data[offset:offset+4] != b"PE\0\0": raise ValueError("Invalid PE header")
         machine = struct.unpack_from("<H", data, offset+4)[0]
+        verify_windows_dependencies(path)
     else:
         if data[:4] != b"\x7fELF" or data[4:6] != b"\x02\x01": raise ValueError(f"Not a 64-bit little-endian ELF: {path}")
         machine = struct.unpack_from("<H", data, 18)[0]
