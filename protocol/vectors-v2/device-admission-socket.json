@@ -1,0 +1,117 @@
+[
+  {
+    "name": "begin",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "request_id": "native-request-identity",
+      "host_token": "fixture-token"
+    }
+  },
+  {
+    "name": "challenge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "challenge",
+      "request_id": "native-request-identity",
+      "challenge": {
+        "v": 1,
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "issuer": "https://global.example",
+        "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+        "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "issued_at": "2026-10-31T12:00:00Z",
+        "expires_at": "2026-10-31T12:01:00Z",
+        "request_id": "native-request-identity"
+      }
+    }
+  },
+  {
+    "name": "commit",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "commit",
+      "request_id": "native-request-identity",
+      "proof": "fixture-proof"
+    }
+  },
+  {
+    "name": "admitted",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "admitted",
+      "request_id": "native-request-identity",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 1,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      }
+    }
+  },
+  {
+    "name": "spoof-node",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "request_id": "native-request-identity",
+      "host_token": "fixture-token",
+      "node_id": "global"
+    }
+  },
+  {
+    "name": "commit-credential",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "commit",
+      "request_id": "native-request-identity",
+      "proof": "fixture-proof",
+      "host_token": "fixture"
+    }
+  },
+  {
+    "name": "wrong-version",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "begin",
+      "request_id": "native-request-identity",
+      "host_token": "fixture-token"
+    }
+  },
+  {
+    "name": "unexpected-attachment",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "admitted",
+      "request_id": "native-request-identity",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 1,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      },
+      "attachment_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]

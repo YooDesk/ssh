@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yoodesk.invalid/protocol/desk-events-heartbeat-v2.schema.json",
+  "title": "Desk authenticated events heartbeat v2",
+  "description": "Application heartbeat on the existing authenticated events WebSocket, independent of a video frame write. Only ping is accepted from the browser; pong echoes its safe integer id. Video acknowledgements and refresh commands remain on stream.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "id"],
+  "properties": {
+    "type": {"enum": ["ping", "pong"]},
+    "id": {"type": "integer", "minimum": 0, "maximum": 9007199254740991}
+  }
+}

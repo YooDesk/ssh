@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:backend-context:v1",
+  "type": "object",
+  "required": [
+    "v",
+    "subject_ref",
+    "access_id",
+    "capability",
+    "target_id",
+    "scopes",
+    "expires_at"
+  ],
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "access_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

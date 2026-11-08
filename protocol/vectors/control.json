@@ -1,0 +1,159 @@
+[
+  {
+    "name": "heartbeat_applied",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "heartbeat",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "applied_network_revision": "net-12",
+        "network_config_status": "applied",
+        "capabilities_revision": "cap-2"
+      }
+    }
+  },
+  {
+    "name": "heartbeat_network_update",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "heartbeat_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "lease_expires_at": "2030-01-01T00:00:00Z",
+        "network_config": {
+          "revision": "net-13",
+          "valid_until": "2030-01-01T00:00:00Z",
+          "stun_servers": [
+            {
+              "urls": [
+                "stun:ice.example.com:3478"
+              ]
+            }
+          ],
+          "ice_policy_revision": "policy-8"
+        }
+      }
+    }
+  },
+  {
+    "name": "clear_stun_list",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "heartbeat_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "lease_expires_at": "2030-01-01T00:00:00Z",
+        "network_config": {
+          "revision": "net-13",
+          "valid_until": "2030-01-01T00:00:00Z",
+          "stun_servers": [],
+          "ice_policy_revision": "policy-8"
+        }
+      }
+    }
+  },
+  {
+    "name": "omit_unchanged_network",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "heartbeat_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "lease_expires_at": "2030-01-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "name": "wrong_version",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "heartbeat",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "applied_network_revision": "net-12",
+        "network_config_status": "applied",
+        "capabilities_revision": "cap-2"
+      }
+    }
+  },
+  {
+    "name": "numeric_generation_forbidden",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "heartbeat",
+      "request_id": "test-1",
+      "connection_generation": 3,
+      "payload": {
+        "applied_network_revision": "net-12",
+        "network_config_status": "applied",
+        "capabilities_revision": "cap-2"
+      }
+    }
+  },
+  {
+    "name": "missing_session_for_offer",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "offer",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "sdp": "v=0\r\n",
+        "negotiation_generation": "1"
+      }
+    }
+  },
+  {
+    "name": "offer_valid",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "offer",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "sdp": "v=0\r\n",
+        "negotiation_generation": "1"
+      },
+      "session_id": "remote-test"
+    }
+  },
+  {
+    "name": "secret_in_device_network",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "heartbeat_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "payload": {
+        "lease_expires_at": "2030-01-01T00:00:00Z",
+        "network_config": {
+          "revision": "net-13",
+          "valid_until": "2030-01-01T00:00:00Z",
+          "stun_servers": [
+            {
+              "urls": [
+                "stun:ice.example.com:3478"
+              ]
+            }
+          ],
+          "ice_policy_revision": "policy-8",
+          "credential": "forbidden"
+        }
+      }
+    }
+  }
+]

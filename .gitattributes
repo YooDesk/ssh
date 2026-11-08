@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.wasm binary
+*.png binary
+*.patch whitespace=-blank-at-eol,-blank-at-eof
+protocol/** whitespace=-blank-at-eol

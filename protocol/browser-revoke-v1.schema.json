@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:browser-revoke:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "v",
+    "token_use",
+    "sid",
+    "session_version",
+    "node_id",
+    "origin",
+    "iss",
+    "aud",
+    "iat",
+    "exp"
+  ],
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "token_use": {
+      "const": "browser-revoke"
+    },
+    "sid": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128
+    },
+    "session_version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "node_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+    },
+    "origin": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://[^/?#@]+$"
+    },
+    "iss": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://[^/?#@]+$"
+    },
+    "aud": {
+      "const": [
+        "raccess-browser-revoke-v1"
+      ]
+    },
+    "iat": {
+      "type": "integer"
+    },
+    "exp": {
+      "type": "integer"
+    }
+  }
+}

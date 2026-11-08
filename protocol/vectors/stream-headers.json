@@ -1,0 +1,69 @@
+[
+  {
+    "name": "bind",
+    "valid": true,
+    "header": {
+      "kind": "bind",
+      "grant": "synthetic-test-ticket"
+    },
+    "hex": "524158310000002f7b226b696e64223a2262696e64222c226772616e74223a2273796e7468657469632d746573742d7469636b6574227d"
+  },
+  {
+    "name": "http",
+    "valid": true,
+    "header": {
+      "kind": "http",
+      "session_id": "remote-test",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-prod",
+      "path": "/yoodesk/webclient/ssh/"
+    },
+    "hex": "52415831000000927b226b696e64223a2268747470222c2273657373696f6e5f6964223a2272656d6f74652d74657374222c226e65676f74696174696f6e5f67656e65726174696f6e223a2231222c226361706162696c697479223a22737368222c227461726765745f6964223a227373682d70726f64222c2270617468223a222f796f6f6465736b2f776562636c69656e742f7373682f227d"
+  },
+  {
+    "name": "bad_magic",
+    "valid": false,
+    "hex": "42414431000000027b7d"
+  },
+  {
+    "name": "zero_length",
+    "valid": false,
+    "hex": "5241583100000000"
+  },
+  {
+    "name": "over_limit",
+    "valid": false,
+    "hex": "5241583100004001"
+  },
+  {
+    "name": "bind_result",
+    "valid": true,
+    "header": {
+      "kind": "bind_result",
+      "ok": true
+    },
+    "hex": "52415831000000207b226b696e64223a2262696e645f726573756c74222c226f6b223a747275657d"
+  },
+  {
+    "name": "unknown_kind",
+    "valid": false,
+    "header": {
+      "kind": "private-open"
+    },
+    "hex": "52415831000000177b226b696e64223a22707269766174652d6f70656e227d"
+  },
+  {
+    "name": "bad_http_path",
+    "valid": false,
+    "header": {
+      "kind": "http",
+      "session_id": "remote",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-prod",
+      "path": "/yoodesk/admin/"
+    },
+    "hex": "52415831000000857b226b696e64223a2268747470222c2273657373696f6e5f6964223a2272656d6f7465222c226e65676f74696174696f6e5f67656e65726174696f6e223a2231222c226361706162696c697479223a22737368222c227461726765745f6964223a227373682d70726f64222c2270617468223a222f796f6f6465736b2f61646d696e2f227d"
+  }
+]

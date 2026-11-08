@@ -1,0 +1,380 @@
+[
+  {
+    "name": "session_create",
+    "valid": true,
+    "message": {
+      "protocol_version": 2,
+      "target_id": "ssh-1",
+      "options": {
+        "rows": 24,
+        "cols": 80
+      },
+      "client_features": []
+    },
+    "definition": "SessionCreate"
+  },
+  {
+    "name": "credentials_has_reference",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "data": {
+        "credential_ref": "cred-1",
+        "kind": "private_key",
+        "persist": false,
+        "expires_at": "2030-01-01T00:00:00Z"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "CredentialResponse"
+  },
+  {
+    "name": "empty_credential_success_rejected",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "data": {},
+      "request_id": "test-1"
+    },
+    "definition": "CredentialResponse"
+  },
+  {
+    "name": "credentials_missing_envelope",
+    "valid": false,
+    "message": {
+      "credential_ref": "cred-1",
+      "kind": "private_key",
+      "persist": false,
+      "expires_at": "2030-01-01T00:00:00Z"
+    },
+    "definition": "CredentialResponse"
+  },
+  {
+    "name": "credential_secret_not_returned",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "data": {
+        "credential_ref": "cred-1",
+        "kind": "private_key",
+        "persist": false,
+        "expires_at": "2030-01-01T00:00:00Z",
+        "secret": "forbidden"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "CredentialResponse"
+  },
+  {
+    "name": "directory_rename",
+    "valid": true,
+    "message": {
+      "from": "/a",
+      "to": "/b"
+    },
+    "definition": "DirectoryRename"
+  },
+  {
+    "name": "rename_missing_paths",
+    "valid": false,
+    "message": {
+      "op": "rename"
+    },
+    "definition": "DirectoryRename"
+  },
+  {
+    "name": "directory_create",
+    "valid": true,
+    "message": {
+      "path": "/a"
+    },
+    "definition": "DirectoryCreate"
+  },
+  {
+    "name": "upload_requires_size",
+    "valid": false,
+    "message": {
+      "direction": "upload",
+      "path": "/a",
+      "conflict": "fail"
+    },
+    "definition": "TransferCreate"
+  },
+  {
+    "name": "complete_with_hash",
+    "valid": true,
+    "message": {
+      "size": "10",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "definition": "TransferComplete"
+  },
+  {
+    "name": "complete_empty_body",
+    "valid": false,
+    "message": {},
+    "definition": "TransferComplete"
+  },
+  {
+    "name": "rdp_can_open_before_target_auth",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "data": {
+        "business_session_id": "00000000-0000-4000-8000-000000000001",
+        "capability": "rdp",
+        "target_id": "rdp-1",
+        "state": "transport_ready",
+        "state_revision": "1",
+        "stream_available": true,
+        "target_authentication": "pending",
+        "stream_profile": "rdcleanpath.v1",
+        "features": [],
+        "event_url": "/yoodesk/webclient/rdp/api/v2/sessions/00000000-0000-4000-8000-000000000001/events/",
+        "stream_url": "/yoodesk/webclient/rdp/api/v2/sessions/00000000-0000-4000-8000-000000000001/stream/",
+        "access_mode": "local",
+        "access_expires_at": "2030-01-01T00:00:00Z"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "SessionResponse"
+  },
+  {
+    "name": "v1_ready_rejected",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "data": {
+        "business_session_id": "00000000-0000-4000-8000-000000000001",
+        "capability": "rdp",
+        "target_id": "rdp-1",
+        "state": "ready",
+        "state_revision": "1",
+        "stream_available": true,
+        "target_authentication": "pending",
+        "stream_profile": "rdcleanpath.v1",
+        "features": [],
+        "event_url": "/yoodesk/webclient/rdp/api/v2/sessions/00000000-0000-4000-8000-000000000001/events/",
+        "stream_url": "/yoodesk/webclient/rdp/api/v2/sessions/00000000-0000-4000-8000-000000000001/stream/",
+        "access_mode": "local",
+        "access_expires_at": "2030-01-01T00:00:00Z"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "SessionResponse"
+  },
+  {
+    "name": "snapshot_typed",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "session.snapshot",
+      "event_id": "1",
+      "business_session_id": "00000000-0000-4000-8000-000000000001",
+      "payload": {
+        "business_session_id": "00000000-0000-4000-8000-000000000001",
+        "capability": "rdp",
+        "target_id": "rdp-1",
+        "state": "transport_ready",
+        "state_revision": "1",
+        "stream_available": true,
+        "target_authentication": "pending",
+        "stream_profile": "rdcleanpath.v1",
+        "features": [],
+        "event_url": "/yoodesk/webclient/rdp/api/v2/sessions/00000000-0000-4000-8000-000000000001/events/",
+        "stream_url": "/yoodesk/webclient/rdp/api/v2/sessions/00000000-0000-4000-8000-000000000001/stream/",
+        "access_mode": "local",
+        "access_expires_at": "2030-01-01T00:00:00Z"
+      }
+    },
+    "definition": "Event"
+  },
+  {
+    "name": "completed_transfer_event",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "transfer.completed",
+      "event_id": "2",
+      "business_session_id": "00000000-0000-4000-8000-000000000001",
+      "payload": {
+        "transfer_id": "transfer-1",
+        "offset": "10",
+        "total": "10",
+        "state": "completed",
+        "source_version": "source-1",
+        "result_path": "/shared/file.txt",
+        "verified_sha256": null
+      }
+    },
+    "definition": "Event"
+  },
+  {
+    "name": "completed_event_running_state_rejected",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "transfer.completed",
+      "event_id": "2",
+      "business_session_id": "00000000-0000-4000-8000-000000000001",
+      "payload": {
+        "transfer_id": "transfer-1",
+        "offset": "10",
+        "total": "10",
+        "state": "running",
+        "source_version": "source-1",
+        "result_path": "/shared/file.txt",
+        "verified_sha256": null
+      }
+    },
+    "definition": "Event"
+  },
+  {
+    "name": "multi_prompt_answer",
+    "valid": true,
+    "message": {
+      "kind": "keyboard_interactive",
+      "answer": {
+        "answers": [
+          {
+            "id": "prompt-1",
+            "value": "synthetic-response"
+          }
+        ]
+      }
+    },
+    "definition": "ChallengeResponse"
+  },
+  {
+    "name": "unknown_challenge_answer",
+    "valid": false,
+    "message": {
+      "kind": "keyboard_interactive",
+      "answer": {
+        "password": "hidden"
+      }
+    },
+    "definition": "ChallengeResponse"
+  },
+  {
+    "name": "certificate_unknown_fields",
+    "valid": false,
+    "message": {
+      "kind": "certificate",
+      "answer": {
+        "ignore_all_errors": true
+      }
+    },
+    "definition": "ChallengeResponse"
+  },
+  {
+    "name": "targets_empty_page",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "data": {
+        "items": [],
+        "next_cursor": null
+      },
+      "request_id": "test-1"
+    },
+    "definition": "TargetListResponse"
+  },
+  {
+    "name": "local_cookie_access",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "data": {
+        "principal_id": "local-user",
+        "scopes": [
+          "session.connect"
+        ],
+        "expires_at": "2030-01-01T00:00:00Z",
+        "absolute_expires_at": "2030-01-01T00:00:00Z",
+        "csrf_token": "csrf-test",
+        "auth_mode": "local-key",
+        "access_mode": "cookie"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "AccessResponse"
+  },
+  {
+    "name": "bearer_requires_token",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "data": {
+        "principal_id": "local-user",
+        "scopes": [
+          "session.connect"
+        ],
+        "expires_at": "2030-01-01T00:00:00Z",
+        "absolute_expires_at": "2030-01-01T00:00:00Z",
+        "csrf_token": "csrf-test",
+        "auth_mode": "local-key",
+        "access_mode": "bearer"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "AccessResponse"
+  },
+  {
+    "name": "embedded_access",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "data": {
+        "principal_id": "local-user",
+        "scopes": [
+          "session.connect"
+        ],
+        "expires_at": "2030-01-01T00:00:00Z",
+        "absolute_expires_at": "2030-01-01T00:00:00Z",
+        "csrf_token": "csrf-test",
+        "auth_mode": "local-key",
+        "access_mode": "bearer",
+        "access_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "AccessResponse"
+  },
+  {
+    "name": "cookie_secret_not_echoed",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "data": {
+        "principal_id": "local-user",
+        "scopes": [
+          "session.connect"
+        ],
+        "expires_at": "2030-01-01T00:00:00Z",
+        "absolute_expires_at": "2030-01-01T00:00:00Z",
+        "csrf_token": "csrf-test",
+        "auth_mode": "local-key",
+        "access_mode": "cookie",
+        "access_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "AccessResponse"
+  },
+  {
+    "name": "native_ws_ticket",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "data": {
+        "business_session_id": "00000000-0000-4000-8000-000000000001",
+        "channel": "stream",
+        "ticket": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "expires_at": "2030-01-01T00:00:00Z"
+      },
+      "request_id": "test-1"
+    },
+    "definition": "StreamTicketResponse"
+  }
+]

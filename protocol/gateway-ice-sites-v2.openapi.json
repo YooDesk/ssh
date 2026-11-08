@@ -1,0 +1,502 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Authoritative enterprise and personal ICE site assignment",
+    "version": "2.0.0-candidate"
+  },
+  "paths": {
+    "/api/v2/admin/ice-sites/": {
+      "get": {
+        "operationId": "getICESiteAssignment",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Global-only independent administrator session. Explicit personal assignment precedes enterprise assignment, then authenticated source Edge assignment, then global defaults. Resolve against current target-device owner and enterprise membership; ambiguous enterprises deny. Null inherits. Selection intersects current approved node capabilities and existing trusted ICE pools/capacity/budgets. The reserved node ID global is writable only when Global is configured for local TURN or local STUN with advertised URLs; it is not a worker enrollment ID. No silent selection outside the assigned set. HTTP/WebSocket origin remains the configured Edge; this is ICE allocation, not account site-access ACL. Changes revoke affected remote sessions and pending negotiations; local LAN sessions and account cookies are unaffected. Desired assignment is not a claim of all-node execution ACK.",
+        "responses": {
+          "200": {
+            "description": "Data envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Unknown target"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "429": {
+            "description": "Capacity"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner_kind",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "user",
+                "enterprise",
+                "edge",
+                "global"
+              ]
+            }
+          },
+          {
+            "name": "owner_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "putICESiteAssignment",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Global-only independent administrator session. Explicit personal assignment precedes enterprise assignment, then authenticated source Edge assignment, then global defaults. Resolve against current target-device owner and enterprise membership; ambiguous enterprises deny. Null inherits. Selection intersects current approved node capabilities and existing trusted ICE pools/capacity/budgets. The reserved node ID global is writable only when Global is configured for local TURN or local STUN with advertised URLs; it is not a worker enrollment ID. No silent selection outside the assigned set. HTTP/WebSocket origin remains the configured Edge; this is ICE allocation, not account site-access ACL. Changes revoke affected remote sessions and pending negotiations; local LAN sessions and account cookies are unaffected. Desired assignment is not a claim of all-node execution ACK.",
+        "responses": {
+          "200": {
+            "description": "Data envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Unknown target"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "429": {
+            "description": "Capacity"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Write"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/ice-sites/list/": {
+      "get": {
+        "operationId": "getICESiteAssignmentList",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Global-only independent administrator session. Explicit personal assignment precedes enterprise assignment, then authenticated source Edge assignment, then global defaults. Resolve against current target-device owner and enterprise membership; ambiguous enterprises deny. Null inherits. Selection intersects current approved node capabilities and existing trusted ICE pools/capacity/budgets. The reserved node ID global is writable only when Global is configured for local TURN or local STUN with advertised URLs; it is not a worker enrollment ID. No silent selection outside the assigned set. HTTP/WebSocket origin remains the configured Edge; this is ICE allocation, not account site-access ACL. Changes revoke affected remote sessions and pending negotiations; local LAN sessions and account cookies are unaffected. Desired assignment is not a claim of all-node execution ACK.",
+        "responses": {
+          "200": {
+            "description": "Data envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Unknown target"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "429": {
+            "description": "Capacity"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 512
+            }
+          }
+        ]
+      }
+    },
+    "/admin/ice-sites/": {
+      "get": {
+        "operationId": "viewICESiteAssignmentPage",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Same-origin server-rendered scope/subject selector and multi-select station form. Scopes include source Edge, enterprise, personal and global. Choice lists are bounded; q filters subject name/ID. Does not report desired assignment as execution readiness.",
+        "responses": {
+          "200": {
+            "description": "Escaped HTML and same-origin CSS"
+          },
+          "401": {
+            "description": "Administrator required"
+          }
+        }
+      },
+      "post": {
+        "operationId": "saveICESiteAssignmentPage",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Same-origin independent administrator form/CSRF. Repeated node_ids fields encode multi-selection; explicit mode=inherit stores null while retaining CAS revision. Invalid, stale and unknown fields are rejected; no automatic replay.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/FormWrite"
+              },
+              "encoding": {
+                "node_ids": {
+                  "style": "form",
+                  "explode": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Saved HTML"
+          },
+          "400": {
+            "description": "Invalid form"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "409": {
+            "description": "Version conflict"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AdministratorSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_admin_session"
+      }
+    },
+    "schemas": {
+      "Write": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "owner_kind",
+          "owner_id",
+          "expected_revision",
+          "node_ids"
+        ],
+        "properties": {
+          "owner_kind": {
+            "enum": [
+              "user",
+              "enterprise",
+              "edge",
+              "global"
+            ]
+          },
+          "owner_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "expected_revision": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,15})$"
+          },
+          "node_ids": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 16,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+                }
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "owner_kind": {
+                  "const": "global"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "owner_id": {
+                  "const": "global"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Assignment": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "owner_kind",
+          "owner_id",
+          "revision",
+          "node_ids"
+        ],
+        "properties": {
+          "owner_kind": {
+            "enum": [
+              "user",
+              "enterprise",
+              "edge",
+              "global"
+            ]
+          },
+          "owner_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,15})$"
+          },
+          "node_ids": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 16,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "Response": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "v",
+          "request_id",
+          "data"
+        ],
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Assignment"
+          }
+        }
+      },
+      "ListResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "v",
+          "request_id",
+          "data"
+        ],
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "items",
+              "next_cursor"
+            ],
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 100,
+                "items": {
+                  "$ref": "#/components/schemas/Assignment"
+                }
+              },
+              "next_cursor": {
+                "type": "string",
+                "maxLength": 512
+              }
+            }
+          }
+        }
+      },
+      "FormWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "csrf",
+          "action",
+          "owner_kind",
+          "owner_id",
+          "expected_revision",
+          "mode"
+        ],
+        "properties": {
+          "csrf": {
+            "type": "string"
+          },
+          "action": {
+            "const": "assign"
+          },
+          "owner_kind": {
+            "enum": [
+              "user",
+              "enterprise",
+              "edge",
+              "global"
+            ]
+          },
+          "owner_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "expected_revision": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,15})$"
+          },
+          "mode": {
+            "enum": [
+              "specific",
+              "inherit"
+            ]
+          },
+          "node_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "specific"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "node_ids"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

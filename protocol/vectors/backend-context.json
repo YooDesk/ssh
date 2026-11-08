@@ -1,0 +1,47 @@
+[
+  {
+    "name": "trusted_readonly_context",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "subject_ref": "opaque-user",
+      "access_id": "remote-test",
+      "capability": "desk",
+      "target_id": "local",
+      "scopes": [
+        "connect",
+        "view"
+      ],
+      "expires_at": "2030-01-01T00:00:00Z"
+    }
+  },
+  {
+    "name": "cloud_token_not_context",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "subject_ref": "opaque-user",
+      "access_id": "remote-test",
+      "capability": "desk",
+      "target_id": "local",
+      "scopes": [
+        "connect",
+        "view"
+      ],
+      "expires_at": "2030-01-01T00:00:00Z",
+      "gateway_jwt": "forbidden"
+    }
+  },
+  {
+    "name": "missing_scope",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "subject_ref": "opaque-user",
+      "access_id": "remote-test",
+      "capability": "desk",
+      "target_id": "local",
+      "expires_at": "2030-01-01T00:00:00Z"
+    }
+  }
+]

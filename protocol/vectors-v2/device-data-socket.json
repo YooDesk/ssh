@@ -1,0 +1,153 @@
+[
+  {
+    "name": "data-begin",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "request_id": "native-request-identity",
+      "host_token": "fixture-token",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 3,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      }
+    }
+  },
+  {
+    "name": "data-challenge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "challenge",
+      "request_id": "native-request-identity",
+      "challenge": {
+        "v": 1,
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "issuer": "https://global.example",
+        "commit_url": "https://global.example/yoodesk/api/v2/device-data/commit/",
+        "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "issued_at": "2026-10-31T12:00:00Z",
+        "expires_at": "2026-10-31T12:01:00Z",
+        "request_id": "native-request-identity",
+        "route_epoch": 3,
+        "data_generation": "1"
+      }
+    }
+  },
+  {
+    "name": "data-commit",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "commit",
+      "request_id": "native-request-identity",
+      "proof": "fixture-proof"
+    }
+  },
+  {
+    "name": "data-admitted",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "admitted",
+      "request_id": "native-request-identity",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 3,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      },
+      "data_generation": "1",
+      "data_lease_deadline": "2026-10-31T12:00:30Z"
+    }
+  },
+  {
+    "name": "data-spoof-node",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "request_id": "native-request-identity",
+      "host_token": "fixture-token",
+      "node_id": "global",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 3,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      }
+    }
+  },
+  {
+    "name": "data-commit-credential",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "commit",
+      "request_id": "native-request-identity",
+      "proof": "fixture-proof",
+      "host_token": "fixture"
+    }
+  },
+  {
+    "name": "data-wrong-version",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "begin",
+      "request_id": "native-request-identity",
+      "host_token": "fixture-token",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 3,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      }
+    }
+  },
+  {
+    "name": "data-unexpected-attachment",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "admitted",
+      "request_id": "native-request-identity",
+      "binding": {
+        "device_id": "device-a",
+        "site_id": "site-a",
+        "node_id": "edge-a",
+        "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "connector_generation": "1",
+        "v": 1,
+        "route_epoch": 3,
+        "lease_deadline": "2026-10-31T12:01:00Z"
+      },
+      "attachment_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "data_generation": "1",
+      "data_lease_deadline": "2026-10-31T12:00:30Z"
+    }
+  }
+]

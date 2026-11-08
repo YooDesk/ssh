@@ -1,0 +1,365 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:device-data-socket:v1",
+  "$defs": {
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "site_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "v": {
+          "const": 1
+        },
+        "edge_connection_generation": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{32})?$"
+        },
+        "connector_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "route_epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "lease_deadline": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+        }
+      },
+      "required": [
+        "device_id",
+        "site_id",
+        "node_id",
+        "v",
+        "edge_connection_generation",
+        "connector_generation",
+        "route_epoch",
+        "lease_deadline"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "node_id": {
+                "const": "global"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "site_id": {
+                "const": "global"
+              },
+              "edge_connection_generation": {
+                "const": ""
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "edge_connection_generation": {
+                "pattern": "^[0-9a-f]{32}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "challenge": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "site_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+        },
+        "v": {
+          "const": 1
+        },
+        "edge_connection_generation": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{32})?$"
+        },
+        "connector_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "challenge_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "issuer": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 512,
+          "pattern": "^https://[^/?#@]+$"
+        },
+        "commit_url": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "^https://[^?#@]+/[^?#]*$"
+        },
+        "host_token_hash": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "route_epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "device_id",
+        "site_id",
+        "node_id",
+        "v",
+        "edge_connection_generation",
+        "connector_generation",
+        "challenge_id",
+        "issuer",
+        "commit_url",
+        "host_token_hash",
+        "issued_at",
+        "expires_at",
+        "request_id",
+        "route_epoch",
+        "data_generation"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "node_id": {
+                "const": "global"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "site_id": {
+                "const": "global"
+              },
+              "edge_connection_generation": {
+                "const": ""
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "edge_connection_generation": {
+                "pattern": "^[0-9a-f]{32}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "data_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/route"
+        },
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "data_lease_deadline": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+        }
+      },
+      "required": [
+        "binding",
+        "data_generation",
+        "data_lease_deadline"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "const": "begin"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "host_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        },
+        "binding": {
+          "$ref": "#/$defs/route"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "request_id",
+        "host_token",
+        "binding"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "const": "challenge"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "challenge": {
+          "$ref": "#/$defs/challenge"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "request_id",
+        "challenge"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "const": "commit"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "proof": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "request_id",
+        "proof"
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "const": "admitted"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "binding": {
+          "$ref": "#/$defs/route"
+        },
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "data_lease_deadline": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "request_id",
+        "binding",
+        "data_generation",
+        "data_lease_deadline"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "protocol_version": 1,
+  "status": "FROZEN",
+  "sha256": {
+    "business-v1.schema.json": "6c4e59730d8aff3516c934d53d4dc92a95507c4110c99d450fe35ee1f820300a",
+    "control-v1.schema.json": "576c3eab09ffd77eec065faea478b9accf499870b87cb984c4401bc9df39564f",
+    "profiles-v1.json": "522e9d0ba419fa1ecc4f486cea1c7584251c6ff56d42ddba35f9c4d5837c5f0d",
+    "rustdesk/message-v1.proto": "7017ed73671c1b2920a2858c77b2a554ad64bab17c82bf7d61823955f1140c4d",
+    "session-grant-v1.schema.json": "3866cc7652b55470a48e4bd3843c89ea79ee1435930e9b809cd2518e81799749",
+    "sources.json": "647aa297f1336ba0892b1febf7a94f65aead4e4ea0fc5054ea50f1099b1f2a4b",
+    "vectors/business.json": "965cd7ffc1c9d0c4f867382847ec84e86a6b73ca6c0798e4098f3d38d1d478c7",
+    "vectors/control.json": "6664b050f2f7d18a25ea89205209fc146eae43b177fceb4daa18aa7929a7be1d",
+    "vectors/stream-headers.json": "f90e83c8d8858bcb3098d6cbdbc3dbd8ffed86a4067682875d1cac9caf92b2ec",
+    "rustdesk/LICENSE.AGPL-3.0": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+    "vectors/session-grant.json": "ac46e4694f2dfce71fd0f8b33ccb5242f0d3bc4192620a3216a956f43afa8c83",
+    "webservice.openapi.json": "51f659c822e265752293d399dfffc90bf6e19f4616fe4f9d75c62a8fa2c6abc8",
+    "stream-header-v1.schema.json": "522f241b3726a9d2f95e3505efdde2d575c84a4b96ff4dbd18c0a1c4b7a0069a",
+    "backend-context-v1.schema.json": "80d687b54e392e370a88fdd89a1bdb6fa75f5f9a841f862ca361d21963a5abb9",
+    "vectors/backend-context.json": "e45f4ce1df520c094151765df47c17715404e7d598d272c6d911365c5788b640"
+  },
+  "document_sha256": {
+    "docs/design/04-webservice.md": "980b7bf3da8007176bfbc343ff77082abdf5f3ff7c671e4b9d72a4f2998a0c06",
+    "docs/design/05-protocol.md": "823547dc9ba42d7b866a37d152419c5dedb28a198aa1222f91fdf718fb233cad",
+    "docs/design/06-ice.md": "a96e553299d78ec3f1b5ae7ffa9b520827092a842f96e4345827ed66e525fdcd",
+    "docs/design/02-gateway.md": "521ca728d38a957f6548754cddd36a3c3524ab5e1f2b3b904e56a1956ee158c1",
+    "docs/design/03-connector.md": "380d98e249d373a32828c28b9d0c3c2b6ef71c18f802b6e2ebc8cefeec0686b3"
+  }
+}

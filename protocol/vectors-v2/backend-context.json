@@ -1,0 +1,56 @@
+[
+  {
+    "name": "lease_context",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "subject_ref": "user-1",
+      "access_id": "remote-1",
+      "capability": "desk",
+      "target_id": "local",
+      "scopes": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "2",
+      "expires_at": "2030-01-01T00:00:00Z"
+    }
+  },
+  {
+    "name": "missing_policy",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "subject_ref": "user-1",
+      "access_id": "remote-1",
+      "capability": "desk",
+      "target_id": "local",
+      "scopes": [
+        "session.connect",
+        "screen.view"
+      ],
+      "lease_version": "2",
+      "expires_at": "2030-01-01T00:00:00Z"
+    }
+  },
+  {
+    "name": "cloud_jwt_not_backend_context",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "subject_ref": "user-1",
+      "access_id": "remote-1",
+      "capability": "desk",
+      "target_id": "local",
+      "scopes": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "2",
+      "expires_at": "2030-01-01T00:00:00Z",
+      "gateway_jwt": "forbidden"
+    }
+  }
+]

@@ -1,0 +1,133 @@
+name: Build and release
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  RUST_VERSION: '1.99.0'
+  LLVM_VERSION: '15.0.6'
+  VCPKG_COMMIT_ID: '9e593bb18ea69cc5095e012465dcd675a822ed0d'
+  VCPKG_CMAKE_VERSION: '4.3.0'
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+jobs:
+
+  browser:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix frontend --ignore-scripts
+
+      - name: Build browser assets once for all native targets
+        run: node ci/browser.mjs ssh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: browser
+          path: browser/
+          if-no-files-found: error
+  native:
+    needs: [browser]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {platform: windows-x64, os: windows-2022, target: x86_64-pc-windows-msvc, triplet: x64-windows-static, msvc: x64}
+          - {platform: windows-arm64, os: windows-11-arm, target: aarch64-pc-windows-msvc, triplet: arm64-windows-static, msvc: x64_arm64}
+          - {platform: linux-x64, os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, triplet: x64-linux}
+          - {platform: linux-arm64, os: ubuntu-22.04-arm, target: aarch64-unknown-linux-gnu, triplet: arm64-linux}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: browser
+          path: browser/
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .ci-cache/
+            target/
+            desk-engine/target/
+          key: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-${{ hashFiles('**/Cargo.lock', 'engine-patches/**', 'scripts/*.py', 'ci/linux-build.sh') }}
+          restore-keys: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-
+      - uses: actions/setup-python@v5
+        if: runner.os == 'Windows'
+        with:
+          python-version: '3.13'
+          architecture: x64
+      - uses: dtolnay/rust-toolchain@stable
+        if: runner.os == 'Windows'
+        with:
+          # x64 build scripts can load the exact LLVM 15 used by RustDesk, also on the ARM runner.
+          toolchain: '1.99.0-x86_64-pc-windows-msvc'
+          targets: ${{ matrix.target }}
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+        with:
+          arch: ${{ matrix.msvc }}
+
+      - name: Build Windows native code and run tests
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          CARGO_BUILD_TARGET: ${{ matrix.target }}
+          RUSTFLAGS: '-C target-feature=+crt-static'
+        run: |
+          cargo build --locked --release --lib
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test --locked --lib
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python ci/package.py ssh --platform '${{ matrix.platform }}'
+      - name: Build every Linux native dependency and binary on Ubuntu 18.04
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          mkdir -p .ci-cache/tools .ci-cache/vcpkg
+          docker run --rm \
+            -e GITHUB_SHA -e RELEASE_VERSION \
+            -v "$PWD:/workspace" -v "$PWD/.ci-cache/tools:/opt/yoodesk-tools" \
+            ubuntu:18.04 bash /workspace/ci/linux-build.sh ssh '${{ matrix.platform }}' '${{ matrix.target }}' '${{ matrix.triplet }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.platform }}
+          path: dist/
+          if-no-files-found: error
+  release:
+    if: github.event_name != 'pull_request'
+    needs: native
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-*
+          path: dist/
+          merge-multiple: true
+      - name: Require all four platform archives before publishing
+        run: |
+          for platform in windows-x64 windows-arm64 linux-x64 linux-arm64; do
+            test -s "dist/yoodesk-ssh-$platform.zip"
+            (cd dist && sha256sum -c "yoodesk-ssh-$platform.zip.sha256")
+          done
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('v0.1.0-ci.{0}', github.run_number) }}
+          name: 'ssh ${{ github.sha }}'
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          fail_on_unmatched_files: true
+          files: dist/*

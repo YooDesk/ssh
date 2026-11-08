@@ -1,0 +1,57 @@
+[
+  {
+    "name": "canonical",
+    "valid": true,
+    "message": {
+      "expected_negotiation_generation": "1"
+    }
+  },
+  {
+    "name": "full-decimal",
+    "valid": true,
+    "message": {
+      "expected_negotiation_generation": "18446744073709551616"
+    }
+  },
+  {
+    "name": "missing",
+    "valid": false,
+    "message": {}
+  },
+  {
+    "name": "zero",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "0"
+    }
+  },
+  {
+    "name": "leading-zero",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "01"
+    }
+  },
+  {
+    "name": "number",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": 1
+    }
+  },
+  {
+    "name": "null",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": null
+    }
+  },
+  {
+    "name": "extra",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "1",
+      "path": "websocket"
+    }
+  }
+]

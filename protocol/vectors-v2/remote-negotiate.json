@@ -1,0 +1,80 @@
+[
+  {
+    "name": "stun",
+    "valid": true,
+    "message": {
+      "expected_negotiation_generation": "1",
+      "path": "stun"
+    }
+  },
+  {
+    "name": "turn",
+    "valid": true,
+    "message": {
+      "expected_negotiation_generation": "1",
+      "path": "turn"
+    }
+  },
+  {
+    "name": "websocket",
+    "valid": true,
+    "message": {
+      "expected_negotiation_generation": "1",
+      "path": "websocket"
+    }
+  },
+  {
+    "name": "missing",
+    "valid": false,
+    "message": {}
+  },
+  {
+    "name": "zero",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "0",
+      "path": "stun"
+    }
+  },
+  {
+    "name": "leading-zero",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "01",
+      "path": "stun"
+    }
+  },
+  {
+    "name": "number",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": 1,
+      "path": "stun"
+    }
+  },
+  {
+    "name": "unknown-path",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "1",
+      "path": "direct"
+    }
+  },
+  {
+    "name": "too-long",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "111111111111111111111",
+      "path": "stun"
+    }
+  },
+  {
+    "name": "self-origin",
+    "valid": false,
+    "message": {
+      "expected_negotiation_generation": "1",
+      "path": "stun",
+      "origin": "https://self.example"
+    }
+  }
+]

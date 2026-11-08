@@ -1,0 +1,205 @@
+[
+  {
+    "name": "independent_viewers_same_device",
+    "steps": [
+      "Create SID A and SID B on the same device, each at 1250000 bytes/s",
+      "Saturate both in the same direction"
+    ],
+    "expect": [
+      "Each SID independently satisfies bytes <= R*T+B",
+      "Each reaches approximately R with sufficient offered load",
+      "Neither consumes the other SID's tokens"
+    ]
+  },
+  {
+    "name": "one_viewer_many_streams",
+    "steps": [
+      "Create one SID at 1250000 bytes/s",
+      "Open concurrent HTTP file transfers and a business WebSocket"
+    ],
+    "expect": [
+      "Aggregate delivery in each direction satisfies R*T+B",
+      "Demanding streams make progress through bounded round-robin scheduling",
+      "No bucket per stream or per outer relay"
+    ]
+  },
+  {
+    "name": "snapshot_not_dynamic",
+    "steps": [
+      "Create A while the effective rate is 1250000 bytes/s",
+      "Commit configuration rate 125000 bytes/s",
+      "Renew and renegotiate A",
+      "Create B"
+    ],
+    "expect": [
+      "A retains exactly 1250000 bytes/s",
+      "B receives 125000 bytes/s",
+      "No update message or policy timer for A"
+    ]
+  },
+  {
+    "name": "inheritance_zero_is_not_null",
+    "steps": [
+      "Device override NULL and enterprise override 1000",
+      "Device override 0 and enterprise override 1000"
+    ],
+    "expect": [
+      "First creation snapshots 1000 in both directions",
+      "Second creation explicitly snapshots 0 in both directions",
+      "No NULL appears in a signed snapshot"
+    ]
+  },
+  {
+    "name": "same_sid_rate_mutation_rejected",
+    "steps": [
+      "Install a valid signed grant with rate 1000",
+      "Submit an otherwise valid renewal or next-negotiation grant with the same SID but rate 2000"
+    ],
+    "expect": [
+      "Reject conflicting rate scope",
+      "Do not allocate another bucket or switch to unlimited",
+      "Do not disconnect other Viewers or the device control connection"
+    ]
+  },
+  {
+    "name": "candidate_handoff_preserves_credit",
+    "steps": [
+      "Consume tokens under negotiation generation 1",
+      "Prepare generation 2 with the identical snapshot",
+      "Fail one candidate, then successfully switch transport",
+      "Deliver delayed generation-1 close and ACK"
+    ],
+    "expect": [
+      "Reuse the exact SID rate-state handle and current credit",
+      "Failed candidate and old cleanup cannot remove the current SID handle",
+      "Old-generation business cannot revive"
+    ]
+  },
+  {
+    "name": "reservation_short_write_and_cancel",
+    "given": {
+      "rate_bytes_per_second": 5000,
+      "burst_bytes": 1000,
+      "available_tokens": 1000,
+      "reserved_bytes": 600,
+      "actually_delivered_bytes": 200
+    },
+    "steps": [
+      "Reserve 600 bytes",
+      "Complete a short write of 200 bytes",
+      "Cancel before delivering the remainder"
+    ],
+    "expect": [
+      "Refund only 400 unconsumed bytes once",
+      "Available credit becomes 800 without intervening time refill",
+      "Successful-delivery counter is exactly 200",
+      "No leaked reservation or double refund"
+    ]
+  },
+  {
+    "name": "low_rate_large_frame",
+    "given": {
+      "rate_bytes_per_second": 1,
+      "burst_bytes": 1,
+      "offered_frame_bytes": 65536
+    },
+    "steps": [
+      "Use virtual monotonic time",
+      "Deliver through bounded chunks while preserving frame bytes"
+    ],
+    "expect": [
+      "Do not wait for 65536 tokens in a bucket capped at 1",
+      "No token or arithmetic overflow",
+      "Cancellation and authorization expiry remain responsive"
+    ]
+  },
+  {
+    "name": "zero_rate_bypass",
+    "steps": [
+      "Install a snapshot with one direction 0 and the other finite",
+      "Transfer in both directions"
+    ],
+    "expect": [
+      "Only the finite direction schedules token waits",
+      "0 means explicitly unlimited, not disabled traffic",
+      "No periodic wakeup or payload copy solely for the unlimited direction"
+    ]
+  },
+  {
+    "name": "control_isolation_and_revocation",
+    "steps": [
+      "Block Viewer A on token availability",
+      "Run Viewer B at its own rate",
+      "Exchange original control heartbeat and lease renewal",
+      "Revoke A"
+    ],
+    "expect": [
+      "B and device control do not wait on A's rate lock",
+      "A's waiters and pending reservations cancel promptly",
+      "Memory returns after A closes",
+      "No Global or Connector process-fatal budget error"
+    ]
+  },
+  {
+    "name": "no_new_periodic_work",
+    "steps": [
+      "Model 100000 online devices with no active Viewer",
+      "Model 1500 active Viewers under unchanged policy"
+    ],
+    "expect": [
+      "Idle devices have no rate buckets, timers, rate RPCs or rate database writes",
+      "Active Viewers use only existing authorization maintenance, approximately 5 renewals/s at 300s intervals",
+      "No traffic counters are required for forwarding permission",
+      "This is a complexity check, not target-scale physical acceptance"
+    ]
+  },
+  {
+    "name": "physical_acceptance_required_by_user",
+    "given": {
+      "online_devices": 1000,
+      "active_business_sessions": 150,
+      "minimum_common_hold_seconds": 185,
+      "business_matrix_cases": 36
+    },
+    "steps": [
+      "Run the existing fixed-topology complete entry with the new protocol",
+      "Exercise all three actual transports and four business protocols",
+      "Verify input feedback, selected candidate pairs, all online samples and resource bounds"
+    ],
+    "expect": [
+      "All original acceptance requirements remain satisfied",
+      "Include limited, unlimited and low-rate cases with sufficient load to measure limits",
+      "Do not require 100000/1500 physical testing",
+      "Do not describe 1000/150 results as 100000/1500 verified capacity"
+    ]
+  },
+  {
+    "name": "protocol_security_beyond_schema",
+    "steps": [
+      "Verify real Go-issued v3 JWT in Rust",
+      "Tamper rates without resigning",
+      "Try wrong issuer, kid, audience and duplicated JSON members",
+      "Reject raw numeric lexemes 1.0 and 1e3 for rate fields even though JSON Schema integer permits their mathematical values",
+      "Try expired access, foreign device, foreign SID and stale control generation"
+    ],
+    "expect": [
+      "Reject every invalid signature or binding",
+      "No missing-snapshot-to-unlimited fallback",
+      "Schema-only success does not count as cryptographic verification"
+    ]
+  },
+  {
+    "name": "memory_and_transport_accounting",
+    "steps": [
+      "Stall readers with many concurrent HTTP and upgraded WebSocket flows",
+      "Exercise RTC, TURN and WSS with identical logical payloads",
+      "Cancel flows while holding large ref-counted body frames"
+    ],
+    "expect": [
+      "Rate-layer payload ownership stays inside per-Viewer and per-Connector budgets",
+      "Account retained backing buffers, not just slice lengths",
+      "No double debit on outer WSS relay or TURN hop",
+      "No RTT, TLS or SCTP retransmission bytes falsely counted as extra application payload"
+    ]
+  }
+]

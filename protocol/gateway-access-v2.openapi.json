@@ -1,0 +1,1311 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gateway browser session and launch broker",
+    "version": "2.0.0-candidate"
+  },
+  "servers": [
+    {
+      "url": "/{product_id}",
+      "variables": {
+        "product_id": {
+          "default": "yoodesk"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/api/v2/sessions/": {
+      "post": {
+        "operationId": "createRemoteSession",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoteSessionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoteSessionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/sessions/{session_id}/launch-tickets/": {
+      "post": {
+        "operationId": "createLaunchTicket",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaunchTicketCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LaunchTicketResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/device-access/exchange/": {
+      "post": {
+        "operationId": "exchangeDeviceAccess",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          }
+        ],
+        "security": [],
+        "x-listener-role": "device",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceAccessExchange"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceAccessResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/sessions/{session_id}/": {
+      "get": {
+        "operationId": "readRemoteSession",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoteSessionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "revokeRemoteSession",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "responses": {
+          "204": {
+            "description": "The original browser session authorization is revoked; repeated revocation is idempotent."
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/sessions/{session_id}/signal/": {
+      "get": {
+        "operationId": "connectRemoteSignal",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "Sec-WebSocket-Protocol",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^raccess\\.signal\\.v2(?:,\\s*raccess\\.negotiation\\.[1-9][0-9]{0,19})?$"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "x-websocket": true,
+        "x-csrf-cookie-bound": true,
+        "x-subprotocol": "raccess.signal.v2",
+        "responses": {
+          "101": {
+            "description": "Original browser session authorized; relay additionally requires device.bind with the original grant before binary traffic."
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "description": " Signal handshake binds the expected negotiation generation using raccess.signal.v2, raccess.negotiation.N subprotocols. The legacy single protocol denotes generation 1 only. A stale generation is rejected before attaching the prepared run."
+      }
+    },
+    "/api/v2/sessions/{session_id}/relay/": {
+      "get": {
+        "operationId": "connectRemoteRelay",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "Sec-WebSocket-Protocol",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^raccess\\.relay\\.v2(?:,\\s*raccess\\.negotiation\\.[1-9][0-9]{0,19})?$"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "x-websocket": true,
+        "x-csrf-cookie-bound": true,
+        "x-subprotocol": "raccess.relay.v2",
+        "responses": {
+          "101": {
+            "description": "Original browser session authorized; relay additionally requires device.bind with the original grant before binary traffic."
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "description": " Relay handshake binds the expected generation using raccess.relay.v2, raccess.negotiation.N; the legacy single protocol denotes generation 1 only. Stale generations cannot consume a replacement permit."
+      }
+    },
+    "/api/v2/sessions/{session_id}/renew/": {
+      "post": {
+        "operationId": "renewRemoteSession",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoteSessionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoteSessionRenew"
+              }
+            }
+          }
+        },
+        "description": "Renew the original live session after matching Native and path acknowledgements. Idempotency identity is session_id + expected_lease_version + X-Request-ID. Exact latest committed retries return the same response without extending expiry; stale versions conflict. Every retry revalidates current authorization."
+      }
+    },
+    "/api/v2/sessions/{session_id}/negotiate/": {
+      "post": {
+        "operationId": "negotiateRemoteSession",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoteSessionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoteSessionNegotiate"
+              }
+            }
+          }
+        },
+        "description": "Request the next authorized negotiation generation for the original session scope. Requires current authorization and original physical route. Identity is session_id + expected_negotiation_generation + path + X-Request-ID. This does not replay or recover any business writes. TURN requires an authorized available pool; no public node may be guessed."
+      }
+    },
+    "/api/v2/sessions/{session_id}/release/": {
+      "post": {
+        "operationId": "releaseRemoteSessionGeneration",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^https://[^/]+$"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ],
+        "x-listener-role": "account",
+        "responses": {
+          "204": {
+            "description": "Expected generation released, or already inactive/superseded; no replacement generation is revoked."
+          },
+          "default": {
+            "description": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoteSessionRelease"
+              }
+            }
+          }
+        },
+        "description": "Release only the expected negotiation generation. Cleanup for an older generation is an idempotent no-op when a newer generation is pending or committed. A future generation conflicts. Explicit whole-session revocation continues to use DELETE."
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RemoteSessionCreate": {
+        "type": "object",
+        "properties": {
+          "device_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "capability": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "target_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "requested_scopes": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "session.connect",
+                "screen.view",
+                "input.pointer",
+                "input.keyboard",
+                "audio.listen",
+                "clipboard.read",
+                "clipboard.write",
+                "files.read",
+                "files.write",
+                "targets.manage",
+                "credentials.use",
+                "credentials.persist",
+                "shell.start"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 64,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "device_id",
+          "capability",
+          "target_id"
+        ],
+        "additionalProperties": false
+      },
+      "RemoteSessionResponse": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "device_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "capability": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "target_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "connection_generation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "negotiation_generation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "lease_version": {
+                "type": "string",
+                "pattern": "^[1-9][0-9]{0,19}$"
+              },
+              "lease_expires_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "policy_revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "grant": {
+                "type": "string",
+                "minLength": 32,
+                "maxLength": 16384
+              },
+              "signal_url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "relay_url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "frontend_mode": {
+                "enum": [
+                  "trusted-ui",
+                  "isolated-app"
+                ]
+              },
+              "device_origin": {
+                "type": "string",
+                "pattern": "^https://[^/]+$",
+                "description": "Account origin in trusted-ui; a distinct device origin in isolated-app."
+              }
+            },
+            "required": [
+              "session_id",
+              "device_id",
+              "capability",
+              "target_id",
+              "connection_generation",
+              "negotiation_generation",
+              "lease_version",
+              "lease_expires_at",
+              "policy_revision",
+              "grant",
+              "signal_url",
+              "relay_url",
+              "frontend_mode",
+              "device_origin"
+            ],
+            "additionalProperties": false
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "v",
+          "data",
+          "request_id"
+        ],
+        "additionalProperties": false
+      },
+      "LaunchTicketCreate": {
+        "type": "object",
+        "properties": {
+          "access_mode": {
+            "enum": [
+              "cookie",
+              "bearer"
+            ]
+          },
+          "parent_origin": {
+            "type": "string",
+            "pattern": "^https://[^/]+$"
+          },
+          "channel_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "access_mode",
+          "parent_origin",
+          "channel_id"
+        ],
+        "additionalProperties": false
+      },
+      "LaunchTicketResponse": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "launch_ticket": {
+                "type": "string",
+                "minLength": 32,
+                "maxLength": 16384
+              },
+              "expires_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "device_origin": {
+                "type": "string",
+                "pattern": "^https://[^/]+$"
+              },
+              "device_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "capability": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "session_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "access_mode": {
+                "enum": [
+                  "cookie",
+                  "bearer"
+                ]
+              },
+              "parent_origin": {
+                "type": "string",
+                "pattern": "^https://[^/]+$"
+              },
+              "channel_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "launch_ticket",
+              "expires_at",
+              "device_origin",
+              "device_id",
+              "capability",
+              "session_id",
+              "access_mode",
+              "parent_origin",
+              "channel_id"
+            ],
+            "additionalProperties": false
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "v",
+          "data",
+          "request_id"
+        ],
+        "additionalProperties": false
+      },
+      "DeviceAccessExchange": {
+        "type": "object",
+        "properties": {
+          "launch_ticket": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 16384
+          },
+          "channel_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "access_mode": {
+            "enum": [
+              "cookie",
+              "bearer"
+            ]
+          }
+        },
+        "required": [
+          "launch_ticket",
+          "channel_id",
+          "access_mode"
+        ],
+        "additionalProperties": false
+      },
+      "DeviceAccessInfo": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "device_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "capability": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "device_origin": {
+            "type": "string",
+            "pattern": "^https://[^/]+$"
+          },
+          "access_mode": {
+            "enum": [
+              "cookie",
+              "bearer"
+            ]
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "device_access_token": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 16384
+          }
+        },
+        "required": [
+          "session_id",
+          "device_id",
+          "capability",
+          "device_origin",
+          "access_mode",
+          "expires_at"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "access_mode": {
+                  "const": "bearer"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "device_access_token"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "access_mode": {
+                  "const": "cookie"
+                }
+              }
+            },
+            "then": {
+              "not": {
+                "required": [
+                  "device_access_token"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "DeviceAccessResponse": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "data": {
+            "$ref": "#/components/schemas/DeviceAccessInfo"
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "v",
+          "data",
+          "request_id"
+        ],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "details": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "stage": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "hint": {
+                    "type": "string",
+                    "maxLength": 4096
+                  },
+                  "hop_index": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 8
+                  },
+                  "current_offset": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,19})$"
+                  },
+                  "retry_after_seconds": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retryable"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "v",
+          "request_id",
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "RemoteSessionRenew": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_lease_version"
+        ],
+        "properties": {
+          "expected_lease_version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,18}$"
+          }
+        }
+      },
+      "RemoteSessionNegotiate": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_negotiation_generation",
+          "path"
+        ],
+        "properties": {
+          "expected_negotiation_generation": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,19}$"
+          },
+          "path": {
+            "enum": [
+              "stun",
+              "turn",
+              "websocket"
+            ]
+          }
+        }
+      },
+      "RemoteSessionRelease": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_negotiation_generation"
+        ],
+        "properties": {
+          "expected_negotiation_generation": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,19}$"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AccountSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_account_session"
+      }
+    }
+  }
+}

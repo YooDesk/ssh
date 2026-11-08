@@ -1,0 +1,223 @@
+[
+  {
+    "name": "claims",
+    "kind": "claims",
+    "valid": true,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "header",
+    "kind": "header",
+    "valid": true,
+    "message": {
+      "alg": "ES256",
+      "typ": "raccess-device-admission+jwt"
+    }
+  },
+  {
+    "name": "wrong-purpose",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "browser:login",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "extra-claim",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "admin": true,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "multiple-audiences",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/",
+        "https://other.example/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "fractional-expiry",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060.5,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "invalid-jti",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "untrusted\nidentifier",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "short-host-hash",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "short",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "embedded-key",
+    "kind": "header",
+    "valid": false,
+    "message": {
+      "alg": "ES256",
+      "typ": "raccess-device-admission+jwt",
+      "jwk": {}
+    }
+  },
+  {
+    "name": "algorithm-confusion",
+    "kind": "header",
+    "valid": false,
+    "message": {
+      "alg": "HS256",
+      "typ": "raccess-device-admission+jwt"
+    }
+  },
+  {
+    "name": "missing-native-request",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-admission/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:route-admit",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060
+    }
+  }
+]

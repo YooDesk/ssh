@@ -1,0 +1,94 @@
+[
+  {
+    "name": "valid_claim_types",
+    "valid": true,
+    "message": {
+      "iss": "https://gateway.example.com",
+      "aud": "raccess-session-v1",
+      "sub": "user-test",
+      "iat": 100,
+      "nbf": 100,
+      "exp": 160,
+      "jti": "grant-test",
+      "device_id": "device-test",
+      "session_id": "remote-test",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-prod",
+      "policy_revision": "policy-8",
+      "scope": [
+        "connect",
+        "input"
+      ]
+    }
+  },
+  {
+    "name": "wrong_audience",
+    "valid": false,
+    "message": {
+      "iss": "https://gateway.example.com",
+      "aud": "device-token",
+      "sub": "user-test",
+      "iat": 100,
+      "nbf": 100,
+      "exp": 160,
+      "jti": "grant-test",
+      "device_id": "device-test",
+      "session_id": "remote-test",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-prod",
+      "policy_revision": "policy-8",
+      "scope": [
+        "connect",
+        "input"
+      ]
+    }
+  },
+  {
+    "name": "numeric_generation",
+    "valid": false,
+    "message": {
+      "iss": "https://gateway.example.com",
+      "aud": "raccess-session-v1",
+      "sub": "user-test",
+      "iat": 100,
+      "nbf": 100,
+      "exp": 160,
+      "jti": "grant-test",
+      "device_id": "device-test",
+      "session_id": "remote-test",
+      "connection_generation": 3,
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-prod",
+      "policy_revision": "policy-8",
+      "scope": [
+        "connect",
+        "input"
+      ]
+    }
+  },
+  {
+    "name": "missing_scope",
+    "valid": false,
+    "message": {
+      "iss": "https://gateway.example.com",
+      "aud": "raccess-session-v1",
+      "sub": "user-test",
+      "iat": 100,
+      "nbf": 100,
+      "exp": 160,
+      "jti": "grant-test",
+      "device_id": "device-test",
+      "session_id": "remote-test",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-prod",
+      "policy_revision": "policy-8"
+    }
+  }
+]

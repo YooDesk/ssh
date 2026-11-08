@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "status": "FROZEN",
+  "base_path": "/{product_id}/",
+  "capabilities": {
+    "ssh": "terminal.v1",
+    "shell": "terminal.v1",
+    "sftp": "sftp.v1",
+    "vnc": "rfb.v1",
+    "rdp": "rdcleanpath.v1",
+    "desk": "rustdesk-message.v1"
+  },
+  "routes": {
+    "page": "/{product_id}/webclient/{capability}/",
+    "sessions": "/{product_id}/webclient/{capability}/api/v1/sessions/",
+    "stream": "/{product_id}/webclient/{capability}/api/v1/sessions/{business_session_id}/stream/",
+    "events": "/{product_id}/webclient/{capability}/api/v1/sessions/{business_session_id}/events/"
+  },
+  "limits": {
+    "control_json_bytes": 65536,
+    "stream_header_bytes": 16384,
+    "datachannel_message_bytes": 16384,
+    "yamux_frame_header_bytes": 12,
+    "yamux_body_bytes": 16372,
+    "sftp_upload_chunk_bytes": 1048576,
+    "desk_message_bytes": 16777216
+  },
+  "native_profiles": {
+    "rfb.v1": "Standard RFB byte stream over binary WS",
+    "rdcleanpath.v1": "RDCleanPath version 3390 then RDP TLS bridge",
+    "rustdesk-message.v1": "One hbb.Message per binary WS message; no native TCP framing"
+  }
+}

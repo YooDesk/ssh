@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "properties": {
+    "iss": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "aud": {
+      "const": "raccess-session-v1"
+    },
+    "sub": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "jti": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "device_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "policy_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "iat": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "nbf": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "exp": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "connection_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "negotiation_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "minItems": 1,
+      "maxItems": 64
+    }
+  },
+  "required": [
+    "iss",
+    "aud",
+    "sub",
+    "jti",
+    "device_id",
+    "session_id",
+    "capability",
+    "target_id",
+    "policy_revision",
+    "iat",
+    "nbf",
+    "exp",
+    "connection_generation",
+    "negotiation_generation",
+    "scope"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:session-grant:v1"
+}

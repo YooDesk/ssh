@@ -1,0 +1,2655 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:business:v2",
+  "$defs": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "message": {
+              "type": "string",
+              "maxLength": 4096
+            },
+            "retryable": {
+              "type": "boolean"
+            },
+            "details": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "stage": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "hint": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "hop_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "current_offset": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]{0,19})$"
+                },
+                "retry_after_seconds": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "retryable"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "request_id",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "SessionCreate": {
+      "type": "object",
+      "properties": {
+        "protocol_version": {
+          "const": 2
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "credential_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "cols": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "rows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "read_only": {
+              "type": "boolean"
+            },
+            "video_codecs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "maxItems": 16
+            },
+            "audio_codecs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "maxItems": 16
+            },
+            "display_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "client_features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 128
+        }
+      },
+      "required": [
+        "protocol_version",
+        "target_id",
+        "options",
+        "client_features"
+      ],
+      "additionalProperties": false
+    },
+    "SessionInfo": {
+      "type": "object",
+      "properties": {
+        "business_session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "capability": {
+          "enum": [
+            "desk",
+            "ssh",
+            "sftp",
+            "vnc",
+            "rdp",
+            "shell"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "state": {
+          "enum": [
+            "created",
+            "connecting",
+            "transport_ready",
+            "authenticating",
+            "waiting_challenge",
+            "active",
+            "closing",
+            "closed",
+            "failed"
+          ]
+        },
+        "state_revision": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "stream_available": {
+          "type": "boolean"
+        },
+        "target_authentication": {
+          "enum": [
+            "unknown",
+            "pending",
+            "verified",
+            "failed"
+          ]
+        },
+        "stream_profile": {
+          "enum": [
+            "terminal.v1",
+            "sftp.v1",
+            "rfb.v1",
+            "rdcleanpath.v1",
+            "rustdesk-message.v1"
+          ]
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 128
+        },
+        "event_url": {
+          "type": "string",
+          "pattern": "^/[a-z][a-z0-9-]{0,31}/",
+          "maxLength": 4096
+        },
+        "stream_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^/[a-z][a-z0-9-]{0,31}/",
+              "maxLength": 4096
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "access_mode": {
+          "enum": [
+            "local",
+            "proxy"
+          ]
+        },
+        "access_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "business_session_id",
+        "capability",
+        "target_id",
+        "state",
+        "state_revision",
+        "stream_available",
+        "target_authentication",
+        "stream_profile",
+        "features",
+        "event_url",
+        "stream_url",
+        "access_mode",
+        "access_expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "SessionResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/SessionInfo"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "SessionState": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "created",
+            "connecting",
+            "transport_ready",
+            "authenticating",
+            "waiting_challenge",
+            "active",
+            "closing",
+            "closed",
+            "failed"
+          ]
+        },
+        "state_revision": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "stream_available": {
+          "type": "boolean"
+        },
+        "target_authentication": {
+          "enum": [
+            "unknown",
+            "pending",
+            "verified",
+            "failed"
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "state_revision",
+        "stream_available",
+        "target_authentication"
+      ],
+      "additionalProperties": false
+    },
+    "CredentialCreate": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "password",
+            "private_key"
+          ]
+        },
+        "secret": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 262144,
+          "writeOnly": true
+        },
+        "passphrase": {
+          "type": "string",
+          "maxLength": 4096,
+          "writeOnly": true
+        },
+        "persist": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "secret",
+        "persist"
+      ],
+      "additionalProperties": false
+    },
+    "CredentialInfo": {
+      "type": "object",
+      "properties": {
+        "credential_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "kind": {
+          "enum": [
+            "password",
+            "private_key"
+          ]
+        },
+        "persist": {
+          "type": "boolean"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "public_fingerprint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "credential_ref",
+        "kind",
+        "persist",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "CredentialResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/CredentialInfo"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "ConnectionProfile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 253
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "username": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "auth_method": {
+          "enum": [
+            "password",
+            "private_key",
+            "keyboard_interactive"
+          ]
+        },
+        "credential_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host_key_policy": {
+          "enum": [
+            "strict",
+            "ask"
+          ]
+        },
+        "jump_chain": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "label",
+        "host",
+        "port",
+        "username",
+        "auth_method",
+        "host_key_policy",
+        "jump_chain"
+      ],
+      "additionalProperties": false
+    },
+    "TargetCreate": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 253
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "username": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "auth_method": {
+          "enum": [
+            "password",
+            "private_key",
+            "keyboard_interactive"
+          ]
+        },
+        "credential_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host_key_policy": {
+          "enum": [
+            "strict",
+            "ask"
+          ]
+        },
+        "jump_chain": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "label",
+        "host",
+        "port",
+        "username",
+        "auth_method",
+        "host_key_policy",
+        "jump_chain"
+      ],
+      "additionalProperties": false
+    },
+    "TargetPatch": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 253
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "username": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "auth_method": {
+          "enum": [
+            "password",
+            "private_key",
+            "keyboard_interactive"
+          ]
+        },
+        "credential_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host_key_policy": {
+          "enum": [
+            "strict",
+            "ask"
+          ]
+        },
+        "jump_chain": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 8
+        },
+        "expected_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "expected_revision"
+      ],
+      "additionalProperties": false,
+      "minProperties": 2
+    },
+    "TargetResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/ConnectionProfile"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "TargetListResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ConnectionProfile"
+              },
+              "maxItems": 128
+            },
+            "next_cursor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "items",
+            "next_cursor"
+          ],
+          "additionalProperties": false
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "CapabilitiesResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "protocol_version": {
+              "const": 2
+            },
+            "supported_features": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "maxItems": 128
+            },
+            "limits": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "stream_profile": {
+              "enum": [
+                "terminal.v1",
+                "sftp.v1",
+                "rfb.v1",
+                "rdcleanpath.v1",
+                "rustdesk-message.v1"
+              ]
+            },
+            "media_status": {
+              "enum": [
+                "not_applicable",
+                "provisional",
+                "verified"
+              ]
+            }
+          },
+          "required": [
+            "protocol_version",
+            "supported_features",
+            "limits",
+            "stream_profile",
+            "media_status"
+          ],
+          "additionalProperties": false
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "DirectoryCreate": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "DirectoryRename": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "expected_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ],
+      "additionalProperties": false
+    },
+    "DirectoryEntry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "type": {
+          "enum": [
+            "file",
+            "directory",
+            "symlink",
+            "other"
+          ]
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "mtime": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "name",
+        "path",
+        "type",
+        "size",
+        "mtime",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "DirectoryListResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/DirectoryEntry"
+              },
+              "maxItems": 128
+            },
+            "next_cursor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "items",
+            "next_cursor"
+          ],
+          "additionalProperties": false
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "EntryResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/DirectoryEntry"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "TransferCreate": {
+      "type": "object",
+      "properties": {
+        "direction": {
+          "enum": [
+            "upload",
+            "download"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "conflict": {
+          "enum": [
+            "fail",
+            "overwrite",
+            "rename"
+          ]
+        },
+        "source_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "direction",
+        "path",
+        "conflict"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "direction": {
+                "const": "upload"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "size"
+            ]
+          }
+        }
+      ]
+    },
+    "TransferInfo": {
+      "type": "object",
+      "properties": {
+        "transfer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "offset": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "total": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]{0,19})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "created",
+            "running",
+            "paused",
+            "completed",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "source_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result_path": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "transfer_id",
+        "offset",
+        "total",
+        "state",
+        "source_version",
+        "result_path",
+        "verified_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "TransferResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/TransferInfo"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "TransferComplete": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "Challenge": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "kind": {
+              "const": "credentials"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "hop_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "username": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "methods": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "password",
+                      "private_key",
+                      "keyboard_interactive"
+                    ]
+                  },
+                  "maxItems": 128,
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "host",
+                "port",
+                "hop_index",
+                "username",
+                "methods"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "expires_at",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "kind": {
+              "const": "host_key"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "hop_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "algorithm": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "fingerprint": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "previous_fingerprint": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "changed": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "host",
+                "port",
+                "hop_index",
+                "algorithm",
+                "fingerprint",
+                "previous_fingerprint",
+                "changed"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "expires_at",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "kind": {
+              "const": "keyboard_interactive"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "hop_index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "instruction": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "round": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 32
+                },
+                "prompts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "prompt": {
+                        "type": "string",
+                        "maxLength": 4096
+                      },
+                      "echo": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "prompt",
+                      "echo"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 32,
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "host",
+                "port",
+                "hop_index",
+                "name",
+                "instruction",
+                "round",
+                "prompts"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "expires_at",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "kind": {
+              "const": "certificate"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "subject": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "issuer": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "not_before": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "not_after": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "validation_errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "maxItems": 32
+                }
+              },
+              "required": [
+                "host",
+                "port",
+                "subject",
+                "issuer",
+                "sha256",
+                "not_before",
+                "not_after",
+                "validation_errors"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "expires_at",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "kind": {
+              "const": "desktop_approval"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "available_actions": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "wait",
+                      "cancel"
+                    ]
+                  },
+                  "maxItems": 2,
+                  "minItems": 1,
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "reason",
+                "available_actions"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "expires_at",
+            "payload"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ChallengeResponse": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "credentials"
+            },
+            "answer": {
+              "type": "object",
+              "properties": {
+                "credential_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "credential_ref"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "answer"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "host_key"
+            },
+            "answer": {
+              "type": "object",
+              "properties": {
+                "decision": {
+                  "enum": [
+                    "reject",
+                    "accept_once",
+                    "save"
+                  ]
+                }
+              },
+              "required": [
+                "decision"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "answer"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "keyboard_interactive"
+            },
+            "answer": {
+              "type": "object",
+              "properties": {
+                "answers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "value": {
+                        "type": "string",
+                        "maxLength": 4096,
+                        "writeOnly": true
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 32
+                }
+              },
+              "required": [
+                "answers"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "answer"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "certificate"
+            },
+            "answer": {
+              "type": "object",
+              "properties": {
+                "decision": {
+                  "enum": [
+                    "reject",
+                    "accept_once",
+                    "save_fingerprint"
+                  ]
+                }
+              },
+              "required": [
+                "decision"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "answer"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "desktop_approval"
+            },
+            "answer": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "enum": [
+                    "wait",
+                    "cancel"
+                  ]
+                }
+              },
+              "required": [
+                "action"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "answer"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ChallengeReceipt": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "challenge_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "enum": [
+                "accepted",
+                "rejected",
+                "pending"
+              ]
+            },
+            "state_revision": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            }
+          },
+          "required": [
+            "challenge_id",
+            "status",
+            "state_revision"
+          ],
+          "additionalProperties": false
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "Event": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "session.snapshot"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "$ref": "#/$defs/SessionInfo"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "session.state"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "$ref": "#/$defs/SessionState"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "access.renewed"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "lease_version": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]{0,18}$"
+                },
+                "expires_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "state_revision": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]{0,18}$"
+                }
+              },
+              "required": [
+                "lease_version",
+                "expires_at",
+                "state_revision"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "challenge.created"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "$ref": "#/$defs/Challenge"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "challenge.resolved"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "challenge_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "status": {
+                  "enum": [
+                    "accepted",
+                    "rejected",
+                    "expired",
+                    "cancelled"
+                  ]
+                },
+                "state_revision": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]{0,18}$"
+                }
+              },
+              "required": [
+                "challenge_id",
+                "status",
+                "state_revision"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "session.error"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "retryable": {
+                  "type": "boolean"
+                },
+                "state_revision": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]{0,18}$"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable",
+                "state_revision"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "transfer.progress"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/TransferInfo"
+                },
+                {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "created",
+                        "running",
+                        "paused"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "transfer.completed"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/TransferInfo"
+                },
+                {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "completed"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "transfer.failed"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/TransferInfo"
+                },
+                {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "failed"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "v": {
+              "const": 2
+            },
+            "type": {
+              "const": "transfer.cancelled"
+            },
+            "event_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            },
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "payload": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/TransferInfo"
+                },
+                {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "cancelled"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "event_id",
+            "business_session_id",
+            "payload"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Terminal": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "enum": [
+            "terminal.resize",
+            "terminal.close",
+            "terminal.ready",
+            "terminal.exit",
+            "terminal.error"
+          ]
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "payload": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "request_id",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "terminal.resize"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "cols": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  },
+                  "rows": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  }
+                },
+                "required": [
+                  "cols",
+                  "rows"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "terminal.exit"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "exit_code": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "signal": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "exit_code",
+                  "signal"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AccessBootstrap": {
+      "type": "object",
+      "properties": {
+        "auth_mode": {
+          "const": "local-key"
+        },
+        "access_mode": {
+          "enum": [
+            "cookie",
+            "bearer"
+          ]
+        },
+        "https_required": {
+          "type": "boolean"
+        },
+        "preauth_csrf": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "preauth_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "preauth_ticket": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 4096
+        },
+        "public_features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 128
+        }
+      },
+      "required": [
+        "auth_mode",
+        "access_mode",
+        "https_required",
+        "preauth_csrf",
+        "preauth_expires_at",
+        "public_features"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "access_mode": {
+                "const": "bearer"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "preauth_ticket"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "access_mode": {
+                "const": "cookie"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "preauth_ticket"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "AccessLogin": {
+      "type": "object",
+      "properties": {
+        "credential": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 4096,
+          "writeOnly": true
+        },
+        "access_mode": {
+          "enum": [
+            "cookie",
+            "bearer"
+          ]
+        }
+      },
+      "required": [
+        "credential",
+        "access_mode"
+      ],
+      "additionalProperties": false
+    },
+    "AccessInfo": {
+      "type": "object",
+      "properties": {
+        "principal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "session.connect",
+              "screen.view",
+              "input.pointer",
+              "input.keyboard",
+              "audio.listen",
+              "clipboard.read",
+              "clipboard.write",
+              "files.read",
+              "files.write",
+              "targets.manage",
+              "credentials.use",
+              "credentials.persist",
+              "shell.start"
+            ]
+          },
+          "maxItems": 128,
+          "uniqueItems": true
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "absolute_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "csrf_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "auth_mode": {
+          "const": "local-key"
+        },
+        "access_mode": {
+          "enum": [
+            "cookie",
+            "bearer"
+          ]
+        },
+        "access_token": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "principal_id",
+        "scopes",
+        "expires_at",
+        "absolute_expires_at",
+        "csrf_token",
+        "auth_mode",
+        "access_mode"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "access_mode": {
+                "const": "bearer"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "access_token"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "access_mode": {
+                "const": "cookie"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "access_token"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "StreamTicketCreate": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "enum": [
+            "stream",
+            "events"
+          ]
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "channel",
+        "protocols"
+      ],
+      "additionalProperties": false
+    },
+    "StreamTicketInfo": {
+      "type": "object",
+      "properties": {
+        "business_session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "channel": {
+          "enum": [
+            "stream",
+            "events"
+          ]
+        },
+        "ticket": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 4096
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "business_session_id",
+        "channel",
+        "ticket",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "StreamTicketResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/StreamTicketInfo"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "AccessBootstrapResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/AccessBootstrap"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "AccessResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/AccessInfo"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "LeaseApplied": {
+      "type": "object",
+      "properties": {
+        "access_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "applied": {
+          "const": true
+        }
+      },
+      "required": [
+        "access_id",
+        "lease_version",
+        "expires_at",
+        "applied"
+      ],
+      "additionalProperties": false
+    },
+    "LeaseResponse": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "data": {
+          "$ref": "#/$defs/LeaseApplied"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "v",
+        "data",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "BackendContext": {
+      "type": "object",
+      "required": [
+        "v",
+        "subject_ref",
+        "access_id",
+        "capability",
+        "target_id",
+        "scopes",
+        "expires_at",
+        "lease_version",
+        "policy_revision"
+      ],
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "subject_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "access_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "capability": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "session.connect",
+              "screen.view",
+              "input.pointer",
+              "input.keyboard",
+              "audio.listen",
+              "clipboard.read",
+              "clipboard.write",
+              "files.read",
+              "files.write",
+              "targets.manage",
+              "credentials.use",
+              "credentials.persist",
+              "shell.start"
+            ]
+          },
+          "maxItems": 128,
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "policy_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/SessionCreate"
+    },
+    {
+      "$ref": "#/$defs/SessionResponse"
+    },
+    {
+      "$ref": "#/$defs/Event"
+    },
+    {
+      "$ref": "#/$defs/Terminal"
+    }
+  ]
+}

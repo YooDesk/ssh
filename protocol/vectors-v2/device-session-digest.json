@@ -1,0 +1,35 @@
+{
+  "request": {
+    "scope": {
+      "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "device_id": "device-a",
+      "connector_generation": "1",
+      "device_data_generation": "1",
+      "route_epoch": 1,
+      "session_id": "session-a",
+      "negotiation_generation": "1"
+    },
+    "message": {
+      "v": 2,
+      "type": "session_open",
+      "request_id": "inner-request",
+      "connection_generation": "1",
+      "session_id": "session-a",
+      "payload": {
+        "grant": "synthetic-grant-v2",
+        "capability": "http",
+        "target_id": "target-a",
+        "ice_config": {
+          "revision": "1",
+          "policy_revision": "p1",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "ice_transport_policy": "all",
+          "allow_wss": true,
+          "ice_servers": []
+        }
+      }
+    }
+  },
+  "digest": "94bb96f58ed891ccfd7ee54c5c53735d073c0198c403d4e3097fa6290d43b1c1"
+}

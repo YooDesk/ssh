@@ -1,0 +1,316 @@
+[
+  {
+    "name": "symmetric_10mbps",
+    "schema": "rate",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "explicit_unlimited",
+    "schema": "rate",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 0,
+      "to_viewer_bytes_per_second": 0
+    }
+  },
+  {
+    "name": "asymmetric",
+    "schema": "rate",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1024,
+      "to_viewer_bytes_per_second": 0
+    }
+  },
+  {
+    "name": "one_byte_per_second",
+    "schema": "rate",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1,
+      "to_viewer_bytes_per_second": 1
+    }
+  },
+  {
+    "name": "maximum_legacy_rate",
+    "schema": "rate",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1250000000,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "negative",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": -1,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "overflow",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1250000001
+    }
+  },
+  {
+    "name": "fraction",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1.5
+    }
+  },
+  {
+    "name": "bool_not_integer",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": true,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "string_not_integer",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": "1250000",
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "null_not_unlimited",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": null,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "unknown_rate_version",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "boolean_version",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": true,
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "missing_v",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "missing_from_viewer_bytes_per_second",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "to_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "missing_to_viewer_bytes_per_second",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1250000
+    }
+  },
+  {
+    "name": "unknown_field",
+    "schema": "rate",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "from_viewer_bytes_per_second": 1250000,
+      "to_viewer_bytes_per_second": 1250000,
+      "device_total_bytes_per_second": 1000
+    }
+  },
+  {
+    "name": "grant_v3_snapshot",
+    "schema": "grant",
+    "valid": true,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v3",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1",
+      "viewer_rate": {
+        "v": 1,
+        "from_viewer_bytes_per_second": 1250000,
+        "to_viewer_bytes_per_second": 1250000
+      }
+    }
+  },
+  {
+    "name": "old_audience_rejected",
+    "schema": "grant",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v2",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1",
+      "viewer_rate": {
+        "v": 1,
+        "from_viewer_bytes_per_second": 1250000,
+        "to_viewer_bytes_per_second": 1250000
+      }
+    }
+  },
+  {
+    "name": "missing_snapshot_no_fallback",
+    "schema": "grant",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v3",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1"
+    }
+  },
+  {
+    "name": "null_snapshot",
+    "schema": "grant",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v3",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1",
+      "viewer_rate": null
+    }
+  },
+  {
+    "name": "grant_negative_snapshot",
+    "schema": "grant",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v3",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1",
+      "viewer_rate": {
+        "v": 1,
+        "from_viewer_bytes_per_second": 1250000,
+        "to_viewer_bytes_per_second": -1
+      }
+    }
+  }
+]

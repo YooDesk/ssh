@@ -1,0 +1,101 @@
+[package]
+name = "yoodesk-ssh"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "YooDesk ssh: independent native plugin architecture"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "yoodesk_ssh"
+path = "src/lib.rs"
+
+[dependencies]
+axum = { version = "0.8.9", features = ["ws"] }
+base64 = "0.22"
+bytes = "1"
+futures-util = "0.3"
+http-body-util = "0.1"
+hyper = { version = "1", features = ["http1", "server", "client"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+rand = "0.9"
+rcgen = "0.13"
+ring = "0.17"
+russh = { version = "0.65", default-features = false, features = ["ring", "rsa"] }
+russh-sftp = "3"
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+rustls-native-certs = "0.8"
+rustls-pemfile = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+subtle = "2"
+thiserror = "2"
+time = { version = "0.3", features = ["formatting", "parsing", "macros"] }
+tokio = { version = "1", features = ["full"] }
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12", "logging"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = [
+    "basetsd",
+    "d3d11",
+    "d3dcommon",
+    "dxgi",
+    "dxgi1_2",
+    "dxgi1_5",
+    "dxgi1_6",
+    "dxgiformat",
+    "dxgitype",
+    "errhandlingapi",
+    "handleapi",
+    "libloaderapi",
+    "memoryapi",
+    "minwindef",
+    "ntdef",
+    "synchapi",
+    "unknwnbase",
+    "winbase",
+    "windef",
+    "wingdi",
+    "winerror",
+    "winnt",
+    "winuser",
+    "winsvc",
+    "wtsapi32",
+    "userenv",
+    "jobapi2",
+    "namedpipeapi",
+    "sddl",
+    "fileapi",
+    "processthreadsapi",
+    "securitybaseapi",
+    "ioapiset",
+    "shellapi",
+] }
+
+
+[features]
+default = []
+# 直接复用 RustDesk 端侧实现（采集/编码/输入/音频/隐私屏）。AGPL-3.0：启用后整个
+# 发行物按 AGPL 分发，见 docs/design/18-desk-endpoint.md。
+desk-engine = []
+
+[build-dependencies]
+serde_json = "1"
+
+[dev-dependencies]
+tokio-tungstenite = { version = "0.30", default-features = false, features = ["connect", "handshake", "rustls-tls-webpki-roots"] }
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12", "logging"] }
+rustls-pemfile = "2"
+
+[lints.rust]
+# 平台 FFI 需要 unsafe；只在 windows 模块内局部 allow，其余代码仍禁止。
+unsafe_code = "warn"
+
+[lints.clippy]
+all = "warn"
+
+# Protocol-specific implementation; the host is never linked as a Rust crate.

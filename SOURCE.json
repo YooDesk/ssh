@@ -1,0 +1,10 @@
+{
+  "repository": "https://gitcode.com/rustzhang/YooDesk",
+  "commit": "cb78bd2bb8cb8fac916809920d5d6589e6664c17",
+  "modules": [
+    "web-service",
+    "protocol",
+    "products"
+  ],
+  "migration": "native-plugin-abi-v1"
+}

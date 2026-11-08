@@ -1,0 +1,1554 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "WebService Business Protocol",
+    "version": "1.0.0",
+    "description": "FROZEN v1; templates expand product identity. No implementation is implied."
+  },
+  "servers": [
+    {
+      "url": "/{product_id}/webclient/{capability}/api/v1",
+      "variables": {
+        "product_id": {
+          "default": "yoodesk"
+        },
+        "capability": {
+          "default": "ssh",
+          "enum": [
+            "desk",
+            "ssh",
+            "sftp",
+            "vnc",
+            "rdp",
+            "shell"
+          ]
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "BusinessSession": []
+    }
+  ],
+  "paths": {
+    "/capabilities/": {
+      "get": {
+        "operationId": "getCapabilities",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capabilities"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/": {
+      "post": {
+        "operationId": "createBusinessSession",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/": {
+      "get": {
+        "operationId": "getBusinessSession",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "closeBusinessSession",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/events/": {
+      "get": {
+        "operationId": "openBusinessEvents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          }
+        ],
+        "responses": {
+          "101": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-websocket": true,
+        "description": "Authenticated WebSocket upgrade; events or selected native profile."
+      }
+    },
+    "/sessions/{business_session_id}/stream/": {
+      "get": {
+        "operationId": "openBusinessStream",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          }
+        ],
+        "responses": {
+          "101": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-websocket": true,
+        "description": "Authenticated WebSocket upgrade; events or selected native profile."
+      }
+    },
+    "/sessions/{business_session_id}/challenges/{challenge_id}/responses/": {
+      "post": {
+        "operationId": "answerBusinessChallenge",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/challenge_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credentials/": {
+      "post": {
+        "operationId": "importBusinessCredential",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/targets/": {
+      "get": {
+        "operationId": "listBusinessTargets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createBusinessTarget",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionProfile"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/targets/{target_id}/": {
+      "get": {
+        "operationId": "getBusinessTarget",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/target_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionProfile"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateBusinessTarget",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/target_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionProfile"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetPatch"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteBusinessTarget",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/target_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "name": "terminate_sessions",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/entries/": {
+      "get": {
+        "operationId": "listSftpEntries",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "name": "path",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 4096
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createSftpDirectory",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectoryMutation"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "renameSftpEntry",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectoryMutation"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteSftpEntry",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "name": "path",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 4096
+            }
+          },
+          {
+            "name": "recursive",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/transfers/": {
+      "post": {
+        "operationId": "createSftpTransfer",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transfer"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/transfers/{transfer_id}/": {
+      "get": {
+        "operationId": "getSftpTransfer",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/transfer_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transfer"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "cancelSftpTransfer",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/transfer_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/transfers/{transfer_id}/complete/": {
+      "post": {
+        "operationId": "completeSftpTransfer",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/transfer_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transfer"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{business_session_id}/transfers/{transfer_id}/content/": {
+      "get": {
+        "operationId": "downloadSftpContent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/transfer_id"
+          },
+          {
+            "name": "Range",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Requested source byte range",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "uploadSftpChunk",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/business_session_id"
+          },
+          {
+            "$ref": "#/components/parameters/transfer_id"
+          },
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "name": "Upload-Offset",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$",
+              "maxLength": 20
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success",
+            "headers": {
+              "Upload-Offset": {
+                "schema": {
+                  "type": "string",
+                  "pattern": "^[0-9]+$",
+                  "maxLength": 20
+                },
+                "description": "Server-confirmed committed offset"
+              }
+            }
+          },
+          "default": {
+            "description": "Structured failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SessionCreate": {
+        "type": "object",
+        "properties": {
+          "protocol_version": {
+            "const": 1
+          },
+          "target_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "credential_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "cols": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "read_only": {
+                "type": "boolean"
+              },
+              "video_codecs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "audio_codecs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "display_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "client_features": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "maxItems": 128
+          }
+        },
+        "required": [
+          "protocol_version",
+          "target_id",
+          "options",
+          "client_features"
+        ],
+        "additionalProperties": false
+      },
+      "SessionResponse": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "business_session_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "state": {
+                "enum": [
+                  "created",
+                  "connecting",
+                  "waiting_challenge",
+                  "ready",
+                  "reconnecting",
+                  "closing",
+                  "closed",
+                  "failed"
+                ]
+              },
+              "stream_profile": {
+                "enum": [
+                  "terminal.v1",
+                  "sftp.v1",
+                  "rfb.v1",
+                  "rdcleanpath.v1",
+                  "rustdesk-message.v1"
+                ]
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "maxItems": 128
+              },
+              "event_url": {
+                "type": "string",
+                "pattern": "^/[a-z][a-z0-9-]{0,31}/webclient/"
+              },
+              "stream_url": {
+                "type": "string",
+                "pattern": "^/[a-z][a-z0-9-]{0,31}/webclient/"
+              }
+            },
+            "required": [
+              "business_session_id",
+              "state",
+              "stream_profile",
+              "features",
+              "event_url",
+              "stream_url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "v",
+          "request_id",
+          "data"
+        ],
+        "additionalProperties": false
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 1
+          },
+          "type": {
+            "enum": [
+              "session.snapshot",
+              "session.state",
+              "challenge.created",
+              "challenge.resolved",
+              "transfer.progress",
+              "transfer.completed",
+              "transfer.failed",
+              "transfer.cancelled",
+              "session.error"
+            ]
+          },
+          "event_id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,19}$"
+          },
+          "business_session_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "payload": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "v",
+          "type",
+          "event_id",
+          "business_session_id",
+          "payload"
+        ],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "v": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "details": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retryable"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "v",
+          "request_id",
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "CredentialCreate": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "password",
+              "private_key"
+            ]
+          },
+          "secret": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 262144,
+            "writeOnly": true
+          },
+          "passphrase": {
+            "type": "string",
+            "maxLength": 4096,
+            "writeOnly": true
+          },
+          "persist": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "secret",
+          "persist"
+        ],
+        "additionalProperties": false
+      },
+      "ChallengeResponse": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "answer": {
+            "type": "object",
+            "description": "Challenge-kind-specific answers; credentials are never echoed."
+          }
+        },
+        "required": [
+          "request_id",
+          "answer"
+        ],
+        "additionalProperties": false
+      },
+      "ConnectionProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "host": {
+            "type": "string",
+            "maxLength": 253
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "auth_method": {
+            "enum": [
+              "password",
+              "private_key",
+              "keyboard_interactive"
+            ]
+          },
+          "credential_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "host_key_policy": {
+            "enum": [
+              "strict",
+              "ask"
+            ]
+          },
+          "jump_chain": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "maxItems": 8
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "label",
+          "host",
+          "port",
+          "username",
+          "auth_method",
+          "host_key_policy",
+          "jump_chain"
+        ],
+        "additionalProperties": false
+      },
+      "TargetCreate": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "host": {
+            "type": "string",
+            "maxLength": 253
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "auth_method": {
+            "enum": [
+              "password",
+              "private_key",
+              "keyboard_interactive"
+            ]
+          },
+          "credential_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "host_key_policy": {
+            "enum": [
+              "strict",
+              "ask"
+            ]
+          },
+          "jump_chain": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "maxItems": 8
+          }
+        },
+        "required": [
+          "label",
+          "host",
+          "port",
+          "username",
+          "auth_method",
+          "host_key_policy",
+          "jump_chain"
+        ],
+        "additionalProperties": false
+      },
+      "TargetPatch": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "host": {
+            "type": "string",
+            "maxLength": 253
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "auth_method": {
+            "enum": [
+              "password",
+              "private_key",
+              "keyboard_interactive"
+            ]
+          },
+          "credential_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "host_key_policy": {
+            "enum": [
+              "strict",
+              "ask"
+            ]
+          },
+          "jump_chain": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "maxItems": 8
+          },
+          "expected_revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "expected_revision"
+        ],
+        "additionalProperties": false
+      },
+      "TransferCreate": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "enum": [
+              "upload",
+              "download"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "size": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "maxLength": 20
+          },
+          "conflict": {
+            "enum": [
+              "fail",
+              "overwrite",
+              "rename"
+            ]
+          },
+          "source_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "direction",
+          "path",
+          "conflict"
+        ],
+        "additionalProperties": false
+      },
+      "Transfer": {
+        "type": "object",
+        "properties": {
+          "transfer_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "offset": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "maxLength": 20
+          },
+          "state": {
+            "enum": [
+              "created",
+              "running",
+              "paused",
+              "completed",
+              "cancelled",
+              "failed"
+            ]
+          },
+          "source_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "total": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "maxLength": 20
+          }
+        },
+        "required": [
+          "transfer_id",
+          "offset",
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "DirectoryMutation": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "enum": [
+              "mkdir",
+              "rename"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "from": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "to": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "op"
+        ],
+        "additionalProperties": false
+      },
+      "Capabilities": {
+        "type": "object",
+        "properties": {
+          "protocol_version": {
+            "const": 1
+          },
+          "supported_features": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "limits": {
+            "type": "object"
+          },
+          "stream_profile": {
+            "enum": [
+              "terminal.v1",
+              "sftp.v1",
+              "rfb.v1",
+              "rdcleanpath.v1",
+              "rustdesk-message.v1"
+            ]
+          }
+        },
+        "required": [
+          "protocol_version",
+          "supported_features",
+          "limits",
+          "stream_profile"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "parameters": {
+      "business_session_id": {
+        "name": "business_session_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "challenge_id": {
+        "name": "challenge_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "target_id": {
+        "name": "target_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "transfer_id": {
+        "name": "transfer_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "RequestId": {
+        "name": "X-Request-ID",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "securitySchemes": {
+      "BusinessSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "{product_id}_business_session",
+        "description": "Name template expanded per product. Independent WebService access identity, not Gateway JWT."
+      }
+    }
+  }
+}

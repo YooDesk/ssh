@@ -1,0 +1,59 @@
+[package]
+name = "yoodesk-desk-engine"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-only"
+description = "YooDesk desk engine: RustDesk endpoint capabilities behind a small, stable FFI"
+
+# 独立 workspace：RustDesk 的依赖图（含其 fork 的 webrtc/tungstenite）与 WebService 自身
+# 的依赖图互不影响。产物是静态库，由 web-service 链接。
+[workspace]
+
+[lib]
+name = "yoodesk_desk_engine"
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+env_logger = "0.11"
+rustdesk = { path = "../../artifacts/rustdesk-engine-src", default-features = false, features = ["hwcodec", "headless"] }
+hbb_common = { path = "../../artifacts/rustdesk-engine-src/libs/hbb_common" }
+base = { path = "../../artifacts/rustdesk-engine-src/libs/base" }
+scrap = { path = "../../artifacts/rustdesk-engine-src/libs/scrap", features = ["hwcodec"] }
+serde_json = "1"
+base64 = "0.22"
+arboard = { git = "https://github.com/rustdesk-org/arboard", features = ["wayland-data-control"] }
+
+log = "0.4"
+protobuf = "3.7"
+tokio = { version = "1", features = ["rt-multi-thread", "sync", "time", "macros"] }
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["winuser", "wingdi", "libloaderapi", "processthreadsapi", "errhandlingapi", "fileapi", "winbase"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+dbus = "0.9"
+gstreamer = "0.16"
+png = "0.17"
+rustdesk = { path = "../../artifacts/rustdesk-engine-src", default-features = false, features = ["hwcodec", "headless", "linux-pkg-config", "drm"] }
+
+[profile.release]
+debug = false
+
+[build-dependencies]
+serde_json = "1"
+
+# RustDesk 的 fork：其 hbb_common 依赖 fork 后的 webrtc/tungstenite API。
+# 由本 workspace 根声明；与 web-service 的依赖图互不影响。
+[patch.crates-io]
+libxdo-sys = { path = "../../artifacts/rustdesk-engine-src/libs/libxdo-sys-stub" }
+tungstenite = { git = "https://github.com/rustdesk-org/tungstenite-rs", rev = "efce47e5364f00a63302cf07ab1fb13ded478914" }
+webrtc = { git = "https://github.com/rustdesk-org/webrtc", rev = "49c89bd8d30e6e62e4c1a96cee38fdc11f79ef63" }
+webrtc-util = { git = "https://github.com/rustdesk-org/webrtc", rev = "49c89bd8d30e6e62e4c1a96cee38fdc11f79ef63" }
+webrtc-sctp = { git = "https://github.com/rustdesk-org/webrtc", rev = "49c89bd8d30e6e62e4c1a96cee38fdc11f79ef63" }
+
+[[example]]
+name = "smoke"
+path = "examples/smoke.rs"
+
+[patch."https://github.com/rustdesk-org/hwcodec"]
+hwcodec = { path = "../../artifacts/hwcodec-patched" }

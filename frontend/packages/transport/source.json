@@ -1,0 +1,7 @@
+{
+  "repository": "E:/works/EMM/YoDesk",
+  "commit": "a41589d052887a15d209b83b7808ab784c72bf2b",
+  "file": "web/yamux.js",
+  "sha256": "d2185aebc7fce72411727f8f2488813aeef6409d39da4ab66d28454fff23d871",
+  "purpose": "yamux wire interoperability, frame splitting and half-close regressions"
+}

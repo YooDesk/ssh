@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:backend-context:v2",
+  "type": "object",
+  "required": [
+    "v",
+    "subject_ref",
+    "access_id",
+    "capability",
+    "target_id",
+    "scopes",
+    "expires_at",
+    "lease_version",
+    "policy_revision"
+  ],
+  "properties": {
+    "v": {
+      "const": 2
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "access_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "session.connect",
+          "screen.view",
+          "input.pointer",
+          "input.keyboard",
+          "audio.listen",
+          "clipboard.read",
+          "clipboard.write",
+          "files.read",
+          "files.write",
+          "targets.manage",
+          "credentials.use",
+          "credentials.persist",
+          "shell.start"
+        ]
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lease_version": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,18}$"
+    },
+    "policy_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    }
+  },
+  "additionalProperties": false
+}

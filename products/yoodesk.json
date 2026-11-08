@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "product_id": "yoodesk",
+  "display_name": "YooDesk",
+  "publisher": "Example",
+  "version": "0.1.0",
+  "logo": "branding/logo.svg"
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-browser-signal:v1",
+  "$defs": {
+    "open": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "v",
+        "session_id",
+        "cookie_token",
+        "csrf_token",
+        "negotiation_generation"
+      ],
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "cookie_token": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[A-Za-z0-9_-]+$"},
+            {"type": "string", "minLength": 38, "maxLength": 1030, "pattern": "^guest:[A-Za-z0-9_-]+$"}
+          ]
+        },
+        "csrf_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      }
+    },
+    "reply": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "v",
+        "status"
+      ],
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "status": {
+          "enum": [
+            200,
+            401,
+            403,
+            409,
+            429,
+            503
+          ]
+        }
+      }
+    }
+  }
+}

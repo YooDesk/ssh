@@ -1,0 +1,729 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gateway authoritative relay overrides",
+    "version": "2.0.0-candidate"
+  },
+  "paths": {
+    "/api/v2/admin/relay-limits/": {
+      "get": {
+        "operationId": "readPlatformRelayLimit",
+        "description": "Independent platform administrator session and CSRF cookie. Exact query target_type=enterprise|device and target_id. Reads an existing authority resource; never creates devices or enterprises. Global target uses target_type=global,target_id=global; only platform administrator may read/write the global override. Null restores approved configuration defaults. Existing device and enterprise overrides retain higher precedence.",
+        "responses": {
+          "200": {
+            "description": "Current override",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Denied"
+          },
+          "404": {
+            "description": "Missing resource"
+          },
+          "400": {
+            "description": "Invalid input, Origin or CSRF"
+          },
+          "503": {
+            "description": "Authority unavailable; reread before retry"
+          }
+        },
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "target_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "global",
+                "enterprise",
+                "device"
+              ]
+            }
+          },
+          {
+            "name": "target_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "writePlatformRelayLimit",
+        "description": "Independent administrator cookies, exact Origin and X-Admin-CSRF. Strict JSON at most 64KiB. Existing enterprise/device only. expected_revision is exact monotonic CAS; initial revision is 1. Authentication, update, revision and audit commit in one transaction. null inherits, 0 is explicitly unlimited, positive values are bytes/second, at most 1250000000. Existing runtime policy resolution reads the same authority columns. Desired persistence alone is not runtime ACK; applied_revision remains null. No automatic replay. Global target uses target_type=global,target_id=global; only platform administrator may read/write the global override. Null restores approved configuration defaults. Existing device and enterprise overrides retain higher precedence.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Write"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Committed override",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input/CSRF/Origin"
+          },
+          "401": {
+            "description": "Denied"
+          },
+          "404": {
+            "description": "Missing resource"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "503": {
+            "description": "Unavailable or uncertain commit; reread before retry"
+          }
+        },
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/enterprise/relay-limits/": {
+      "get": {
+        "operationId": "readEnterpriseRelayLimit",
+        "description": "Global account cookies with current enterprise administrator membership, never platform cookies. Query enterprise_id, target_type and target_id exactly once. Target enterprise must equal enterprise_id. Device owner must currently belong exclusively to that enterprise; ambiguous membership denied to prevent changes affecting other enterprise contexts. Revalidate role and ownership in the resource transaction.",
+        "responses": {
+          "200": {
+            "description": "Scoped override",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Role or scope denied"
+          },
+          "400": {
+            "description": "Invalid input, Origin or CSRF"
+          },
+          "404": {
+            "description": "Resource missing"
+          },
+          "503": {
+            "description": "Authority unavailable; reread before retry"
+          }
+        },
+        "security": [
+          {
+            "EnterpriseAccountSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "enterprise_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          },
+          {
+            "name": "target_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "enterprise",
+                "device"
+              ]
+            }
+          },
+          {
+            "name": "target_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "writeEnterpriseRelayLimit",
+        "description": "Same current enterprise scope as GET. Origin and X-CSRF-Token must match account origin and account CSRF cookie. Body adds enterprise_id to the platform write DTO. Enterprise administrator cannot alter global defaults, another enterprise, or devices with ambiguous enterprise membership. Role removal denies the next transaction.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnterpriseWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Committed scoped override",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Denied"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "503": {
+            "description": "Unavailable"
+          },
+          "404": {
+            "description": "Resource missing"
+          }
+        },
+        "security": [
+          {
+            "EnterpriseAccountSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ]
+      }
+    },
+    "/admin/relay-limits/": {
+      "get": {
+        "operationId": "relayLimitForm",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Trusted server rendered form; CSP forbids scripts. Same-origin Referrer-Policy preserves browser POST Origin. Read existing resource by target_type and target_id. POST csrf, target_type, target_id, expected_revision and mbps are single-valued. Empty Mbps inherits; otherwise exact decimal up to six fractional digits, converted without rounding to integer bytes/second. A stale form returns 409 and displays current values. Unknown or duplicate fields, invalid units, Origin or CSRF return 400. No automatic write replay. Pending runtime application remains visible. Global target uses target_type=global,target_id=global; only platform administrator may read/write the global override. Null restores approved configuration defaults. Existing device and enterprise overrides retain higher precedence.",
+        "responses": {
+          "200": {
+            "description": "Form and current desired override"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Administrator denied"
+          },
+          "404": {
+            "description": "Resource missing"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "503": {
+            "description": "Unavailable; reread state"
+          }
+        }
+      },
+      "post": {
+        "operationId": "submitRelayLimitForm",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Trusted server rendered form; CSP forbids scripts. Same-origin Referrer-Policy preserves browser POST Origin. Read existing resource by target_type and target_id. POST csrf, target_type, target_id, expected_revision and mbps are single-valued. Empty Mbps inherits; otherwise exact decimal up to six fractional digits, converted without rounding to integer bytes/second. A stale form returns 409 and displays current values. Unknown or duplicate fields, invalid units, Origin or CSRF return 400. No automatic write replay. Pending runtime application remains visible. Global target uses target_type=global,target_id=global; only platform administrator may read/write the global override. Null restores approved configuration defaults. Existing device and enterprise overrides retain higher precedence.",
+        "responses": {
+          "200": {
+            "description": "Form and current desired override"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Administrator denied"
+          },
+          "404": {
+            "description": "Resource missing"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "503": {
+            "description": "Unavailable; reread state"
+          }
+        }
+      }
+    },
+    "/api/v2/admin/relay-limits/batch/": {
+      "put": {
+        "operationId": "batchPlatformDeviceRelayLimits",
+        "description": "Atomic batch of 1..128 existing devices, no duplicate target IDs. Strict root and item objects; all items require target_type=device, target_id, expected_revision, relay_limit_bps. Same current identity, Origin and CSRF as single PUT. Enterprise root additionally requires enterprise_id. Resolve every target in the same transaction, apply deterministic target ordering, retain input result order. Any missing target, role/scope failure, stale revision, audit failure or unavailable commit fails the whole batch; no partial success or replay. Each accepted device mutation has its own audit event. All original rate, capacity and deadline bounds remain unchanged.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Committed override",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input/CSRF/Origin"
+          },
+          "401": {
+            "description": "Denied"
+          },
+          "404": {
+            "description": "Missing resource"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "503": {
+            "description": "Unavailable or uncertain commit; reread before retry"
+          }
+        },
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/enterprise/relay-limits/batch/": {
+      "put": {
+        "operationId": "batchEnterpriseDeviceRelayLimits",
+        "description": "Atomic batch of 1..128 existing devices, no duplicate target IDs. Strict root and item objects; all items require target_type=device, target_id, expected_revision, relay_limit_bps. Same current identity, Origin and CSRF as single PUT. Enterprise root additionally requires enterprise_id. Resolve every target in the same transaction, apply deterministic target ordering, retain input result order. Any missing target, role/scope failure, stale revision, audit failure or unavailable commit fails the whole batch; no partial success or replay. Each accepted device mutation has its own audit event. All original rate, capacity and deadline bounds remain unchanged.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnterpriseBatchWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Committed scoped override",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Denied"
+          },
+          "409": {
+            "description": "Revision conflict"
+          },
+          "503": {
+            "description": "Unavailable"
+          },
+          "404": {
+            "description": "Resource missing"
+          }
+        },
+        "security": [
+          {
+            "EnterpriseAccountSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 32
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ID": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^[^\\s\\x00-\\x1f\\x7f](?:[^\\x00-\\x1f\\x7f]*[^\\s\\x00-\\x1f\\x7f])?$"
+      },
+      "Revision": {
+        "type": "string",
+        "pattern": "^[1-9][0-9]{0,15}$"
+      },
+      "Write": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_type",
+          "target_id",
+          "expected_revision",
+          "relay_limit_bps"
+        ],
+        "properties": {
+          "target_type": {
+            "enum": [
+              "global",
+              "enterprise",
+              "device"
+            ]
+          },
+          "target_id": {
+            "$ref": "#/components/schemas/ID"
+          },
+          "expected_revision": {
+            "$ref": "#/components/schemas/Revision"
+          },
+          "relay_limit_bps": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1250000000
+          }
+        }
+      },
+      "EnterpriseWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "enterprise_id",
+          "target_type",
+          "target_id",
+          "expected_revision",
+          "relay_limit_bps"
+        ],
+        "properties": {
+          "enterprise_id": {
+            "$ref": "#/components/schemas/ID"
+          },
+          "target_type": {
+            "enum": [
+              "enterprise",
+              "device"
+            ]
+          },
+          "target_id": {
+            "$ref": "#/components/schemas/ID"
+          },
+          "expected_revision": {
+            "$ref": "#/components/schemas/Revision"
+          },
+          "relay_limit_bps": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1250000000
+          }
+        }
+      },
+      "Limit": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_type",
+          "target_id",
+          "relay_limit_bps",
+          "desired_revision",
+          "applied_revision",
+          "source",
+          "pending_reason"
+        ],
+        "properties": {
+          "target_type": {
+            "enum": [
+              "global",
+              "enterprise",
+              "device"
+            ]
+          },
+          "target_id": {
+            "$ref": "#/components/schemas/ID"
+          },
+          "relay_limit_bps": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1250000000
+          },
+          "desired_revision": {
+            "$ref": "#/components/schemas/Revision"
+          },
+          "applied_revision": {
+            "type": "null"
+          },
+          "source": {
+            "enum": [
+              "inherit",
+              "global",
+              "enterprise",
+              "device"
+            ]
+          },
+          "pending_reason": {
+            "const": "new_viewers_only"
+          }
+        }
+      },
+      "Response": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "v",
+          "request_id",
+          "data"
+        ],
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Limit"
+          }
+        }
+      },
+      "DeviceWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_type",
+          "target_id",
+          "expected_revision",
+          "relay_limit_bps"
+        ],
+        "properties": {
+          "target_type": {
+            "const": "device"
+          },
+          "target_id": {
+            "$ref": "#/components/schemas/ID"
+          },
+          "expected_revision": {
+            "$ref": "#/components/schemas/Revision"
+          },
+          "relay_limit_bps": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1250000000
+          }
+        }
+      },
+      "BatchWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 128,
+            "items": {
+              "$ref": "#/components/schemas/DeviceWrite"
+            }
+          }
+        }
+      },
+      "EnterpriseBatchWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "enterprise_id"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 128,
+            "items": {
+              "$ref": "#/components/schemas/DeviceWrite"
+            }
+          },
+          "enterprise_id": {
+            "$ref": "#/components/schemas/ID"
+          }
+        }
+      },
+      "BatchResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "v",
+          "request_id",
+          "data"
+        ],
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "limits"
+            ],
+            "properties": {
+              "limits": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 128,
+                "items": {
+                  "$ref": "#/components/schemas/Limit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AdministratorSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_admin_session"
+      },
+      "EnterpriseAccountSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_account_session"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/{product_id}"
+    }
+  ]
+}

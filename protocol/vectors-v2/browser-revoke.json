@@ -1,0 +1,198 @@
+[
+  {
+    "name": "valid-revoke-only",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "version",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "purpose",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "access",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "audience",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "account"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "audience-shape",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": "raccess-browser-revoke-v1",
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "node",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "/bad",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "origin",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "http://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "session-version",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 0,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "unsafe-version",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 9007199254740992,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  },
+  {
+    "name": "unknown-permission",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "sid": "session-identity-placeholder",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600,
+      "access": "admin"
+    }
+  },
+  {
+    "name": "missing-session",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "token_use": "browser-revoke",
+      "session_version": 1,
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "iss": "https://global.example",
+      "aud": [
+        "raccess-browser-revoke-v1"
+      ],
+      "iat": 1800000000,
+      "exp": 1800003600
+    }
+  }
+]

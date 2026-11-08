@@ -1,0 +1,4580 @@
+[
+  {
+    "name": "edge-hello",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "edge-unknown-field",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      },
+      "extra": true
+    }
+  },
+  {
+    "name": "edge-wrong-plane",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "edge-wrong-version",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "edge-bad-boot",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "bad",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "edge-duplicate-service",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun",
+          "stun"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "edge-config",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "config",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "revision": 1,
+        "server_time": 1793404800000,
+        "expires_at": 1793404860000,
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    },
+    "digest": "9d74e3955f7d4e69ba5c36de42c11dd7213db5d36c2355ff947c68e9e265dd04"
+  },
+  {
+    "name": "edge-zero-revision",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "config",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "revision": 0,
+        "server_time": 1793404800000,
+        "expires_at": 1793404860000,
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "edge-unsafe-revision",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "config",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "revision": 9007199254740992,
+        "server_time": 1793404800000,
+        "expires_at": 1793404860000,
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a"
+      }
+    }
+  },
+  {
+    "name": "ice-hello",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "ice-unknown-field",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      },
+      "extra": true
+    }
+  },
+  {
+    "name": "ice-wrong-plane",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "ice-wrong-version",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "ice-bad-boot",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "bad",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "ice-duplicate-service",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "services": [
+          "stun",
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "ice-config",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "config",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "revision": 1,
+        "server_time": 1793404800000,
+        "expires_at": 1793404860000,
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    },
+    "digest": "b72a190134a85131bc3ab23086592e5119b44d252cddbc0a6046f6dffe21e947"
+  },
+  {
+    "name": "ice-zero-revision",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "config",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "revision": 0,
+        "server_time": 1793404800000,
+        "expires_at": 1793404860000,
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "ice-unsafe-revision",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "config",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "revision": 9007199254740992,
+        "server_time": 1793404800000,
+        "expires_at": 1793404860000,
+        "services": [
+          "stun"
+        ],
+        "site_id": ""
+      }
+    }
+  },
+  {
+    "name": "auth-info",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "info",
+        "arguments": {}
+      }
+    }
+  },
+  {
+    "name": "auth-scope-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "info",
+        "arguments": {
+          "origin": "https://forged.example"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-operation-denied",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "proxy_http",
+        "arguments": {}
+      }
+    }
+  },
+  {
+    "name": "auth-ice-denied",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "info",
+        "arguments": {}
+      }
+    }
+  },
+  {
+    "name": "auth-result",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_response",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-status-denied",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_response",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "status": 201,
+        "body": {
+          "ok": true
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-cancel",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_cancel",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {}
+    }
+  },
+  {
+    "name": "auth-chunk",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_chunk",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "status": 200,
+        "index": 0,
+        "total": 1,
+        "length": 2,
+        "digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "data": "e30="
+      }
+    }
+  },
+  {
+    "name": "auth-chunk-base64-denied",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_chunk",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "status": 200,
+        "index": 0,
+        "total": 1,
+        "length": 2,
+        "digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "data": "%%%"
+      }
+    }
+  },
+  {
+    "name": "edge-auth-refresh",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "refresh",
+        "arguments": {
+          "cookie_token": "browser-cookie-opaque",
+          "csrf_token": "browser-csrf-opaque",
+          "request_id": "browser-refresh-request"
+        }
+      }
+    }
+  },
+  {
+    "name": "edge-auth-refresh-missing-request",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "refresh",
+        "arguments": {
+          "cookie_token": "browser-cookie-opaque",
+          "csrf_token": "browser-csrf-opaque"
+        }
+      }
+    }
+  },
+  {
+    "name": "edge-auth-refresh_ack",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "refresh_ack",
+        "arguments": {
+          "cookie_token": "browser-cookie-opaque",
+          "csrf_token": "browser-csrf-opaque",
+          "request_id": "browser-refresh-request"
+        }
+      }
+    }
+  },
+  {
+    "name": "edge-auth-refresh_ack-missing-request",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "refresh_ack",
+        "arguments": {
+          "cookie_token": "browser-cookie-opaque",
+          "csrf_token": "browser-csrf-opaque"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-begin",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "begin",
+        "arguments": {
+          "request_id": "native-connection-request",
+          "host_token": "fixture-host-token"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-begin-scope-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "begin",
+        "arguments": {
+          "request_id": "native-connection-request",
+          "host_token": "fixture-host-token",
+          "node_id": "forged"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-commit",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "commit",
+        "arguments": {
+          "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "host_token": "fixture-host-token",
+          "proof": "fixture-device-proof"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-commit-scope-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "commit",
+        "arguments": {
+          "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "host_token": "fixture-host-token",
+          "proof": "fixture-device-proof",
+          "node_id": "forged"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-ice-denied",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "commit",
+        "arguments": {
+          "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "host_token": "fixture-host-token",
+          "proof": "fixture-device-proof"
+        }
+      }
+    }
+  },
+  {
+    "name": "device_response",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_response",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "status": 200,
+        "body": {
+          "accepted": true
+        }
+      }
+    }
+  },
+  {
+    "name": "device_cancel",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_cancel",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {}
+    }
+  },
+  {
+    "name": "device-attach",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "attach",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-attach-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "attach",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-renew",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "renew",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_generation": "1",
+          "data_ready": true
+        }
+      }
+    }
+  },
+  {
+    "name": "device-renew-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "renew",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "node_id": "global",
+          "data_generation": "1",
+          "data_ready": true
+        }
+      }
+    }
+  },
+  {
+    "name": "device-close",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "close",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-close-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "close",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_begin",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_begin",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "request_id": "native-data-request"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_begin-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_begin",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "request_id": "native-data-request",
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_commit",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_commit",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "proof": "fixture-data-proof"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_commit-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_commit",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "proof": "fixture-data-proof",
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_ready",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_ready",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "data_generation": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_ready-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_ready",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "data_generation": "1",
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_close",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_close",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "data_generation": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-data_close-spoof",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "data_close",
+        "arguments": {
+          "host_token": "fixture",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "node-a",
+            "edge_connection_generation": "33333333333333333333333333333333",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "attachment_id": "44444444444444444444444444444444",
+          "data_attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "data_generation": "1",
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "stream_install",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/"
+          },
+          "lease_version": "1"
+        }
+      }
+    },
+    "command_digest": "db5601a5b04cfb28b7e99978fbb8ea40eb0cbd35a17509984d12ff561eff696d"
+  },
+  {
+    "name": "stream_install-extra",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/"
+          },
+          "lease_version": "1"
+        },
+        "unknown": true
+      }
+    }
+  },
+  {
+    "name": "stream_install-null-data",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": null,
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/"
+          },
+          "lease_version": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "stream_install-ice-forbidden",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/"
+          },
+          "lease_version": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "stream_install-missing-data",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/"
+          },
+          "lease_version": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "stream_revoke",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_revoke",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": 1793452800
+      }
+    },
+    "command_digest": "7ca55b5d9c5249286b821a0e939db48a0fb7ad168535ec64c9d6f49ca97d7728"
+  },
+  {
+    "name": "stream_revoke-extra",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_revoke",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unknown": true,
+        "expires_at": 1793452800
+      }
+    }
+  },
+  {
+    "name": "stream_revoke-null-data",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_revoke",
+      "payload": {
+        "data_generation": null,
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": 1793452800
+      }
+    }
+  },
+  {
+    "name": "stream_revoke-ice-forbidden",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_revoke",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": 1793452800
+      }
+    }
+  },
+  {
+    "name": "stream_revoke-missing-data",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_revoke",
+      "payload": {
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": 1793452800
+      }
+    }
+  },
+  {
+    "name": "stream_ack",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_ack",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation": "install",
+        "command_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "stream_ack-extra",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_ack",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation": "install",
+        "command_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "accepted": true,
+        "unknown": true
+      }
+    }
+  },
+  {
+    "name": "stream_ack-null-data",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_ack",
+      "payload": {
+        "data_generation": null,
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation": "install",
+        "command_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "stream_ack-ice-forbidden",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_ack",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation": "install",
+        "command_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "stream_ack-missing-data",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_ack",
+      "payload": {
+        "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operation": "install",
+        "command_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "stream_install-unicode-digest",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device<>&?? ",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/"
+          },
+          "lease_version": "1"
+        }
+      }
+    },
+    "command_digest": "4f6ee5fdf74dbc10aeb0d16268761117615c779616f27b6146253f639fdd471c"
+  },
+  {
+    "name": "stream-abort",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_abort",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "stream_id": "cccccccccccccccccccccccccccccccc"
+      }
+    }
+  },
+  {
+    "name": "stream-abort-reject-data_generation",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_abort",
+      "payload": {
+        "data_generation": "",
+        "permit_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "stream_id": "cccccccccccccccccccccccccccccccc"
+      }
+    }
+  },
+  {
+    "name": "stream-abort-reject-permit_id",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_abort",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": null,
+        "stream_id": "cccccccccccccccccccccccccccccccc"
+      }
+    }
+  },
+  {
+    "name": "stream-abort-reject-extra",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_abort",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "stream_id": "cccccccccccccccccccccccccccccccc",
+        "extra": true
+      }
+    }
+  },
+  {
+    "name": "stream-install-missing-stream",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "stream-install-forbidden-bind",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "bind",
+            "grant": "fixture"
+          },
+          "lease_version": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "stream-install-mixed-http-fields",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "stream_install",
+      "payload": {
+        "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permit": {
+          "device_id": "device-1",
+          "header": {
+            "v": 1,
+            "stream_kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "origin_node_id": "edge-a",
+            "target_node_id": "edge-b",
+            "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "origin_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "target_data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "device_data_generation": "1",
+            "stream_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "permit_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "expires_at": 1793452800
+          },
+          "stream": {
+            "kind": "http",
+            "session_id": "session-1",
+            "negotiation_generation": "1",
+            "capability": "http",
+            "target_id": "target-a",
+            "path": "/yoodesk/webclient/http/target-a/",
+            "grant": "fixture"
+          },
+          "lease_version": "1"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-open",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "session_open",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "grant": "synthetic-grant-v2",
+            "capability": "http",
+            "target_id": "target-a",
+            "ice_config": {
+              "revision": "1",
+              "policy_revision": "p1",
+              "expires_at": "2030-01-01T00:00:00Z",
+              "ice_transport_policy": "all",
+              "allow_wss": true,
+              "ice_servers": []
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-open-empty-owner",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "session_open",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "grant": "synthetic-grant-v2",
+            "capability": "http",
+            "target_id": "target-a",
+            "ice_config": {
+              "revision": "1",
+              "policy_revision": "p1",
+              "expires_at": "2030-01-01T00:00:00Z",
+              "ice_transport_policy": "all",
+              "allow_wss": true,
+              "ice_servers": []
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-open-forged-source",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "node_id": "forged"
+        },
+        "message": {
+          "v": 2,
+          "type": "session_open",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "grant": "synthetic-grant-v2",
+            "capability": "http",
+            "target_id": "target-a",
+            "ice_config": {
+              "revision": "1",
+              "policy_revision": "p1",
+              "expires_at": "2030-01-01T00:00:00Z",
+              "ice_transport_policy": "all",
+              "allow_wss": true,
+              "ice_servers": []
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-close",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "session_close",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "reason": "test"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-close-empty-owner",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "session_close",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "reason": "test"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-close-forged-source",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "node_id": "forged"
+        },
+        "message": {
+          "v": 2,
+          "type": "session_close",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "reason": "test"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-renew",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "lease_renew",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "grant": "synthetic-new-grant",
+            "lease_version": "2",
+            "lease_expires_at": "2030-01-01T00:00:00Z"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-renew-empty-owner",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "lease_renew",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "grant": "synthetic-new-grant",
+            "lease_version": "2",
+            "lease_expires_at": "2030-01-01T00:00:00Z"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-renew-forged-source",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "node_id": "forged"
+        },
+        "message": {
+          "v": 2,
+          "type": "lease_renew",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "grant": "synthetic-new-grant",
+            "lease_version": "2",
+            "lease_expires_at": "2030-01-01T00:00:00Z"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-native-ack",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_reply",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "request_digest": "94bb96f58ed891ccfd7ee54c5c53735d073c0198c403d4e3097fa6290d43b1c1",
+        "status": "reply",
+        "message": {
+          "v": 2,
+          "type": "session_accept",
+          "request_id": "native-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "features": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-retired",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_reply",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "request_digest": "94bb96f58ed891ccfd7ee54c5c53735d073c0198c403d4e3097fa6290d43b1c1",
+        "status": "retired"
+      }
+    }
+  },
+  {
+    "name": "device-session-node-error",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_reply",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "request_digest": "94bb96f58ed891ccfd7ee54c5c53735d073c0198c403d4e3097fa6290d43b1c1",
+        "status": "error",
+        "code": "stale"
+      }
+    }
+  },
+  {
+    "name": "device-session-retired-cannot-fake-native-ack",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_reply",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "request_digest": "94bb96f58ed891ccfd7ee54c5c53735d073c0198c403d4e3097fa6290d43b1c1",
+        "status": "retired",
+        "message": {
+          "v": 2,
+          "type": "session_accept",
+          "request_id": "native-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "features": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-signal-offer",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "offer",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "sdp": "synthetic-sdp",
+            "negotiation_generation": "1"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-signal-offer-empty-generation",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "offer",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "sdp": "synthetic-sdp",
+            "negotiation_generation": ""
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-signal-ice_candidate",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "ice_candidate",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "candidate": null,
+            "negotiation_generation": "1"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-signal-ice_candidate-empty-generation",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "ice_candidate",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "candidate": null,
+            "negotiation_generation": ""
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-signal-relay_ready",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "relay_ready",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "negotiation_generation": "1"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-signal-relay_ready-empty-generation",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_request",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "relay_ready",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "negotiation_generation": ""
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-event-connector",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_event",
+      "payload": {
+        "source": "connector",
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "ice_candidate",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "candidate": null,
+            "negotiation_generation": "1"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-event-connector-missing-source",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_event",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "ice_candidate",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "candidate": null,
+            "negotiation_generation": "1"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-event-node",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_event",
+      "payload": {
+        "source": "node",
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "error",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "code": "device_session_retired",
+            "message": "retired",
+            "retryable": false
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-event-node-missing-source",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_event",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "message": {
+          "v": 2,
+          "type": "error",
+          "request_id": "inner-request",
+          "connection_generation": "1",
+          "session_id": "session-a",
+          "payload": {
+            "code": "device_session_retired",
+            "message": "retired",
+            "retryable": false
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-session-scoped-cancel",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_cancel",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "request_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  },
+  {
+    "name": "device-session-scoped-cancel-bad-digest",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_cancel",
+      "payload": {
+        "scope": {
+          "data_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "installation_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "device_id": "device-a",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "request_digest": ""
+      }
+    }
+  },
+  {
+    "name": "session-fragment-device_session_request",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-device_session_reply",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_reply",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-device_session_event",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_event",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-invalid-nested-kind",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_fragment",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-invalid-index",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 3,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-invalid-total",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 0,
+        "total": 4,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-invalid-length",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 0,
+        "total": 3,
+        "length": 73729,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-invalid-digest",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "session-fragment-invalid-base64",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "*bad"
+      }
+    }
+  },
+  {
+    "name": "session-fragment-ice-forbidden",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_session_fragment",
+      "payload": {
+        "kind": "device_session_request",
+        "index": 0,
+        "total": 3,
+        "length": 66000,
+        "digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "data": "eA=="
+      }
+    }
+  },
+  {
+    "name": "auth-remote_create",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_create",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "request_id": "remote-request",
+          "request": {
+            "device_id": "device",
+            "capability": "http",
+            "target_id": "backend",
+            "requested_scopes": [
+              "session.connect"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_create-reject-origin",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_create",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "request_id": "remote-request",
+          "request": {
+            "device_id": "device",
+            "capability": "http",
+            "target_id": "backend",
+            "requested_scopes": [
+              "session.connect"
+            ]
+          },
+          "origin": "untrusted"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_create-reject-node_id",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_create",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "request_id": "remote-request",
+          "request": {
+            "device_id": "device",
+            "capability": "http",
+            "target_id": "backend",
+            "requested_scopes": [
+              "session.connect"
+            ]
+          },
+          "node_id": "untrusted"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_read",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_read",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "session_id": "ssssssssssssssssssssssssssssssss"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_read-reject-origin",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_read",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "session_id": "ssssssssssssssssssssssssssssssss",
+          "origin": "untrusted"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_read-reject-node_id",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_read",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "session_id": "ssssssssssssssssssssssssssssssss",
+          "node_id": "untrusted"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_revoke",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_revoke",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "session_id": "ssssssssssssssssssssssssssssssss"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_revoke-reject-origin",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_revoke",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "session_id": "ssssssssssssssssssssssssssssssss",
+          "origin": "untrusted"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote_revoke-reject-node_id",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_revoke",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "session_id": "ssssssssssssssssssssssssssssssss",
+          "node_id": "untrusted"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote-create-reject-wrong-permissions-field",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_create",
+        "arguments": {
+          "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "request_id": "remote-request",
+          "request": {
+            "device_id": "device",
+            "capability": "http",
+            "target_id": "backend",
+            "requested_permissions": [
+              "session.connect"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote-denied-403",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_response",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "status": 403,
+        "body": {
+          "code": "remote_session_denied"
+        }
+      }
+    }
+  },
+  {
+    "name": "edge-child-tree",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "parent-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {"operation": "edge_child_tree", "arguments": {}}
+    }
+  },
+  {
+    "name": "admin-devices-filter-attachment",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "parent-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {"operation": "admin_devices", "arguments": {"cursor": "", "limit": 50, "attachment_node": "child-a"}}
+    }
+  },
+  {
+    "name": "edge-child-invitation",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "parent-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "edge_child_admin",
+        "arguments": {"action": "invite", "node_id": "child-a"}
+      }
+    }
+  },
+  {
+    "name": "admin-device-remark",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_device_remark",
+        "arguments": {"device_id": "_opaque-device", "expected_remark": "", "remark": "test"}
+      }
+    }
+  },
+  {
+    "name": "admin-device-remark-forged-node",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_device_remark",
+        "arguments": {"device_id": "123456789", "expected_remark": "", "remark": "test", "node_id": "node-b"}
+      }
+    }
+  },
+  {
+    "name": "admin-devices",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_devices",
+        "arguments": {
+          "cursor": "",
+          "limit": 50
+        }
+      }
+    }
+  },
+  {
+    "name": "admin-devices-forged-site",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_devices",
+        "arguments": {
+          "cursor": "",
+          "limit": 50,
+          "site_id": "other"
+        }
+      }
+    }
+  },
+  {
+    "name": "admin-devices-forged-node",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_devices",
+        "arguments": {
+          "cursor": "",
+          "limit": 50,
+          "node_id": "global"
+        }
+      }
+    }
+  },
+  {
+    "name": "admin-devices-zero-limit",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_devices",
+        "arguments": {
+          "cursor": "",
+          "limit": 0
+        }
+      }
+    }
+  },
+  {
+    "name": "admin-devices-large-limit",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "admin_devices",
+        "arguments": {
+          "cursor": "",
+          "limit": 101
+        }
+      }
+    }
+  },
+  {
+    "name": "account-form-get",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "account_http",
+        "arguments": {
+          "method": "GET",
+          "path": "/yoodesk/account/login/",
+          "binding": "",
+          "body": "",
+          "source_hint": "127.0.0.1"
+        }
+      }
+    }
+  },
+  {
+    "name": "device-renew-fresh-host",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "renew",
+        "arguments": {
+          "host_token": "isolated-old-host",
+          "replacement_host_token": "isolated-fresh-host",
+          "attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "edge-a",
+            "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "data_generation": "1",
+          "data_ready": true
+        }
+      }
+    }
+  },
+  {
+    "name": "device-attach-cannot-rotate-host",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "attach",
+        "arguments": {
+          "host_token": "isolated-old-host",
+          "replacement_host_token": "isolated-fresh-host",
+          "attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "edge-a",
+            "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "device-renew-empty-fresh-host",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "device_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "renew",
+        "arguments": {
+          "host_token": "isolated-old-host",
+          "replacement_host_token": "",
+          "attachment_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "binding": {
+            "v": 1,
+            "device_id": "device-a",
+            "site_id": "site-a",
+            "node_id": "edge-a",
+            "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "connector_generation": "1",
+            "route_epoch": 1,
+            "lease_deadline": "2030-01-01T00:00:00Z"
+          },
+          "data_generation": "1",
+          "data_ready": true
+        }
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-query",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_query",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555"
+      }
+    },
+    "command_digest": "63f78b8aa73efab2682ebe2179a8130c8b0475610009f65329dce4dfa4071405"
+  },
+  {
+    "name": "turn-retirement-query-edge-denied",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "retirement_query",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-query-unknown-field",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_query",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "extra": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-query-nonce",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_query",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "bad"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-ack-confirmed",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "query_digest": "63f78b8aa73efab2682ebe2179a8130c8b0475610009f65329dce4dfa4071405",
+        "retired": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-ack-unknown",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "query_digest": "63f78b8aa73efab2682ebe2179a8130c8b0475610009f65329dce4dfa4071405",
+        "retired": false
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-ack-missing-proof",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-ack-bad-digest",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "query_digest": "short",
+        "retired": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-hello-advertise",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "services": [
+          "turn"
+        ],
+        "site_id": "",
+        "turn_retirement": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-hello-edge-denied",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "services": [
+          "gateway"
+        ],
+        "site_id": "site-a",
+        "turn_retirement": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-hello-stun-denied",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "services": [
+          "stun"
+        ],
+        "site_id": "",
+        "turn_retirement": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-confirm",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_confirm",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "proof_digest": "63f78b8aa73efab2682ebe2179a8130c8b0475610009f65329dce4dfa4071405"
+      }
+    },
+    "command_digest": "fd8a4bc7e5cdf5ea24a76af26349c60d3b47658fd80d62b1d6d7559345037373"
+  },
+  {
+    "name": "turn-retirement-delivery-confirm-edge",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "retirement_confirm",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "proof_digest": "63f78b8aa73efab2682ebe2179a8130c8b0475610009f65329dce4dfa4071405"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-confirm-proof-missing",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_confirm",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-ack",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_confirm_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "confirm_digest": "fd8a4bc7e5cdf5ea24a76af26349c60d3b47658fd80d62b1d6d7559345037373",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-ack-denied",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_confirm_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "confirm_digest": "fd8a4bc7e5cdf5ea24a76af26349c60d3b47658fd80d62b1d6d7559345037373",
+        "accepted": false
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-ack-digest",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_confirm_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "original_boot_id": "44444444444444444444444444444444",
+        "original_generation": "55555555555555555555555555555555",
+        "confirm_digest": "bad",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-hello",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "services": [
+          "turn"
+        ],
+        "site_id": "",
+        "turn_retirement": true,
+        "turn_retirement_confirm": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-delivery-hello-missing-query",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "hello",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "services": [
+          "turn"
+        ],
+        "site_id": "",
+        "turn_retirement_confirm": true
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-list-request",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_list",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "after": ""
+      }
+    },
+    "command_digest": "65ce0cad297407509e8832a757d5f5922e2aef2a892b39756ebe09f63fac37f6"
+  },
+  {
+    "name": "turn-retirement-list-bad-cursor",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_list",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "after": "bad"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-list-edge",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "retirement_list",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "after": ""
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-list-reply",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_list_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "query_digest": "65ce0cad297407509e8832a757d5f5922e2aef2a892b39756ebe09f63fac37f6",
+        "entries": [
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          }
+        ],
+        "next": "44444444444444444444444444444444/55555555555555555555555555555555"
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-list-empty",
+    "plane": "ice",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_list_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "query_digest": "65ce0cad297407509e8832a757d5f5922e2aef2a892b39756ebe09f63fac37f6",
+        "entries": [],
+        "next": ""
+      }
+    }
+  },
+  {
+    "name": "turn-retirement-list-overflow",
+    "plane": "ice",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "ice",
+      "type": "retirement_list_ack",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "query_digest": "65ce0cad297407509e8832a757d5f5922e2aef2a892b39756ebe09f63fac37f6",
+        "entries": [
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          },
+          {
+            "original_boot_id": "44444444444444444444444444444444",
+            "original_generation": "55555555555555555555555555555555"
+          }
+        ],
+        "next": "44444444444444444444444444444444/55555555555555555555555555555555"
+      }
+    }
+  },
+  {
+    "name": "connector-http-account-request",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "operation": "connector_http",
+        "arguments": {
+          "method": "POST",
+          "path": "/yoodesk/api/v2/connector-logins/",
+          "body": "{}",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "cookies": {},
+          "source_hint": "127.0.0.1"
+        }
+      }
+    }
+  },
+  {
+    "name": "connector-http-scope-forgery",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "operation": "connector_http",
+        "arguments": {
+          "method": "POST",
+          "path": "/yoodesk/api/v2/connector-logins/",
+          "body": "{}",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "cookies": {},
+          "source_hint": "127.0.0.1",
+          "node_id": "other-node"
+        }
+      }
+    }
+  },
+  {
+    "name": "connector-http-arbitrary-header",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "operation": "connector_http",
+        "arguments": {
+          "method": "POST",
+          "path": "/yoodesk/api/v2/connector-logins/",
+          "body": "{}",
+          "headers": {
+            "Content-Type": "application/json",
+            "X-Forwarded-Host": "other.example"
+          },
+          "cookies": {},
+          "source_hint": "127.0.0.1"
+        }
+      }
+    }
+  },
+  {
+    "name": "connector-http-oversized-body",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "operation": "connector_http",
+        "arguments": {
+          "method": "POST",
+          "path": "/yoodesk/api/v2/connector-logins/",
+          "body": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "cookies": {},
+          "source_hint": "127.0.0.1"
+        }
+      }
+    }
+  },
+  {
+    "name": "connector-http-unrelated-cookie",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "operation": "connector_http",
+        "arguments": {
+          "method": "POST",
+          "path": "/yoodesk/api/v2/connector-logins/",
+          "body": "{}",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "cookies": {
+            "other_session": "secret-fixture"
+          },
+          "source_hint": "127.0.0.1"
+        }
+      }
+    }
+  },
+  {
+    "name": "connector-http-browser-context",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "22222222222222222222222222222222",
+      "request_id": "33333333333333333333333333333333",
+      "payload": {
+        "operation": "connector_http",
+        "arguments": {
+          "method": "GET",
+          "path": "/yoodesk/account/login/",
+          "body": "",
+          "headers": {},
+          "cookies": {
+            "__Host-yoodesk_account_desktop-return": "11111111111111111111111111111111"
+          },
+          "source_hint": "127.0.0.1"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-page",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "page",
+          "device_id": "device"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-read",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "read",
+          "session_id": "session1234567890",
+          "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "csrf_token": "csrf1234567890123"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-clone",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "bind",
+          "session_id": "session1234567890",
+          "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "csrf_token": "csrf1234567890123"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-renew",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "renew",
+          "session_id": "session1234567890",
+          "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "csrf_token": "csrf1234567890123"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-reject-node",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "page",
+          "device_id": "device",
+          "node_id": "edge-a"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-reject-origin",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "page",
+          "device_id": "device",
+          "origin": "https://edge.example"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-reject-retarget",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "bind",
+          "session_id": "session1234567890",
+          "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "csrf_token": "csrf1234567890123",
+          "device_id": "other-device"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-viewer-reject-account",
+    "plane": "edge",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "viewer_session",
+        "arguments": {
+          "command": "read",
+          "session_id": "session1234567890",
+          "cookie_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "csrf_token": "csrf1234567890123"
+        }
+      }
+    }
+  },
+  {
+    "name": "auth-remote-create-guest",
+    "plane": "edge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "plane": "edge",
+      "type": "auth_request",
+      "node_id": "node-a",
+      "boot_id": "11111111111111111111111111111111",
+      "connection_generation": "33333333333333333333333333333333",
+      "request_id": "22222222222222222222222222222222",
+      "payload": {
+        "operation": "remote_create",
+        "arguments": {
+          "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "csrf_token": "cccccccccccccccccccccccccccccccc",
+          "request_id": "remote-request",
+          "request": {
+            "device_id": "device",
+            "capability": "http",
+            "target_id": "backend",
+            "requested_scopes": [
+              "session.connect"
+            ]
+          }
+        }
+      }
+    }
+  }
+]

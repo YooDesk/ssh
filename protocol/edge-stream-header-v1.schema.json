@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-stream-header:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "v",
+    "stream_kind",
+    "session_id",
+    "negotiation_generation",
+    "origin_node_id",
+    "target_node_id",
+    "origin_control_generation",
+    "origin_data_generation",
+    "target_control_generation",
+    "target_data_generation",
+    "device_data_generation",
+    "stream_id",
+    "permit_id",
+    "connector_generation",
+    "route_epoch",
+    "expires_at"
+  ],
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "stream_kind": {
+      "enum": [
+        "http",
+        "relay"
+      ]
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "negotiation_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "origin_node_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+    },
+    "target_node_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+    },
+    "origin_control_generation": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "origin_data_generation": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "target_control_generation": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "target_data_generation": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "device_data_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "stream_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "permit_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "connector_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "route_epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "expires_at": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    }
+  }
+}

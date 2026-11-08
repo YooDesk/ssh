@@ -1,0 +1,113 @@
+[
+  {
+    "name": "begin",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc"
+    }
+  },
+  {
+    "name": "admitted",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "admitted",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "data_generation": "dddddddddddddddddddddddddddddddd"
+    }
+  },
+  {
+    "name": "unknown-field",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "cookie": "forbidden"
+    }
+  },
+  {
+    "name": "wrong-version",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "begin",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc"
+    }
+  },
+  {
+    "name": "global-source",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "node_id": "global",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc"
+    }
+  },
+  {
+    "name": "short-control-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "b",
+      "request_id": "cccccccccccccccccccccccccccccccc"
+    }
+  },
+  {
+    "name": "client-data-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "begin",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "data_generation": "dddddddddddddddddddddddddddddddd"
+    }
+  },
+  {
+    "name": "unknown-kind",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "ready",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc"
+    }
+  },
+  {
+    "name": "missing-data-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "admitted",
+      "node_id": "node-a",
+      "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connection_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "request_id": "cccccccccccccccccccccccccccccccc"
+    }
+  }
+]

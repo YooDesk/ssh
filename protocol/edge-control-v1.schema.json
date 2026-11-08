@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-control:v1",
+  "allOf": [
+    {"$ref": "urn:raccess:node-control:v1"},
+    {"properties": {"plane": {"const": "edge"}}}
+  ]
+}

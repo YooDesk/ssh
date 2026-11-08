@@ -1,0 +1,55 @@
+[
+  {
+    "name": "ssh_create",
+    "valid": true,
+    "message": {
+      "protocol_version": 1,
+      "target_id": "ssh-prod",
+      "options": {
+        "cols": 120,
+        "rows": 32
+      },
+      "client_features": [
+        "encrypted-key",
+        "jump-chain"
+      ]
+    }
+  },
+  {
+    "name": "resize_valid",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "type": "terminal.resize",
+      "request_id": "resize-1",
+      "payload": {
+        "cols": 80,
+        "rows": 24
+      }
+    }
+  },
+  {
+    "name": "resize_invalid",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "terminal.resize",
+      "request_id": "resize-1",
+      "payload": {
+        "cols": 0,
+        "rows": 24
+      }
+    }
+  },
+  {
+    "name": "arbitrary_destination_rejected",
+    "valid": false,
+    "message": {
+      "protocol_version": 1,
+      "target_id": "ssh-prod",
+      "host": "arbitrary",
+      "options": {},
+      "client_features": []
+    }
+  }
+]

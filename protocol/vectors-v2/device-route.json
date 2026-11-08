@@ -1,0 +1,199 @@
+[
+  {
+    "name": "edge-binding",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "global-binding",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "global",
+      "node_id": "global",
+      "edge_connection_generation": "",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "max-safe-epoch",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 9007199254740991,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "zero-epoch",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 0,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "unsafe-epoch",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 9007199254740992,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "wrong-version",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "edge-missing-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "global-self-reported-edge-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "global",
+      "node_id": "global",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "invalid-lease",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "not-a-time"
+    }
+  },
+  {
+    "name": "ordinary-credential-forbidden",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z",
+      "cookie_token": "must-not-be-routed"
+    }
+  },
+  {
+    "name": "leading-zero-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "01",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "nul-device",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device\u0000a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31T12:00:00Z"
+    }
+  },
+  {
+    "name": "invalid-calendar",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-02-30T12:00:00Z"
+    }
+  },
+  {
+    "name": "noncanonical-lowercase-time",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "route_epoch": 1,
+      "lease_deadline": "2026-10-31t12:00:00z"
+    }
+  }
+]

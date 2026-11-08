@@ -1,0 +1,125 @@
+[
+  {
+    "name": "valid_v2",
+    "valid": true,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v2",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1"
+    }
+  },
+  {
+    "name": "missing_lease_version",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v2",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1"
+    }
+  },
+  {
+    "name": "v1_audience_rejected",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v1",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1"
+    }
+  },
+  {
+    "name": "unknown_privilege_rejected",
+    "valid": false,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v2",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 60,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "all"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1"
+    }
+  },
+  {
+    "name": "valid_fifteen_minute_authorization",
+    "valid": true,
+    "message": {
+      "iss": "https://control.example.test",
+      "aud": "raccess-session-v2",
+      "sub": "user-1",
+      "iat": 0,
+      "nbf": 0,
+      "exp": 900,
+      "jti": "grant-1",
+      "device_id": "device-1",
+      "session_id": "remote-1",
+      "connection_generation": "3",
+      "negotiation_generation": "1",
+      "capability": "desk",
+      "target_id": "local",
+      "scope": [
+        "session.connect",
+        "screen.view"
+      ],
+      "policy_revision": "policy-1",
+      "lease_version": "1"
+    }
+  }
+]

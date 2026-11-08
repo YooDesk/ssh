@@ -1,0 +1,157 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gateway account authority",
+    "version": "2.0.0-candidate"
+  },
+  "servers": [
+    {
+      "url": "/{product_id}",
+      "variables": {
+        "product_id": {
+          "default": "yoodesk"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/login/": {
+      "get": {
+        "operationId": "showConnectorConsent",
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "use_password",
+            "in": "query",
+            "required": false,
+            "description": "Value 1 explicitly selects another account for a pending Connector transaction. The same-tab login form binds that transaction and shows a login-and-authorize action. GET never approves a device; successful explicit submission redirects directly to account.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trusted escaped HTML consent form with browser binding cookie; no authentication is completed"
+          },
+          "410": {
+            "description": "Expired transaction"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          },
+          "303": {
+            "description": "Missing browser account or explicit account switch: enter contextual account login. Confirmation and login-and-authorize both return directly to account."
+          }
+        }
+      },
+      "post": {
+        "operationId": "approveConnectorOIDC",
+        "description": "Requires exact configured Origin, Secure host-only browser cookie, matching csrf and explicit user approval. Global persists state/nonce/PKCE before redirect. No browser-selected redirect URI.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "transaction_id",
+                  "csrf"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "transaction_id": {
+                    "type": "string"
+                  },
+                  "csrf": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "303": {
+            "description": "Redirect to fixed IdP authorization endpoint"
+          },
+          "400": {
+            "description": "Invalid request or CSRF/Origin"
+          },
+          "410": {
+            "description": "Expired or already started transaction"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    },
+    "/api/v2/login/callback/": {
+      "get": {
+        "operationId": "completeConnectorOIDC",
+        "description": "Fixed registered callback. One-time state plus browser binding checked before code exchange. Global checks RS256, fixed issuer/audience/azp/nonce/expiry using trusted JWKS and maps issuer/subject to existing account authority. Failed/uncertain exchange requires new login; no authentication token in redirect or logs.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 4096
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "Redirect to trusted completion page without query parameters"
+          },
+          "400": {
+            "description": "Invalid identity or browser binding"
+          },
+          "410": {
+            "description": "Expired/replayed state"
+          },
+          "503": {
+            "description": "IdP/authority unavailable; transaction not guessed successful"
+          },
+          "401": {
+            "description": "Invalid signed identity claims; no local authorization issued"
+          }
+        }
+      }
+    },
+    "/login/complete/": {
+      "get": {
+        "operationId": "showConnectorAuthorizationComplete",
+        "responses": {
+          "303": {
+            "description": "Compatibility alias redirects to account; no intermediate completion page"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,239 @@
+[
+  {
+    "name": "data-claims",
+    "kind": "claims",
+    "valid": true,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-header",
+    "kind": "header",
+    "valid": true,
+    "message": {
+      "alg": "ES256",
+      "typ": "raccess-device-data+jwt"
+    }
+  },
+  {
+    "name": "data-wrong-purpose",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "browser:login",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-extra-claim",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "admin": true,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-multiple-audiences",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/",
+        "https://other.example/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-fractional-expiry",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060.5,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-invalid-jti",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "untrusted\nidentifier",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-short-host-hash",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "short",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "request_id": "native-request-identity",
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  },
+  {
+    "name": "data-embedded-key",
+    "kind": "header",
+    "valid": false,
+    "message": {
+      "alg": "ES256",
+      "typ": "raccess-device-data+jwt",
+      "jwk": {}
+    }
+  },
+  {
+    "name": "data-algorithm-confusion",
+    "kind": "header",
+    "valid": false,
+    "message": {
+      "alg": "HS256",
+      "typ": "raccess-device-data+jwt"
+    }
+  },
+  {
+    "name": "data-missing-native-request",
+    "kind": "claims",
+    "valid": false,
+    "message": {
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "iss": "https://global.example",
+      "sub": "device-a",
+      "aud": [
+        "https://global.example/yoodesk/api/v2/device-data/commit/"
+      ],
+      "jti": "test-proof-identity",
+      "purpose": "device:data-attach",
+      "iat": 1793448000,
+      "nbf": 1793448000,
+      "exp": 1793448060,
+      "route_epoch": 3,
+      "data_generation": "1"
+    }
+  }
+]

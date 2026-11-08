@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-logout-record:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "v",
+    "logout_id",
+    "node_id",
+    "origin",
+    "issuer",
+    "session_id",
+    "session_version",
+    "hard_expires_at",
+    "status",
+    "record_digest"
+  ],
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "logout_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "origin": {
+      "type": "string",
+      "format": "uri"
+    },
+    "issuer": {
+      "type": "string",
+      "format": "uri"
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128
+    },
+    "session_version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "hard_expires_at": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "acked"
+      ]
+    },
+    "revoke_capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8192
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "pending"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "revoke_capability"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "acked"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "revoke_capability"
+          ]
+        }
+      }
+    }
+  ]
+}

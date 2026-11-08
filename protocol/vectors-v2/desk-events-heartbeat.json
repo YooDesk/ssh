@@ -1,0 +1,15 @@
+{
+  "schema": "desk-events-heartbeat-v2.schema.json",
+  "cases": [
+    {"name": "zero", "message": {"type": "ping", "id": 0}, "browser_accepted": true},
+    {"name": "safe-maximum", "message": {"type": "ping", "id": 9007199254740991}, "browser_accepted": true},
+    {"name": "pong-is-server-only", "message": {"type": "pong", "id": 1}, "browser_accepted": false},
+    {"name": "negative", "message": {"type": "ping", "id": -1}, "browser_accepted": false},
+    {"name": "unsafe-integer", "message": {"type": "ping", "id": 9007199254740992}, "browser_accepted": false},
+    {"name": "fraction", "message": {"type": "ping", "id": 1.5}, "browser_accepted": false},
+    {"name": "missing-id", "message": {"type": "ping"}, "browser_accepted": false},
+    {"name": "extra-field", "message": {"type": "ping", "id": 1, "extra": true}, "browser_accepted": false},
+    {"name": "refresh-stays-on-stream", "message": {"type": "refresh_video"}, "browser_accepted": false},
+    {"name": "video-ack-stays-on-stream", "message": {"type": "video_received", "pts": 1}, "browser_accepted": false}
+  ]
+}

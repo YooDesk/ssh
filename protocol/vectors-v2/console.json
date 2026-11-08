@@ -1,0 +1,67 @@
+{
+  "valid": [
+    {
+      "schema": "RelayBatch",
+      "value": {
+        "items": [
+          {
+            "target_type": "global",
+            "target_id": "global",
+            "expected_revision": "1",
+            "relay_limit_bps": null
+          }
+        ]
+      }
+    },
+    {
+      "schema": "RoleWrite",
+      "value": {
+        "enterprise_id": "enterprise-a",
+        "revision": "2",
+        "user_id": "user-a",
+        "administrator": true
+      }
+    },
+    {
+      "schema": "EnterpriseWrite",
+      "value": {
+        "enterprise_id": "enterprise-a",
+        "revision": "2",
+        "name": "Enterprise",
+        "keys": []
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "schema": "RelayBatch",
+      "value": {
+        "items": []
+      }
+    },
+    {
+      "schema": "RelayBatch",
+      "value": {
+        "items": [
+          {
+            "target_type": "global",
+            "target_id": "global",
+            "expected_revision": "1"
+          }
+        ]
+      }
+    },
+    {
+      "schema": "RoleWrite",
+      "value": {
+        "enterprise_id": "enterprise-a",
+        "user_id": "user-a",
+        "administrator": true
+      }
+    },
+    {
+      "schema": "SettingsWrite",
+      "value": {}
+    }
+  ]
+}

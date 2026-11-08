@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:device-data-proof:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+    },
+    "edge_connection_generation": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{32})?$"
+    },
+    "connector_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "challenge_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{43}$"
+    },
+    "host_token_hash": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{43}$"
+    },
+    "iss": {
+      "type": "string",
+      "minLength": 9,
+      "maxLength": 512,
+      "pattern": "^https://[^/?#@]+$"
+    },
+    "sub": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+    },
+    "aud": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "string",
+        "maxLength": 1024,
+        "pattern": "^https://[^?#@]+/[^?#]*$"
+      }
+    },
+    "jti": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "purpose": {
+      "const": "device:data-attach"
+    },
+    "exp": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "nbf": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "iat": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "route_epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "data_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    }
+  },
+  "required": [
+    "site_id",
+    "node_id",
+    "edge_connection_generation",
+    "connector_generation",
+    "challenge_id",
+    "host_token_hash",
+    "iss",
+    "sub",
+    "aud",
+    "jti",
+    "purpose",
+    "exp",
+    "nbf",
+    "iat",
+    "request_id",
+    "route_epoch",
+    "data_generation"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "node_id": {
+            "const": "global"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "site_id": {
+            "const": "global"
+          },
+          "edge_connection_generation": {
+            "const": ""
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "edge_connection_generation": {
+            "pattern": "^[0-9a-f]{32}$"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "alg": {
+          "const": "ES256"
+        },
+        "typ": {
+          "const": "raccess-device-data+jwt"
+        }
+      },
+      "required": [
+        "alg",
+        "typ"
+      ]
+    }
+  }
+}

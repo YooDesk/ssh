@@ -1,0 +1,81 @@
+{
+  "valid": [
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "0",
+      "node_ids": [
+        "worker-a"
+      ]
+    },
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "0",
+      "node_ids": null
+    },
+    {
+      "owner_kind": "global",
+      "owner_id": "global",
+      "expected_revision": "0",
+      "node_ids": [
+        "worker-a"
+      ]
+    },
+    {
+      "owner_kind": "edge",
+      "owner_id": "edge-a",
+      "expected_revision": "0",
+      "node_ids": [
+        "worker-a",
+        "worker-b"
+      ]
+    },
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "0",
+      "node_ids": [
+        "global"
+      ]
+    }
+  ],
+  "invalid": [
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "0",
+      "node_ids": []
+    },
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "0",
+      "node_ids": [
+        "worker-a",
+        "worker-a"
+      ]
+    },
+    {
+      "owner_kind": "global",
+      "owner_id": "user-a",
+      "expected_revision": "0",
+      "node_ids": [
+        "worker-a"
+      ]
+    },
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "0"
+    },
+    {
+      "owner_kind": "user",
+      "owner_id": "user-a",
+      "expected_revision": "01",
+      "node_ids": [
+        "worker-a"
+      ]
+    }
+  ]
+}

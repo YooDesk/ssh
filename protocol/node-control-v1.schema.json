@@ -1,0 +1,899 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:node-control:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "v",
+    "plane",
+    "type",
+    "node_id",
+    "boot_id",
+    "connection_generation",
+    "request_id",
+    "payload"
+  ],
+  "properties": {
+    "v": {
+      "const": 1
+    },
+    "plane": {
+      "enum": [
+        "edge",
+        "ice"
+      ]
+    },
+    "type": {
+      "enum": [
+        "hello",
+        "config",
+        "applied",
+        "heartbeat",
+        "heartbeat_ack",
+        "drain",
+        "auth_request",
+        "auth_response",
+        "auth_chunk",
+        "auth_cancel",
+        "device_request",
+        "device_response",
+        "device_cancel",
+        "stream_install",
+        "stream_revoke",
+        "stream_ack",
+        "stream_abort",
+        "device_session_request",
+        "device_session_reply",
+        "device_session_event",
+        "device_session_cancel",
+        "device_session_fragment",
+        "stream_renew",
+        "credential_install",
+        "credential_revoke",
+        "credential_ack",
+        "retirement_query",
+        "retirement_ack",
+        "retirement_confirm",
+        "retirement_confirm_ack",
+        "retirement_list",
+        "retirement_list_ack"
+      ]
+    },
+    "node_id": {
+      "$ref": "#/$defs/id"
+    },
+    "boot_id": {
+      "$ref": "#/$defs/nonce"
+    },
+    "connection_generation": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "request_id": {
+      "$ref": "#/$defs/nonce"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "hello"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "connection_generation": {
+            "const": ""
+          },
+          "payload": {
+            "$ref": "#/$defs/hello"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "connection_generation": {
+            "$ref": "#/$defs/nonce"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "config"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/config"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "applied"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/applied"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "heartbeat"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/heartbeat"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "heartbeat_ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/heartbeat_ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "drain"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/drain"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "auth_request"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-auth-rpc:v1#/$defs/request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "auth_response"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-auth-rpc:v1#/$defs/response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "auth_chunk"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-auth-rpc:v1#/$defs/chunk"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "auth_cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {},
+            "required": []
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_request"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-rpc:v1#/$defs/request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_response"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-rpc:v1#/$defs/response"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {},
+            "required": []
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stream_install"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-session:v1#/$defs/install"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stream_revoke"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-session:v1#/$defs/revoke"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stream_ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-session:v1#/$defs/ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stream_abort"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-session:v1#/$defs/abort"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_session_request"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-session:v1#/$defs/request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_session_reply"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-session:v1#/$defs/reply"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_session_event"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-session:v1#/$defs/event"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_session_cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-session:v1#/$defs/cancel"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "device_session_fragment"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-device-session:v1#/$defs/fragment"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stream_renew"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "edge"
+          },
+          "payload": {
+            "$ref": "urn:raccess:edge-flow-lease:v1#/$defs/renew"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "credential_install"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/install"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "credential_revoke"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/revoke"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "credential_ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "retirement_query"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/retirement_query"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "retirement_ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/retirement_ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "hello"
+          },
+          "payload": {
+            "required": [
+              "turn_retirement"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "properties": {
+              "services": {
+                "contains": {
+                  "const": "turn"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "retirement_confirm"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/retirement_confirm"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "retirement_confirm_ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/retirement_confirm_ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "hello"
+          },
+          "payload": {
+            "required": [
+              "turn_retirement_confirm"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "required": [
+              "turn_retirement"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "retirement_list"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/retirement_list"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "retirement_list_ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "plane": {
+            "const": "ice"
+          },
+          "payload": {
+            "$ref": "urn:raccess:ice-credential:v1#/$defs/retirement_list_ack"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"
+    },
+    "nonce": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "timestamp": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "gateway",
+          "stun",
+          "turn"
+        ]
+      }
+    },
+    "site": {
+      "type": "string",
+      "pattern": "^([a-zA-Z0-9][a-zA-Z0-9_.-]{0,63})?$"
+    },
+    "hello": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "services",
+        "site_id"
+      ],
+      "properties": {
+        "services": {
+          "$ref": "#/$defs/services"
+        },
+        "site_id": {
+          "$ref": "#/$defs/site"
+        },
+        "turn_retirement": {
+          "const": true
+        },
+        "turn_retirement_confirm": {
+          "const": true
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "server_time",
+        "expires_at",
+        "services",
+        "site_id"
+      ],
+      "properties": {
+        "revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "server_time": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "services": {
+          "$ref": "#/$defs/services"
+        },
+        "site_id": {
+          "$ref": "#/$defs/site"
+        },
+        "origin": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 2048
+        }
+      }
+    },
+    "applied": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "config_digest"
+      ],
+      "properties": {
+        "revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "config_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "heartbeat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "config_digest",
+        "listener_ready"
+      ],
+      "properties": {
+        "revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "config_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "listener_ready": {
+          "type": "boolean"
+        }
+      }
+    },
+    "heartbeat_ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "server_time"
+      ],
+      "properties": {
+        "server_time": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "drain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deadline"
+      ],
+      "properties": {
+        "deadline": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    }
+  }
+}

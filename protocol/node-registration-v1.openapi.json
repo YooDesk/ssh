@@ -1,0 +1,345 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Worker self-enrollment and Global review",
+    "version": "1.0.0-candidate"
+  },
+  "paths": {
+    "/internal/v1/nodes/registration/": {
+      "post": {
+        "operationId": "submitOrPollNodeApplication",
+        "description": "Only the dedicated TLS node listener. Bearer invitation is bound to node_id. First submission expires after 15 minutes; consumed invitations only replay their exact application and recover the same approved node credential. Transport certificate renewal does not change node identity or require review. Pending/rejected/revoked responses contain no node credential. Approved credentials never authenticate an administrator or account. Body <=8192 bytes; strict exact required fields; no Origin, Cookie, query or redirects. Stable node_id plus separate node credential authenticate subsequent control/data connections using X-YooDesk-Node-ID and X-YooDesk-Node-Key, independently of the TLS leaf. Legacy deployment approvals retain their original transport identity only. No implicit credential downgrade.",
+        "security": [
+          {
+            "NodeInvitation": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application state; success is independent node v1, not account envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Invitation denied"
+          },
+          "409": {
+            "description": "Consumed invitation or pending request conflict"
+          },
+          "410": {
+            "description": "Unused invitation expired"
+          },
+          "429": {
+            "description": "Bounded capacity"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    },
+    "/admin/nodes/": {
+      "get": {
+        "operationId": "listNodeApplicationsAndApprovals",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Independent platform admin; escaped HTML, same-origin CSS only, paginated after/applications_after <=100 records each. No credential or invitation is disclosed on GET. Approval, control sync, configuration readiness and offline states are distinct. Legacy entries are marked deployment preauthorization. TLS leaf fingerprint is not used for enrollment.",
+        "responses": {
+          "200": {
+            "description": "Node/application HTML"
+          },
+          "401": {
+            "description": "Administrator required"
+          }
+        }
+      },
+      "post": {
+        "operationId": "manageNodeApplications",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Origin plus independent admin session/CSRF. Strict form actions: invite(node_id); cancel_invites(node_id); review(application_id,expected_revision,expected_node_revision,decision,optional gateway/stun/turn checkboxes=true); revoke(node_id,expected_revision). Approvals must be a subset of requested services. Audit and CAS are atomic. New Edge authorization does not grant account/site access or TURN pool rights. No automatic role elevation or old-config resurrection. Invite only shown in successful POST response. Cancellation atomically removes all unused invitations for the specified node; submitted applications and approved credentials are unaffected.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Saved HTML"
+          },
+          "400": {
+            "description": "Invalid form/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "409": {
+            "description": "Version conflict"
+          },
+          "429": {
+            "description": "Bounded capacity"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "NodeInvitation": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "AdministratorSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_admin_session"
+      }
+    },
+    "schemas": {
+      "Request": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "role",
+          "node_id",
+          "display_name",
+          "services",
+          "site_id",
+          "origin",
+          "region"
+        ],
+        "properties": {
+          "version": {
+            "const": 1
+          },
+          "role": {
+            "const": "worker"
+          },
+          "node_id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$",
+            "not": {
+              "const": "global"
+            }
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "services": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "gateway",
+                "stun",
+                "turn"
+              ]
+            }
+          },
+          "site_id": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "origin": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "region": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "stun_urls": {
+            "type": "array",
+            "maxItems": 4,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "maxLength": 512,
+              "pattern": "^stun:[^/?#@]+$"
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "services": {
+                  "contains": {
+                    "const": "gateway"
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "site_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$",
+                  "not": {
+                    "const": "global"
+                  }
+                },
+                "origin": {
+                  "type": "string",
+                  "pattern": "^https://[^/]+$",
+                  "maxLength": 2048
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "site_id": {
+                  "const": ""
+                },
+                "origin": {
+                  "const": ""
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "services": {
+                  "not": {
+                    "contains": {
+                      "const": "stun"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "stun_urls": {
+                  "maxItems": 0
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Result": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "application_id",
+          "node_id",
+          "state",
+          "revision",
+          "approved_services"
+        ],
+        "properties": {
+          "version": {
+            "const": 1
+          },
+          "application_id": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 128
+          },
+          "node_id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$",
+            "not": {
+              "const": "global"
+            }
+          },
+          "state": {
+            "enum": [
+              "pending",
+              "approved",
+              "rejected",
+              "revoked"
+            ]
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,15}$"
+          },
+          "approved_services": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "gateway",
+                "stun",
+                "turn"
+              ]
+            }
+          },
+          "node_credential": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{43}$"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "approved"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "node_credential"
+              ],
+              "properties": {
+                "approved_services": {
+                  "minItems": 1
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "node_credential": false
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

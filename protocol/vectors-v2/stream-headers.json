@@ -1,0 +1,65 @@
+[
+  {
+    "name": "bind",
+    "valid": true,
+    "header": {
+      "kind": "bind",
+      "grant": "synthetic-grant-v2"
+    },
+    "hex": "524158320000002c7b226b696e64223a2262696e64222c226772616e74223a2273796e7468657469632d6772616e742d7632227d"
+  },
+  {
+    "name": "bound",
+    "valid": true,
+    "header": {
+      "kind": "bind_result",
+      "ok": true,
+      "lease_version": "2"
+    },
+    "hex": "52415832000000347b226b696e64223a2262696e645f726573756c74222c226f6b223a747275652c226c656173655f76657273696f6e223a2232227d"
+  },
+  {
+    "name": "bound_requires_lease_version",
+    "valid": false,
+    "header": {
+      "kind": "bind_result",
+      "ok": true
+    },
+    "hex": "52415832000000207b226b696e64223a2262696e645f726573756c74222c226f6b223a747275657d"
+  },
+  {
+    "name": "http",
+    "valid": true,
+    "header": {
+      "kind": "http",
+      "session_id": "remote-1",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-1",
+      "path": "/yoodesk/webclient/ssh/"
+    },
+    "hex": "524158320000008c7b226b696e64223a2268747470222c2273657373696f6e5f6964223a2272656d6f74652d31222c226e65676f74696174696f6e5f67656e65726174696f6e223a2231222c226361706162696c697479223a22737368222c227461726765745f6964223a227373682d31222c2270617468223a222f796f6f6465736b2f776562636c69656e742f7373682f227d"
+  },
+  {
+    "name": "admin_forbidden",
+    "valid": false,
+    "header": {
+      "kind": "http",
+      "session_id": "remote-1",
+      "negotiation_generation": "1",
+      "capability": "ssh",
+      "target_id": "ssh-1",
+      "path": "/yoodesk/admin/"
+    },
+    "hex": "52415832000000847b226b696e64223a2268747470222c2273657373696f6e5f6964223a2272656d6f74652d31222c226e65676f74696174696f6e5f67656e65726174696f6e223a2231222c226361706162696c697479223a22737368222c227461726765745f6964223a227373682d31222c2270617468223a222f796f6f6465736b2f61646d696e2f227d"
+  },
+  {
+    "name": "old_magic_rejected",
+    "valid": false,
+    "header": {
+      "kind": "bind",
+      "grant": "synthetic-grant-v2"
+    },
+    "hex": "524158310000002c7b226b696e64223a2262696e64222c226772616e74223a2273796e7468657469632d6772616e742d7632227d"
+  }
+]

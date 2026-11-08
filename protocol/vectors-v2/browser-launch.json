@@ -1,0 +1,63 @@
+[
+  {
+    "name": "ready",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "launch.ready",
+      "payload": {
+        "channel_id": "channel-1"
+      }
+    }
+  },
+  {
+    "name": "embedded_grant",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "launch.grant",
+      "payload": {
+        "channel_id": "channel-1",
+        "launch_ticket": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "access_mode": "bearer"
+      }
+    }
+  },
+  {
+    "name": "wrong_protocol",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "launch.ready",
+      "payload": {
+        "channel_id": "channel-1"
+      }
+    }
+  },
+  {
+    "name": "credential_not_in_extra_url",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "launch.grant",
+      "payload": {
+        "channel_id": "channel-1",
+        "launch_ticket": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "access_mode": "bearer",
+        "url": "https://bad/?token=x"
+      }
+    }
+  },
+  {
+    "name": "device_ws_bind",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "device.bind",
+      "payload": {
+        "session_id": "remote-1",
+        "access_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  }
+]

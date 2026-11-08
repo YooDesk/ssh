@@ -1,0 +1,373 @@
+[
+  {
+    "name": "renew_has_new_grant",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "lease_renew",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "grant": "synthetic-grant-v2",
+        "lease_version": "2",
+        "lease_expires_at": "2030-01-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "name": "v1_expiry_only_renewal_rejected",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "lease_renew",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "lease_expires_at": "2030-01-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "name": "numeric_lease_version_rejected",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "lease_renew",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "grant": "synthetic-grant-v2",
+        "lease_version": 2,
+        "lease_expires_at": "2030-01-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "name": "accepted_ack_requires_expiry",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "lease_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "lease_version": "2",
+        "accepted": true
+      }
+    }
+  },
+  {
+    "name": "failed_ack_requires_reason",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "lease_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "lease_version": "2",
+        "accepted": false
+      }
+    }
+  },
+  {
+    "name": "accepted_ack",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "lease_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "lease_version": "2",
+        "accepted": true,
+        "lease_expires_at": "2030-01-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "name": "failed_ack",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "lease_ack",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "lease_version": "2",
+        "accepted": false,
+        "code": "backend_unavailable"
+      }
+    }
+  },
+  {
+    "name": "browser_receives_committed_access",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "lease_update",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "grant": "synthetic-grant-v2",
+        "lease_version": "2",
+        "lease_expires_at": "2030-01-01T00:00:00Z",
+        "browser_access": {
+          "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "audience": "raccess-device-access-v2"
+        }
+      }
+    }
+  },
+  {
+    "name": "connector_never_receives_browser_credential",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "lease_renew",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "grant": "synthetic-grant-v2",
+        "lease_version": "2",
+        "lease_expires_at": "2030-01-01T00:00:00Z",
+        "browser_access": {
+          "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "audience": "raccess-device-access-v2"
+        }
+      }
+    }
+  },
+  {
+    "name": "wrong_protocol_version",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "type": "lease_renew",
+      "request_id": "test-1",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "grant": "synthetic-grant-v2",
+        "lease_version": "2",
+        "lease_expires_at": "2030-01-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "name": "browser_endpoint_ice_update",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "ice_config_update",
+      "request_id": "ice-browser",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "negotiation_generation": "2",
+        "ice_config": {
+          "revision": "ice-2",
+          "policy_revision": "p1",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "ice_transport_policy": "relay",
+          "allow_wss": true,
+          "ice_servers": [
+            {
+              "urls": [
+                "turn:isolated.example:3478"
+              ],
+              "username": "browser-opaque",
+              "credential": "isolated-browser-test-password",
+              "credential_expires_at": "2030-01-01T00:00:30Z"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "name": "browser_ice_update_requires_negotiation",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "ice_config_update",
+      "request_id": "ice-browser",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "ice_config": {
+          "revision": "ice-2",
+          "policy_revision": "p1",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "ice_transport_policy": "relay",
+          "allow_wss": true,
+          "ice_servers": [
+            {
+              "urls": [
+                "turn:isolated.example:3478"
+              ],
+              "username": "browser-opaque",
+              "credential": "isolated-browser-test-password",
+              "credential_expires_at": "2030-01-01T00:00:30Z"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "name": "browser_ice_update_rejects_auth_key",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "ice_config_update",
+      "request_id": "ice-browser",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "negotiation_generation": "2",
+        "ice_config": {
+          "revision": "ice-2",
+          "policy_revision": "p1",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "ice_transport_policy": "relay",
+          "allow_wss": true,
+          "ice_servers": [
+            {
+              "urls": [
+                "turn:isolated.example:3478"
+              ],
+              "username": "browser-opaque",
+              "credential": "isolated-browser-test-password",
+              "credential_expires_at": "2030-01-01T00:00:30Z",
+              "auth_key": "not-endpoint-material"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "heartbeat",
+      "request_id": "native-host-rotation",
+      "connection_generation": "1",
+      "payload": {
+        "applied_network_revision": "",
+        "network_config_status": "applied",
+        "capabilities_revision": "",
+        "host_token": "isolated-host-credential"
+      }
+    },
+    "name": "native_host_credential_update"
+  },
+  {
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "heartbeat",
+      "request_id": "native-host-rotation",
+      "connection_generation": "1",
+      "payload": {
+        "applied_network_revision": "",
+        "network_config_status": "applied",
+        "capabilities_revision": "",
+        "host_token": ""
+      }
+    },
+    "name": "native_host_credential_empty"
+  },
+  {
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "heartbeat",
+      "request_id": "native-host-rotation",
+      "connection_generation": "1",
+      "payload": {
+        "applied_network_revision": "",
+        "network_config_status": "applied",
+        "capabilities_revision": "",
+        "host_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    "name": "native_host_credential_too_large"
+  },
+  {
+    "name": "http_resources_without_wss_relay",
+    "valid": true,
+    "message": {
+      "v": 2,
+      "type": "ice_config_update",
+      "request_id": "ice-browser",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "negotiation_generation": "2",
+        "ice_config": {
+          "revision": "ice-2",
+          "policy_revision": "p1",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "ice_transport_policy": "relay",
+          "allow_wss": false,
+          "ice_servers": [
+            {
+              "urls": [
+                "turn:isolated.example:3478"
+              ],
+              "username": "browser-opaque",
+              "credential": "isolated-browser-test-password",
+              "credential_expires_at": "2030-01-01T00:00:30Z"
+            }
+          ],
+          "allow_http": true
+        }
+      }
+    }
+  },
+  {
+    "name": "http_policy_must_be_boolean",
+    "valid": false,
+    "message": {
+      "v": 2,
+      "type": "ice_config_update",
+      "request_id": "ice-browser",
+      "connection_generation": "3",
+      "session_id": "remote-1",
+      "payload": {
+        "negotiation_generation": "2",
+        "ice_config": {
+          "revision": "ice-2",
+          "policy_revision": "p1",
+          "expires_at": "2030-01-01T00:00:00Z",
+          "ice_transport_policy": "relay",
+          "allow_wss": false,
+          "ice_servers": [
+            {
+              "urls": [
+                "turn:isolated.example:3478"
+              ],
+              "username": "browser-opaque",
+              "credential": "isolated-browser-test-password",
+              "credential_expires_at": "2030-01-01T00:00:30Z"
+            }
+          ],
+          "allow_http": "true"
+        }
+      }
+    }
+  }
+]

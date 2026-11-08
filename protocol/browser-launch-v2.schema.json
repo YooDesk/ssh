@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:browser-launch:v2",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "type": {
+          "const": "launch.ready"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "channel_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "channel_id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "type": {
+          "const": "launch.grant"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "channel_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "launch_ticket": {
+              "type": "string",
+              "minLength": 32,
+              "maxLength": 16384
+            },
+            "access_mode": {
+              "enum": [
+                "cookie",
+                "bearer"
+              ]
+            }
+          },
+          "required": [
+            "channel_id",
+            "launch_ticket",
+            "access_mode"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "type": {
+          "const": "launch.ack"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "channel_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "accepted": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "channel_id",
+            "accepted"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 2
+        },
+        "type": {
+          "const": "device.bind"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "access_token": {
+              "type": "string",
+              "minLength": 32,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "session_id",
+            "access_token"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

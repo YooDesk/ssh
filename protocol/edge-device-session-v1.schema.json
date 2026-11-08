@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-device-session:v1",
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_generation",
+        "installation_id",
+        "device_id",
+        "connector_generation",
+        "device_data_generation",
+        "route_epoch",
+        "session_id",
+        "negotiation_generation"
+      ],
+      "properties": {
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "installation_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "device_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "connector_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "device_data_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "route_epoch": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "message"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "message": {
+          "allOf": [
+            {
+              "$ref": "urn:raccess:control:v2"
+            },
+            {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "session_open",
+                    "lease_renew",
+                    "session_close",
+                    "offer",
+                    "ice_candidate",
+                    "relay_ready"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "reply": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "request_digest",
+        "status"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "request_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "reply",
+            "retired",
+            "error",
+            "sent"
+          ]
+        },
+        "message": {
+          "allOf": [
+            {
+              "$ref": "urn:raccess:control:v2"
+            },
+            {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "session_accept",
+                    "session_reject",
+                    "lease_ack",
+                    "session_closed",
+                    "error",
+                    "answer"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "code": {
+          "enum": [
+            "invalid",
+            "stale",
+            "capacity",
+            "unavailable",
+            "expired"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "reply"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "message"
+            ],
+            "not": {
+              "required": [
+                "code"
+              ]
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "message"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "error"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "code"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "code"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "message",
+        "source"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "message": {
+          "allOf": [
+            {
+              "$ref": "urn:raccess:control:v2"
+            },
+            {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "ice_candidate",
+                    "session_closed",
+                    "error"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "source": {
+          "enum": [
+            "connector",
+            "node"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "node"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "message": {
+                "properties": {
+                  "type": {
+                    "const": "error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "request_digest"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "request_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "fragment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "index",
+        "total",
+        "length",
+        "digest",
+        "data"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "device_session_request",
+            "device_session_reply",
+            "device_session_event"
+          ]
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 49153,
+          "maximum": 73728
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "data": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 32768,
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        }
+      }
+    }
+  }
+}

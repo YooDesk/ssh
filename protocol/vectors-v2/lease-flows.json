@@ -1,0 +1,157 @@
+[
+  {
+    "name": "healthy_more_than_two_initial_leases",
+    "steps": [
+      {
+        "at": 20,
+        "version": "2",
+        "expires": 80,
+        "backend": "ok",
+        "accept": true
+      },
+      {
+        "at": 22,
+        "version": "2",
+        "expires": 80,
+        "backend": "ok",
+        "scope": [
+          "screen.view",
+          "session.connect"
+        ],
+        "accept": true
+      },
+      {
+        "at": 40,
+        "version": "3",
+        "expires": 100,
+        "backend": "ok",
+        "accept": true
+      },
+      {
+        "at": 60,
+        "version": "4",
+        "expires": 120,
+        "backend": "ok",
+        "accept": true
+      },
+      {
+        "at": 110,
+        "expect_alive": true
+      },
+      {
+        "at": 121,
+        "expect_alive": false
+      }
+    ]
+  },
+  {
+    "name": "lost_backend_ack_retried",
+    "steps": [
+      {
+        "at": 20,
+        "version": "2",
+        "expires": 80,
+        "backend": "lost_ack",
+        "accept": false
+      },
+      {
+        "at": 25,
+        "version": "2",
+        "expires": 80,
+        "backend": "ok",
+        "accept": true
+      },
+      {
+        "at": 65,
+        "expect_alive": true
+      }
+    ]
+  },
+  {
+    "name": "failed_backend_does_not_extend",
+    "steps": [
+      {
+        "at": 20,
+        "version": "2",
+        "expires": 80,
+        "backend": "fail",
+        "accept": false
+      },
+      {
+        "at": 61,
+        "expect_alive": false
+      }
+    ]
+  },
+  {
+    "name": "expired_does_not_resurrect",
+    "steps": [
+      {
+        "at": 61,
+        "version": "2",
+        "expires": 100,
+        "backend": "ok",
+        "accept": false
+      },
+      {
+        "at": 62,
+        "expect_alive": false
+      }
+    ]
+  },
+  {
+    "name": "old_and_conflicting_versions_rejected",
+    "steps": [
+      {
+        "at": 20,
+        "version": "2",
+        "expires": 80,
+        "backend": "ok",
+        "accept": true
+      },
+      {
+        "at": 30,
+        "version": "2",
+        "expires": 95,
+        "backend": "ok",
+        "accept": false
+      },
+      {
+        "at": 31,
+        "version": "1",
+        "expires": 90,
+        "backend": "ok",
+        "accept": false
+      },
+      {
+        "at": 32,
+        "version": "2",
+        "expires": 80,
+        "backend": "ok",
+        "jti": "conflicting-grant",
+        "accept": false
+      }
+    ]
+  },
+  {
+    "name": "scope_widening_rejected",
+    "steps": [
+      {
+        "at": 20,
+        "version": "2",
+        "expires": 80,
+        "backend": "ok",
+        "scope": [
+          "session.connect",
+          "screen.view",
+          "files.write"
+        ],
+        "accept": false
+      },
+      {
+        "at": 61,
+        "expect_alive": false
+      }
+    ]
+  }
+]

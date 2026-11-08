@@ -1,0 +1,4 @@
+SPDX-License-Identifier: MIT OR Apache-2.0
+
+Migrated YooDesk source declares MIT OR Apache-2.0 in Cargo.toml.
+Browser dependencies retain their upstream license files in the release archive.

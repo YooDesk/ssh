@@ -1,0 +1,154 @@
+[
+  {
+    "name": "Password-valid",
+    "schema": "Password",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "isolated-password-example"
+    },
+    "valid": true
+  },
+  {
+    "name": "Password-missing-csrf",
+    "schema": "Password",
+    "value": {
+      "email": "fixture@example.test",
+      "password": "isolated-password-example"
+    },
+    "valid": false
+  },
+  {
+    "name": "Password-unknown-role",
+    "schema": "Password",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "isolated-password-example",
+      "role": "administrator"
+    },
+    "valid": false
+  },
+  {
+    "name": "EmailCode-valid",
+    "schema": "EmailCode",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "isolated-password-example",
+      "challenge": "",
+      "code": "",
+      "action": "send"
+    },
+    "valid": true
+  },
+  {
+    "name": "EmailCode-missing-csrf",
+    "schema": "EmailCode",
+    "value": {
+      "email": "fixture@example.test",
+      "password": "isolated-password-example",
+      "challenge": "",
+      "code": "",
+      "action": "send"
+    },
+    "valid": false
+  },
+  {
+    "name": "EmailCode-unknown-role",
+    "schema": "EmailCode",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "isolated-password-example",
+      "challenge": "",
+      "code": "",
+      "action": "send",
+      "role": "administrator"
+    },
+    "valid": false
+  },
+  {
+    "name": "Scan-valid",
+    "schema": "Scan",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "provider": "wecom"
+    },
+    "valid": true
+  },
+  {
+    "name": "Scan-missing-csrf",
+    "schema": "Scan",
+    "value": {
+      "provider": "wecom"
+    },
+    "valid": false
+  },
+  {
+    "name": "Scan-unknown-role",
+    "schema": "Scan",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "provider": "wecom",
+      "role": "administrator"
+    },
+    "valid": false
+  },
+  {
+    "name": "scan-invalid-provider",
+    "schema": "Scan",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "provider": "browser-chosen"
+    },
+    "valid": false
+  },
+  {
+    "name": "email-invalid-action",
+    "schema": "EmailCode",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "isolated-password-example",
+      "challenge": "",
+      "code": "",
+      "action": "grant"
+    },
+    "valid": false
+  },
+  {
+    "name": "email-null-password",
+    "schema": "EmailCode",
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": null,
+      "challenge": "",
+      "code": "",
+      "action": "send"
+    },
+    "valid": false
+  },
+  {
+    "name": "connector_password_bound_transaction",
+    "schema": "ConnectorPassword",
+    "valid": true,
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "fixture-password",
+      "transaction_id": "ttttttttttttttttttttttttttttttttttttttttttt"
+    }
+  },
+  {
+    "name": "connector_password_missing_transaction",
+    "schema": "ConnectorPassword",
+    "valid": false,
+    "value": {
+      "csrf": "ccccccccccccccccccccccccccccccccccccccccccc",
+      "email": "fixture@example.test",
+      "password": "fixture-password"
+    }
+  }
+]

@@ -1,0 +1,14 @@
+/target/
+/desk-engine/target/
+/artifacts/
+/deps/
+/dist/
+/frontend/node_modules/
+/frontend/dist/
+/__pycache__/
+**/__pycache__/
+*.pdb
+*.key
+*.pem
+/.ci-cache/
+/browser/

@@ -1,0 +1,637 @@
+[
+  {
+    "name": "renew",
+    "valid": true,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "missing-data_generation",
+    "valid": false,
+    "message": {
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "missing-permit",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "missing-previous_lease_version",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "missing-lease_version",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "missing-expires_at",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2"
+    }
+  },
+  {
+    "name": "bad-lease_version-6",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "0",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "bad-lease_version-7",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "02",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "bad-previous_lease_version-8",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "0",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "bad-expires_at-9",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 0
+    }
+  },
+  {
+    "name": "bad-expires_at-10",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 1.5
+    }
+  },
+  {
+    "name": "bad-data_generation-11",
+    "valid": false,
+    "message": {
+      "data_generation": "injected",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "self-reported-origin",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010,
+      "origin": "self-reported"
+    }
+  },
+  {
+    "name": "renew-installed-version-seven",
+    "valid": true,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "7"
+      },
+      "previous_lease_version": "7",
+      "lease_version": "8",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "permit-lease-version-missing",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        }
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "permit-lease-version-zero",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "0"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "permit-lease-version-leading-zero",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "01"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  },
+  {
+    "name": "permit-lease-version-too-long",
+    "valid": false,
+    "message": {
+      "data_generation": "cccccccccccccccccccccccccccccccc",
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "11111111111111111111"
+      },
+      "previous_lease_version": "1",
+      "lease_version": "2",
+      "expires_at": 2000000010
+    }
+  }
+]

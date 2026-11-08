@@ -1,0 +1,255 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Viewer browser transport bootstrap",
+    "version": "2.0.0-candidate"
+  },
+  "servers": [
+    {
+      "url": "/{product_id}",
+      "variables": {
+        "product_id": {
+          "default": "yoodesk"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/transport/keepalive/": {
+      "post": {
+        "operationId": "renewViewerResourceSession",
+        "description": "Empty body. Renews only the authenticated page resource session through its existing forwarding controller. Does not renew an arbitrary SID or unlock business access.",
+        "security": [
+          {
+            "ViewerResourceSession": []
+          },
+          {
+            "ViewerPageSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-YooDesk-Viewer-Page",
+            "in": "header",
+            "required": false,
+            "description": "Selects the exact HttpOnly page resource Cookie issued by GET bootstrap. No fallback to another page identity when present.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{16,128}$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Original resource lease renewed; no content"
+          },
+          "401": {
+            "description": "Invalid or expired page authority"
+          }
+        }
+      }
+    },
+    "/transport/viewer.js": {
+      "get": {
+        "operationId": "getViewerTransportSDK",
+        "responses": {
+          "200": {
+            "description": "Same-origin ES module; generated from frontend/packages/transport/viewer.js",
+            "content": {
+              "text/javascript": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transport/session/": {
+      "get": {
+        "operationId": "getViewerTransportProof",
+        "security": [
+          {
+            "ViewerPageSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No-store v2 envelope with data.csrf_token for the authenticated page session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "v",
+                    "data"
+                  ],
+                  "properties": {
+                    "v": {
+                      "const": 2
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "csrf_token",
+                        "page_id"
+                      ],
+                      "properties": {
+                        "csrf_token": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9_-]{16,128}$"
+                        },
+                        "page_id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9_-]{16,128}$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, duplicate, expired or invalid viewer cookie"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createViewerBusinessTransport",
+        "description": "Empty body. Creates an independent webservice/local guest transport for the server-resolved page device. Does not unlock WebService. Sets an HttpOnly Secure SameSite=Strict cookie scoped to the new session API path. Existing negotiation, signal, relay, renewal and generation-scoped release contracts apply.",
+        "security": [
+          {
+            "ViewerResourceSession": []
+          },
+          {
+            "ViewerPageSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-YooDesk-Viewer-Page",
+            "in": "header",
+            "required": false,
+            "description": "Selects the exact HttpOnly page resource Cookie issued by GET bootstrap. No fallback to another page identity when present.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{16,128}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "No-store v2 bootstrap envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "v",
+                    "data"
+                  ],
+                  "properties": {
+                    "v": {
+                      "const": 2
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "session",
+                        "csrf_token",
+                        "policy"
+                      ],
+                      "properties": {
+                        "session": {
+                          "$ref": "gateway-access-v2.openapi.json#/components/schemas/RemoteSessionResponse/properties/data"
+                        },
+                        "csrf_token": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9_-]{16,128}$"
+                        },
+                        "policy": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "allowTURN",
+                            "allowWSS"
+                          ],
+                          "properties": {
+                            "allowTURN": {
+                              "type": "boolean"
+                            },
+                            "allowWSS": {
+                              "const": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid page identity, Origin or CSRF"
+          },
+          "429": {
+            "description": "Bounded bootstrap rate exceeded"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ViewerPageSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-yoodesk-viewer"
+      },
+      "ViewerResourceSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Secure-{product_id}_remote_guest_page_{page_id}"
+      }
+    }
+  }
+}

@@ -1,0 +1,374 @@
+[
+  {
+    "name": "open",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": true
+  },
+  {
+    "name": "missing-v",
+    "kind": "open",
+    "message": {
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-session_id",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-cookie_token",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-csrf_token",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-origin",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "origin": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-node_id",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "node_id": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-connection_generation",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "connection_generation": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-data_generation",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "data_generation": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-grant",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-session_id-10",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-session_id-11",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-session_id-12",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "a b",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-cookie_token-13",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-cookie_token-14",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-cookie_token-15",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "a b",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-csrf_token-16",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-csrf_token-17",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "bad-csrf_token-18",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "a b",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "reply-200",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-401",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 401
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-403",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 403
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-409",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 409
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-429",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 429
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-503",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 503
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-201",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 201
+    },
+    "valid": false
+  },
+  {
+    "name": "reply-500",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 500
+    },
+    "valid": false
+  },
+  {
+    "name": "generation-missing",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf"
+    },
+    "valid": false
+  },
+  {
+    "name": "generation-zero",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "0"
+    },
+    "valid": false
+  },
+  {
+    "name": "generation-leading-zero",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "01"
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-guest",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": true
+  },
+  {
+    "name": "viewer-guest-too-short",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "guest:abc",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-guest-punctuation",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session",
+      "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  }
+]

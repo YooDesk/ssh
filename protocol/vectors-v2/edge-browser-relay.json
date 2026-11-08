@@ -1,0 +1,541 @@
+[
+  {
+    "name": "open",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": true
+  },
+  {
+    "name": "missing-v",
+    "kind": "open",
+    "message": {
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-session_id",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-cookie_token",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-csrf_token",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-grant",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-node_id",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "node_id": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-origin",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "origin": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-data_generation",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "data_generation": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-permit",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "permit": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-target_node_id",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "target_node_id": "injected",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "reply-401",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 401
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-403",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 403
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-409",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 409
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-429",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 429
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-503",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 503
+    },
+    "valid": true
+  },
+  {
+    "name": "reply-200",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200
+    },
+    "valid": false
+  },
+  {
+    "name": "reply-201",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 201
+    },
+    "valid": false
+  },
+  {
+    "name": "reply-500",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 500
+    },
+    "valid": false
+  },
+  {
+    "name": "ready-cross",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200,
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "ready-local",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200,
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-a",
+          "target_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "target_data_generation": "cccccccccccccccccccccccccccccccc",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      }
+    },
+    "valid": true
+  },
+  {
+    "name": "non-relay-header",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200,
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "http",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "lease_version": "1"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "missing-inner-stream",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200,
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        }
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "self-reported-origin-in-permit",
+    "kind": "reply",
+    "message": {
+      "v": 1,
+      "status": 200,
+      "permit": {
+        "device_id": "device-a",
+        "header": {
+          "v": 1,
+          "stream_kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1",
+          "origin_node_id": "node-a",
+          "origin_control_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "origin_data_generation": "cccccccccccccccccccccccccccccccc",
+          "target_node_id": "node-b",
+          "target_control_generation": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "target_data_generation": "dddddddddddddddddddddddddddddddd",
+          "connector_generation": "1",
+          "device_data_generation": "1",
+          "route_epoch": 1,
+          "stream_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "permit_id": "ffffffffffffffffffffffffffffffff",
+          "expires_at": 2000000000
+        },
+        "stream": {
+          "kind": "relay",
+          "session_id": "session-a",
+          "negotiation_generation": "1"
+        },
+        "origin": "injected",
+        "lease_version": "1"
+      }
+    },
+    "valid": false
+  },
+  {
+    "name": "generation-missing",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant"
+    },
+    "valid": false
+  },
+  {
+    "name": "generation-zero",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "0"
+    },
+    "valid": false
+  },
+  {
+    "name": "generation-leading-zero",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "01"
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-guest",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": true
+  },
+  {
+    "name": "viewer-guest-too-short",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "guest:abc",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-guest-punctuation",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "guest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1"
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-resource",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1",
+      "resource_path": "/yoodesk/webclient/desk/"
+    },
+    "valid": true
+  },
+  {
+    "name": "viewer-upgrade",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1",
+      "resource_path": "/yoodesk/webclient/ssh/socket/",
+      "upgrade": true
+    },
+    "valid": true
+  },
+  {
+    "name": "viewer-upgrade-missing-path",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1",
+      "upgrade": true
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-absolute-path",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1",
+      "resource_path": "https://other.example/"
+    },
+    "valid": false
+  },
+  {
+    "name": "viewer-self-reported-node",
+    "kind": "open",
+    "message": {
+      "v": 1,
+      "session_id": "session-a",
+      "cookie_token": "isolated_cookie",
+      "csrf_token": "isolated_csrf",
+      "grant": "isolated_grant",
+      "negotiation_generation": "1",
+      "resource_path": "/yoodesk/webclient/desk/",
+      "node_id": "edge-a"
+    },
+    "valid": false
+  }
+]

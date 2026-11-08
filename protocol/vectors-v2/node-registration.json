@@ -1,0 +1,172 @@
+{
+  "valid": [
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "stun"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "gateway",
+        "stun",
+        "turn"
+      ],
+      "site_id": "site-a",
+      "origin": "https://edge.example",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "application_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "node_id": "worker-a",
+      "state": "approved",
+      "revision": "2",
+      "approved_services": [
+        "stun"
+      ],
+      "node_credential": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "stun"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a",
+      "stun_urls": [
+        "stun:node.example:3478"
+      ]
+    }
+  ],
+  "invalid": [
+    {
+      "version": 1,
+      "role": "global",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "stun"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "stun",
+        "stun"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "gateway"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "stun"
+      ],
+      "site_id": "site-a",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "global",
+      "display_name": "Worker A",
+      "services": [
+        "stun"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "stun"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a"
+    },
+    {
+      "version": 1,
+      "application_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "node_id": "worker-a",
+      "state": "approved",
+      "revision": "2",
+      "approved_services": [
+        "stun"
+      ]
+    },
+    {
+      "version": 1,
+      "role": "worker",
+      "node_id": "worker-a",
+      "display_name": "Worker A",
+      "services": [
+        "turn"
+      ],
+      "site_id": "",
+      "origin": "",
+      "region": "region-a",
+      "stun_urls": [
+        "stun:node.example:3478"
+      ]
+    },
+    {
+      "version": 1,
+      "application_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "node_id": "worker-a",
+      "state": "approved",
+      "revision": "2",
+      "approved_services": [],
+      "node_credential": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    {
+      "version": 1,
+      "application_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "node_id": "worker-a",
+      "state": "approved",
+      "revision": "2",
+      "node_credential": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
+  ]
+}

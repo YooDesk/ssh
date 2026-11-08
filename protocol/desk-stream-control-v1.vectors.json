@@ -1,0 +1,14 @@
+[
+  {"valid":true,"text":"{\"type\":\"video_received\",\"pts\":0}"},
+  {"valid":true,"text":"{\"type\":\"video_received\",\"pts\":9007199254740991}"},
+  {"valid":true,"text":"{\"type\":\"refresh_video\"}"},
+  {"valid":true,"text":"{\"type\":\"ping\",\"id\":42}"},
+  {"valid":false,"text":"{\"type\":\"video_received\",\"pts\":-1}"},
+  {"valid":false,"text":"{\"type\":\"video_received\",\"pts\":1.5}"},
+  {"valid":false,"text":"{\"type\":\"video_received\",\"pts\":\"1\"}"},
+  {"valid":false,"text":"{\"type\":\"video_received\",\"pts\":9007199254740992}"},
+  {"valid":false,"text":"{\"type\":\"refresh_video\",\"conn\":2}"},
+  {"valid":false,"text":"{\"type\":\"ping\",\"id\":-1}"},
+  {"valid":false,"text":"{\"type\":\"mouse\",\"mask\":1}"},
+  {"valid":false,"text":"{\"type\":\"video_received\"}"}
+]

@@ -1,0 +1,61 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "Gateway management identity", "version": "2.0.0-candidate"},
+  "servers": [{"url": "/{product_id}", "variables": {"product_id": {"default": "yoodesk"}}}],
+  "paths": {
+    "/admin/login/": {
+      "get": {
+        "operationId": "showAdministratorLogin",
+        "description": "Global only. Fixed trusted form and independent __Host-{product_id}_admin_login binding cookie; no default administrator. No query parameters. Cache-Control no-store.",
+        "responses": {"200": {"description": "Login form", "headers": {"Referrer-Policy": {"required": true, "schema": {"const": "same-origin"}, "description": "Preserve real Origin on trusted same-origin form submission; cross-origin referrer remains suppressed."}}}, "400": {"description": "Invalid host or query"}}
+      },
+      "post": {
+        "operationId": "loginAdministrator",
+        "description": "Exact configured Host and Origin, matching login binding and csrf required. Reject duplicate and unknown form fields. Persistent peer attempt limit: five attempts per fifteen minutes, 4096 peer records; two concurrent password checks per process. bcrypt password length 12-72 UTF-8 bytes. Commit independent opaque administrator session and audit before setting Secure, HttpOnly, SameSite=Strict, Path=/, no-Domain __Host-{product_id}_admin_session and _admin_csrf cookies. Eight hour fixed expiry; maximum 128 live sessions. No account/worker identity fallback. No password or session token in response body, URL or logs.",
+        "requestBody": {"required": true, "content": {"application/x-www-form-urlencoded": {"schema": {"$ref": "#/components/schemas/AdministratorLogin"}}}},
+        "responses": {"303": {"description": "Redirect to product admin page"}, "400": {"description": "Invalid form or binding"}, "401": {"description": "Invalid credentials"}, "429": {"description": "Attempt, concurrency or session capacity"}, "503": {"description": "Authority unavailable"}}
+      }
+    },
+    "/admin/": {
+      "get": {
+        "operationId": "showAdministratorHome",
+        "security": [{"AdministratorSession": []}],
+        "description": "Current independent administrator session and CSRF cookie required. Validate persisted auth_version and expiry on every request. No management resources are implied by this identity page.",
+        "responses": {"200": {"description": "Trusted identity page with logout form", "headers": {"Referrer-Policy": {"required": true, "schema": {"const": "same-origin"}}}}, "401": {"description": "Session invalid"}, "503": {"description": "Authority unavailable"}}
+      }
+    },
+    "/api/v2/admin/session/": {
+      "get": {
+        "operationId": "getAdministratorSession",
+        "security": [{"AdministratorSession": []}],
+        "responses": {"200": {"description": "Current administrator identity; no token or password", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AdministratorSession"}}}}, "401": {"description": "Session invalid"}, "503": {"description": "Authority unavailable"}}
+      }
+    },
+    "/admin/logout/": {
+      "post": {
+        "operationId": "logoutAdministrator",
+        "security": [{"AdministratorSession": []}],
+        "description": "Exact Host and Origin and form csrf matching independent current session required. Persist deletion of only that administrator session and audit before clearing admin cookies; preserve account/Edge/LAN sessions. Invalid authority fails closed; storage failure returns 503 without reporting successful central logout.",
+        "requestBody": {"required": true, "content": {"application/x-www-form-urlencoded": {"schema": {"type": "object", "additionalProperties": false, "required": ["csrf"], "properties": {"csrf": {"type": "string", "minLength": 16, "maxLength": 128}}}}}},
+        "responses": {"303": {"description": "Redirect to administrator login"}, "400": {"description": "Invalid form or origin"}, "401": {"description": "Session invalid"}, "503": {"description": "Authority unavailable"}}
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {"AdministratorSession": {"type": "apiKey", "in": "cookie", "name": "__Host-{product_id}_admin_session", "description": "Independent platform administrator session; ordinary account cookies and worker certificates do not grant platform management authority. Server also requires the matching HttpOnly admin_csrf cookie."}},
+    "schemas": {
+      "AdministratorLogin": {
+        "type": "object", "additionalProperties": false, "required": ["username", "password", "csrf"],
+        "properties": {
+          "username": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$"},
+          "password": {"type": "string", "minLength": 12, "maxLength": 72, "writeOnly": true, "description": "Implementation additionally bounds UTF-8 bytes to 12-72; no trimming or truncation."},
+          "csrf": {"type": "string", "minLength": 16, "maxLength": 128}
+        }
+      },
+      "AdministratorSession": {
+        "type": "object", "additionalProperties": false, "required": ["v", "request_id", "data"],
+        "properties": {"v": {"const": 2}, "request_id": {"type": "string", "minLength": 16, "maxLength": 128}, "data": {"type": "object", "additionalProperties": false, "required": ["actor_type", "actor_id", "expires_at"], "properties": {"actor_type": {"const": "administrator"}, "actor_id": {"const": "1"}, "expires_at": {"type": "string", "format": "date-time"}}}}
+      }
+    }
+  }
+}

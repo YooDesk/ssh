@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yoodesk.invalid/protocol/desk-stream-control-v1.schema.json",
+  "title": "Desk stream flow control v1",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["type", "pts"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "video_received" },
+        "pts": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": { "type": { "const": "refresh_video" } }
+    },
+    {
+      "type": "object",
+      "required": ["type", "id"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "ping" },
+        "id": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[
+  { "name": "enabled defaults", "valid": true, "value": { "disabled": [], "remote_enabled": true } },
+  { "name": "master off preserves choices", "valid": true, "value": { "disabled": ["vnc"], "remote_enabled": false } },
+  { "name": "password update", "valid": true, "value": { "action": "password", "password": "fixture-password-only" } },
+  { "name": "protocol disable", "valid": true, "value": { "action": "protocol", "protocol": "ssh", "enabled": false } },
+  { "name": "master disable", "valid": true, "value": { "action": "remote", "enabled": false } },
+  { "name": "update ack", "valid": true, "value": { "ok": true } },
+  { "name": "local management password readback", "valid": true, "value": { "disabled": [], "remote_enabled": true, "password": "fixture-only" } },
+  { "name": "short password", "valid": false, "value": { "action": "password", "password": "short" } },
+  { "name": "unknown action", "valid": false, "value": { "action": "login", "enabled": true } },
+  { "name": "unknown protocol", "valid": false, "value": { "action": "protocol", "protocol": "http", "enabled": false } },
+  { "name": "missing enabled", "valid": false, "value": { "action": "protocol", "protocol": "ssh" } },
+  { "name": "unknown update field", "valid": false, "value": { "action": "remote", "enabled": true, "password": "fixture-only" } },
+  { "name": "duplicate disabled", "valid": false, "value": { "disabled": ["ssh", "ssh"], "remote_enabled": true } }
+]

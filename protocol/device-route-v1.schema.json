@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:device-route:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "device_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+    },
+    "site_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\x00-\\x1f\\x7f]+$"
+    },
+    "v": {
+      "const": 1
+    },
+    "edge_connection_generation": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{32})?$"
+    },
+    "connector_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "route_epoch": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "lease_deadline": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+    }
+  },
+  "required": [
+    "device_id",
+    "site_id",
+    "node_id",
+    "v",
+    "edge_connection_generation",
+    "connector_generation",
+    "route_epoch",
+    "lease_deadline"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "node_id": {
+            "const": "global"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "site_id": {
+            "const": "global"
+          },
+          "edge_connection_generation": {
+            "const": ""
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "edge_connection_generation": {
+            "pattern": "^[0-9a-f]{32}$"
+          }
+        }
+      }
+    }
+  ]
+}

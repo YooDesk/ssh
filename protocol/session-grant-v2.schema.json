@@ -1,0 +1,117 @@
+{
+  "type": "object",
+  "description": "远程会话授权最长900秒；exp必须大于nbf且exp-iat不超过900秒，由签发和验签端同时校验。连接心跳期限独立，不截短访问授权；撤销与换代仍终止原会话。",
+  "properties": {
+    "iss": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "aud": {
+      "const": "raccess-session-v2"
+    },
+    "sub": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "jti": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "device_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "policy_revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "iat": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "nbf": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "exp": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "connection_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "negotiation_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "session.connect",
+          "screen.view",
+          "input.pointer",
+          "input.keyboard",
+          "audio.listen",
+          "clipboard.read",
+          "clipboard.write",
+          "files.read",
+          "files.write",
+          "targets.manage",
+          "credentials.use",
+          "credentials.persist",
+          "shell.start"
+        ]
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "lease_version": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,18}$"
+    }
+  },
+  "required": [
+    "iss",
+    "aud",
+    "sub",
+    "jti",
+    "device_id",
+    "session_id",
+    "capability",
+    "target_id",
+    "policy_revision",
+    "iat",
+    "nbf",
+    "exp",
+    "connection_generation",
+    "negotiation_generation",
+    "scope",
+    "lease_version"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:session-grant:v2"
+}

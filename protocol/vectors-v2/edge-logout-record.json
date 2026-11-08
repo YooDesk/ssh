@@ -1,0 +1,120 @@
+[
+  {
+    "name": "pending-intent",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 1,
+      "hard_expires_at": 2000000000000,
+      "status": "pending",
+      "revoke_capability": "signed-proof-placeholder",
+      "record_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "name": "acked-tombstone",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 1,
+      "hard_expires_at": 2000000000000,
+      "status": "acked",
+      "record_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "name": "ordinary-cookie-denied",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 1,
+      "hard_expires_at": 2000000000000,
+      "status": "pending",
+      "revoke_capability": "signed-proof-placeholder",
+      "record_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "cookie_token": "ordinary-credential"
+    }
+  },
+  {
+    "name": "status-denied",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 1,
+      "hard_expires_at": 2000000000000,
+      "status": "success",
+      "revoke_capability": "signed-proof-placeholder",
+      "record_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "name": "version-denied",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 0,
+      "hard_expires_at": 2000000000000,
+      "status": "pending",
+      "revoke_capability": "signed-proof-placeholder",
+      "record_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  },
+  {
+    "name": "digest-required",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 1,
+      "hard_expires_at": 2000000000000,
+      "status": "pending",
+      "revoke_capability": "signed-proof-placeholder"
+    }
+  },
+  {
+    "name": "acked-proof-denied",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "logout_id": "11111111111111111111111111111111",
+      "node_id": "edge-a",
+      "origin": "https://edge-a.example",
+      "issuer": "https://global.example",
+      "session_id": "session-identity-placeholder",
+      "session_version": 1,
+      "hard_expires_at": 2000000000000,
+      "status": "acked",
+      "revoke_capability": "signed-proof-placeholder",
+      "record_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  }
+]

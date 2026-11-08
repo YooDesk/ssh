@@ -1,0 +1,466 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gateway browser account",
+    "version": "2.0.0-candidate"
+  },
+  "servers": [
+    {
+      "url": "/{product_id}",
+      "variables": {
+        "product_id": {
+          "default": "yoodesk"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/account/login/": {
+      "get": {
+        "operationId": "showBrowserLogin",
+        "responses": {
+          "200": {
+            "description": "Trusted login form; browser binding and CSRF cookie, no account session yet"
+          }
+        }
+      },
+      "post": {
+        "operationId": "startBrowserLogin",
+        "description": "Exact Origin, matching CSRF/browser cookie and bounded form required. Global persists scope/state/nonce/PKCE. Request ID retry is idempotent.",
+        "responses": {
+          "303": {
+            "description": "Redirect to fixed IdP"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "429": {
+            "description": "Login capacity/rate limit"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "request_id",
+                  "csrf"
+                ],
+                "properties": {
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  },
+                  "csrf": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/browser/login/callback/": {
+      "get": {
+        "operationId": "completeBrowserLogin",
+        "description": "Fixed Global browser callback, independent of Connector consent. One-time state plus browser binding; RSA ID token verification precedes account mapping. Global sets origin-scoped opaque session, CSRF and revoke-only cookies; code/state removed from redirect.",
+        "responses": {
+          "303": {
+            "description": "Redirect to account page"
+          },
+          "400": {
+            "description": "Invalid callback"
+          },
+          "401": {
+            "description": "Invalid identity"
+          },
+          "410": {
+            "description": "Expired/replayed state"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    },
+    "/api/v2/browser/session/": {
+      "get": {
+        "operationId": "getBrowserSession",
+        "description": "Authoritative scope/user/version/expiry check on every request; no access JWT or refresh token returned. CSRF value may be returned only to authenticated same-origin caller.",
+        "responses": {
+          "200": {
+            "description": "Local browser account session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrowserSessionResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session invalid"
+          }
+        },
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ]
+      }
+    },
+    "/api/v2/browser/devices/": {
+      "get": {
+        "operationId": "listBrowserDevices",
+        "description": "Persistent account ACL, independently scoped from Connector tokens. Global is authoritative for all sites; Edge proxies this directory without filtering it to the entry site. Offline devices remain listed. The existing online boolean includes an authorized current Native route only when its original control attachment, current node generation, site policy, ready data attachment and independent data lease are valid. This is device-link status, not a browser access grant or proof of a ready inter-node business tunnel. Legacy authorized host-presence semantics remain unchanged.",
+        "responses": {
+          "200": {
+            "description": "Own authorized device directory"
+          },
+          "401": {
+            "description": "Session invalid"
+          }
+        },
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ]
+      }
+    },
+    "/api/v2/browser/logout/": {
+      "post": {
+        "operationId": "logoutBrowserSession",
+        "description": "Exact Origin and CSRF; revoke-only proof can revoke only its signed node/origin/session/version before hard deadline. Persistent revoke blocks completed-login result recovery. Remote-lease/outbox integration is separate and must not be inferred from this endpoint. Edge offline path requires local exact Origin/double-submit CSRF and signed revoke-only scope; persist/fsync before clearing cookies. No account read or refresh permission is granted by proof. Pending renewal logout additionally accepts X-Browser-Refresh: 1 and X-Refresh-Request matching the HttpOnly __Host-{product_id}_account_refresh cookie. Ordinary X-CSRF-Token remains independently valid before prepare delivery. Global binds nonce/CSRF to the signed revoke session; Edge verifies locally then persists before clearing all cookies.",
+        "responses": {
+          "200": {
+            "description": "Current browser session revoked"
+          },
+          "401": {
+            "description": "Invalid proof/CSRF"
+          },
+          "202": {
+            "description": "Edge local logout completed; fsynced revoke-only intent awaits central ACK and will retry without browser"
+          },
+          "503": {
+            "description": "Local logout completed but storage unavailable/full; central revocation cannot be guaranteed"
+          }
+        },
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ]
+      }
+    },
+    "/account/": {
+      "get": {
+        "operationId": "showBrowserAccount",
+        "responses": {
+          "200": {
+            "description": "Trusted account page with escaped identity/device metadata"
+          },
+          "303": {
+            "description": "Login required"
+          }
+        },
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ]
+      }
+    },
+    "/account/logout/": {
+      "post": {
+        "operationId": "logoutBrowserForm",
+        "description": "Same authoritative revoke as API, with exact Origin and bounded CSRF form; redirect to login after acknowledged revoke.",
+        "responses": {
+          "303": {
+            "description": "Logged out"
+          },
+          "401": {
+            "description": "Invalid session/proof/CSRF"
+          }
+        },
+        "security": [
+          {
+            "AccountSession": []
+          }
+        ]
+      }
+    },
+    "/api/v2/browser/refresh/": {
+      "post": {
+        "operationId": "prepareBrowserRefresh",
+        "description": "Exact Origin, X-Browser-Refresh: 1, current CSRF and bounded form required. Prepare is idempotent for the original request_id for five minutes. Installs pending cookies; client must ACK before ordinary reads. Session identity, revocation version and hard deadline stay fixed. Prepare also installs a hard-deadline HttpOnly/Secure/Lax host-only refresh request-id cookie for purpose-limited logout during pending renewal.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Browser-Refresh",
+            "required": true,
+            "schema": {
+              "const": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  },
+                  "csrf": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "request_id",
+                  "csrf"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pending cookie group installed; ACK required"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Invalid scope, Origin, CSRF, cookie or request"
+          },
+          "409": {
+            "description": "Another refresh pending or consumed operation"
+          },
+          "410": {
+            "description": "Commit window expired"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    },
+    "/api/v2/browser/refresh/ack/": {
+      "post": {
+        "operationId": "ackBrowserRefresh",
+        "description": "Exact Origin, X-Browser-Refresh: 1 and bounded form required. ACK uses the installed HttpOnly cookie pair and original unpredictable browser request_id; it runs before ordinary session validation, activates prepared credentials and erases the encrypted result. No access to account data is granted before ACK.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Browser-Refresh",
+            "required": true,
+            "schema": {
+              "const": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "request_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Acknowledged"
+          },
+          "400": {
+            "description": "Malformed request"
+          },
+          "401": {
+            "description": "Invalid scope, Origin, CSRF, cookie or request"
+          },
+          "409": {
+            "description": "Another refresh pending or consumed operation"
+          },
+          "410": {
+            "description": "Commit window expired"
+          },
+          "503": {
+            "description": "Authority unavailable"
+          }
+        }
+      }
+    },
+    "/account/session.js": {
+      "get": {
+        "operationId": "getBrowserSessionClient",
+        "description": "Shared trusted same-origin module for automatic renewal, Web Locks coordination and original request_id recovery. No credentials embedded.",
+        "responses": {
+          "200": {
+            "description": "JavaScript module",
+            "content": {
+              "text/javascript": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid method or query"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BrowserSessionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "v",
+          "request_id",
+          "data"
+        ],
+        "properties": {
+          "v": {
+            "const": 2
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 16,
+            "maxLength": 128
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "session",
+              "csrf_token"
+            ],
+            "properties": {
+              "session": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "user_id",
+                  "display_name",
+                  "session_id",
+                  "session_version",
+                  "expires_at",
+                  "hard_expires_at"
+                ],
+                "properties": {
+                  "user_id": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  },
+                  "display_name": {
+                    "type": "string"
+                  },
+                  "session_id": {
+                    "type": "string",
+                    "minLength": 16,
+                    "maxLength": 128
+                  },
+                  "session_version": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "expires_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "hard_expires_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "csrf_token": {
+                "type": "string",
+                "minLength": 16,
+                "maxLength": 128
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AccountSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_account_session"
+      }
+    }
+  }
+}

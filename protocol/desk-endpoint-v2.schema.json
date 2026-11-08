@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yoodesk.invalid/protocol/desk-endpoint-v2.schema.json",
+  "title": "Desk endpoint extension request v2",
+  "$defs": {
+    "path": {
+      "type": "string",
+      "maxLength": 4096
+    },
+    "file_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "root_id": {
+      "type": "string",
+      "pattern": "^(default|system|drive-[A-Z])$"
+    },
+    "size": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1073741824
+    },
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["action"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.roots"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "input.release"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "after"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "chat.read"
+        },
+        "after": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "message_id", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "chat.send"
+        },
+        "message_id": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "path"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.list"
+        },
+        "root_id": {
+          "$ref": "#/$defs/root_id"
+        },
+        "path": {
+          "$ref": "#/$defs/path"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "path", "size"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.upload"
+        },
+        "root_id": {
+          "$ref": "#/$defs/root_id"
+        },
+        "path": {
+          "$ref": "#/$defs/file_path"
+        },
+        "size": {
+          "$ref": "#/$defs/size"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "path"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.download"
+        },
+        "root_id": {
+          "$ref": "#/$defs/root_id"
+        },
+        "path": {
+          "$ref": "#/$defs/file_path"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "transfer_id", "offset", "data"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.write"
+        },
+        "transfer_id": {
+          "$ref": "#/$defs/id"
+        },
+        "offset": {
+          "$ref": "#/$defs/size"
+        },
+        "data": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 174764,
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "transfer_id", "offset"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.read"
+        },
+        "transfer_id": {
+          "$ref": "#/$defs/id"
+        },
+        "offset": {
+          "$ref": "#/$defs/size"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "transfer_id"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.commit"
+        },
+        "transfer_id": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "transfer_id"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.cancel"
+        },
+        "transfer_id": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "privacy.set"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "privacy.get"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "path", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.create"
+        },
+        "root_id": {
+          "$ref": "#/$defs/root_id"
+        },
+        "path": {
+          "$ref": "#/$defs/file_path"
+        },
+        "kind": {
+          "enum": ["file", "directory"]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "path", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.delete"
+        },
+        "root_id": {
+          "$ref": "#/$defs/root_id"
+        },
+        "path": {
+          "$ref": "#/$defs/file_path"
+        },
+        "kind": {
+          "enum": ["file", "directory"]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["action", "path", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "const": "files.rename"
+        },
+        "root_id": {
+          "$ref": "#/$defs/root_id"
+        },
+        "path": {
+          "$ref": "#/$defs/file_path"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[^/\\\\]+$"
+        }
+      }
+    }
+  ]
+}

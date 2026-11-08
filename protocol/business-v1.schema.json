@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:business:v1",
+  "$defs": {
+    "session_create": {
+      "type": "object",
+      "properties": {
+        "protocol_version": {
+          "const": 1
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "credential_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "cols": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "rows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "read_only": {
+              "type": "boolean"
+            },
+            "video_codecs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "audio_codecs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "display_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "client_features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 128
+        }
+      },
+      "required": [
+        "protocol_version",
+        "target_id",
+        "options",
+        "client_features"
+      ],
+      "additionalProperties": false
+    },
+    "session_descriptor": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "business_session_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "state": {
+              "enum": [
+                "created",
+                "connecting",
+                "waiting_challenge",
+                "ready",
+                "reconnecting",
+                "closing",
+                "closed",
+                "failed"
+              ]
+            },
+            "stream_profile": {
+              "enum": [
+                "terminal.v1",
+                "sftp.v1",
+                "rfb.v1",
+                "rdcleanpath.v1",
+                "rustdesk-message.v1"
+              ]
+            },
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "maxItems": 128
+            },
+            "event_url": {
+              "type": "string",
+              "pattern": "^/[a-z][a-z0-9-]{0,31}/webclient/"
+            },
+            "stream_url": {
+              "type": "string",
+              "pattern": "^/[a-z][a-z0-9-]{0,31}/webclient/"
+            }
+          },
+          "required": [
+            "business_session_id",
+            "state",
+            "stream_profile",
+            "features",
+            "event_url",
+            "stream_url"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "request_id",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "enum": [
+            "session.snapshot",
+            "session.state",
+            "challenge.created",
+            "challenge.resolved",
+            "transfer.progress",
+            "transfer.completed",
+            "transfer.failed",
+            "transfer.cancelled",
+            "session.error"
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "business_session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "payload": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "event_id",
+        "business_session_id",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    "terminal": {
+      "type": "object",
+      "properties": {
+        "v": {
+          "const": 1
+        },
+        "type": {
+          "enum": [
+            "terminal.resize",
+            "terminal.close",
+            "terminal.ready",
+            "terminal.exit",
+            "terminal.error"
+          ]
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "payload": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "request_id",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "terminal.resize"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "cols": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  },
+                  "rows": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  }
+                },
+                "required": [
+                  "cols",
+                  "rows"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "terminal.exit"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "exit_code": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "signal": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "exit_code",
+                  "signal"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/session_create"
+    },
+    {
+      "$ref": "#/$defs/session_descriptor"
+    },
+    {
+      "$ref": "#/$defs/event"
+    },
+    {
+      "$ref": "#/$defs/terminal"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-flow-lease:v1",
+  "$defs": {
+    "renew": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_generation",
+        "permit",
+        "previous_lease_version",
+        "lease_version",
+        "expires_at"
+      ],
+      "properties": {
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "permit": {
+          "$ref": "urn:raccess:edge-session:v1#/$defs/install/properties/permit"
+        },
+        "previous_lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        },
+        "expires_at": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    }
+  }
+}

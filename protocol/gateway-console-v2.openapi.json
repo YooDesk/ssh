@@ -1,0 +1,1035 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gateway Global management console",
+    "version": "2.0.0-candidate"
+  },
+  "paths": {
+    "/api/v2/admin/console/settings": {
+      "get": {
+        "operationId": "getConsoleSettings",
+        "summary": "Read settings and redacted SMTP delivery health",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope. smtp_last_delivery is null until a delivery attempt, otherwise contains at (UTC date-time), delivered (boolean), stage (transport/authentication/envelope/data result category), optional smtp_code (numeric protocol status only). No SMTP reply text, credentials, recipient or verification code is exposed. Health is process-local and resets on restart."
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postConsoleSettings",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsWrite"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/console/users": {
+      "get": {
+        "operationId": "getConsoleUsers",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 2048
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "enterprise_id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "all",
+                "online",
+                "offline"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/console/devices": {
+      "get": {
+        "operationId": "getConsoleDevices",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 2048
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "enterprise_id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "attachment_node",
+            "in": "query",
+            "description": "Exact current or last authenticated attachment; global selects devices attached directly to Global.",
+            "schema": {"type": "string", "maxLength": 128}
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "all",
+                "online",
+                "offline"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/console/enterprises": {
+      "get": {
+        "operationId": "getConsoleEnterprises",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postConsoleEnterprises",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnterpriseWrite"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/console/enterprise-admins": {
+      "post": {
+        "operationId": "postConsoleEnterpriseAdmins",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleWrite"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/console/relay-limits": {
+      "get": {
+        "operationId": "getConsoleRelayLimits",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability. GET with no query reads global/global; otherwise exact target_type and target_id. POST single global/enterprise or up to 128 distinct devices atomically; mixing kinds rejected. Null inherits, zero is explicit unlimited. CAS required per item; applied_revision is null until runtime ACK is proven.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postConsoleRelayLimits",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability. GET with no query reads global/global; otherwise exact target_type and target_id. POST single global/enterprise or up to 128 distinct devices atomically; mixing kinds rejected. Null inherits, zero is explicit unlimited. CAS required per item; applied_revision is null until runtime ACK is proven.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelayBatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/console/remote-sessions": {
+      "get": {
+        "operationId": "getConsoleRemoteSessions",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability. Only current controller runs with current durable parent-session/route/grant are listed; no historical-session inference. started_at and duration_seconds are null when original signed creation evidence is absent. Pagination uses limit 1..100 and offset 0..1024, q <=128 characters.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        }
+      }
+    },
+    "/api/v2/admin/console/password": {
+      "post": {
+        "operationId": "postConsolePassword",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordWrite"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/console/logout": {
+      "post": {
+        "operationId": "postConsoleLogout",
+        "security": [
+          {
+            "AdministratorSession": []
+          }
+        ],
+        "description": "Product-prefixed Global authority. Exact Host, independent administrator session and CSRF cookie; no ordinary-account elevation. No duplicate/unknown JSON fields or duplicate queries. Requests <=64 KiB, nesting <=16, transaction deadline 25 seconds. Configuration switches are stored here; this contract does not claim external provider availability.",
+        "responses": {
+          "200": {
+            "description": "Successful data envelope"
+          },
+          "400": {
+            "description": "Invalid query/body/Origin/CSRF"
+          },
+          "401": {
+            "description": "Administrator required"
+          },
+          "404": {
+            "description": "Missing authority resource"
+          },
+          "409": {
+            "description": "Revision conflict; reread before manual retry"
+          },
+          "429": {
+            "description": "Hash capacity or login rate exceeded"
+          },
+          "503": {
+            "description": "Authority unavailable; do not replay writes automatically"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Admin-CSRF",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyWrite"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AdministratorSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-{product_id}_admin_session"
+      }
+    },
+    "schemas": {
+      "EnterpriseKey": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "email_domain",
+              "wecom_corp_id",
+              "feishu_tenant_key",
+              "dingtalk_corp_id"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "kind",
+          "value"
+        ]
+      },
+      "EnterpriseWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enterprise_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,15}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "keys": {
+            "type": "array",
+            "maxItems": 1024,
+            "items": {
+              "$ref": "#/components/schemas/EnterpriseKey"
+            }
+          }
+        },
+        "required": [
+          "enterprise_id",
+          "revision",
+          "name",
+          "keys"
+        ]
+      },
+      "RoleWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "enterprise_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,15}$"
+          },
+          "user_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "administrator": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "enterprise_id",
+          "revision",
+          "user_id",
+          "administrator"
+        ]
+      },
+      "RelayWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target_type": {
+            "enum": [
+              "global",
+              "enterprise",
+              "device"
+            ]
+          },
+          "target_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "expected_revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,15}$"
+          },
+          "relay_limit_bps": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1250000000
+          }
+        },
+        "required": [
+          "target_type",
+          "target_id",
+          "expected_revision",
+          "relay_limit_bps"
+        ]
+      },
+      "RelayBatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 128,
+            "items": {
+              "$ref": "#/components/schemas/RelayWrite"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "SMTP": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "host": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "from": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "tls_mode": {
+            "enum": [
+              "tls",
+              "starttls"
+            ]
+          },
+          "username": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "from_name": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "host",
+          "port",
+          "from",
+          "tls_mode"
+        ]
+      },
+      "OIDC": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "issuer": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "client_id": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "client_secret": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "provider_hint": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 32
+          }
+        },
+        "required": [
+          "issuer",
+          "client_id",
+          "client_secret",
+          "provider_hint",
+          "scopes"
+        ]
+      },
+      "PasswordWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "old_password": {
+            "type": "string",
+            "maxLength": 72
+          },
+          "new_password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 72
+          }
+        },
+        "required": [
+          "old_password",
+          "new_password"
+        ]
+      },
+      "EmptyWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {},
+        "required": []
+      },
+      "Settings": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "management_owned": {
+            "type": "boolean"
+          },
+          "email_registration_enabled": {
+            "type": "boolean"
+          },
+          "wecom_enabled": {
+            "type": "boolean"
+          },
+          "feishu_enabled": {
+            "type": "boolean"
+          },
+          "dingtalk_enabled": {
+            "type": "boolean"
+          },
+          "feishu_provider_hint": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "dingtalk_provider_hint": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "wecom": {
+            "$ref": "#/components/schemas/OIDC"
+          },
+          "smtp": {
+            "$ref": "#/components/schemas/SMTP"
+          }
+        },
+        "required": [
+          "email_registration_enabled",
+          "wecom_enabled",
+          "feishu_enabled",
+          "dingtalk_enabled",
+          "feishu_provider_hint",
+          "dingtalk_provider_hint",
+          "wecom",
+          "smtp"
+        ]
+      },
+      "SettingsWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]{0,15}$"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/Settings"
+          },
+          "keep_smtp_password": {
+            "type": "boolean"
+          },
+          "keep_wecom_secret": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "keep_smtp_password",
+          "keep_wecom_secret"
+        ]
+      }
+    }
+  }
+}

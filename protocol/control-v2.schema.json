@@ -1,0 +1,1196 @@
+{
+  "type": "object",
+  "properties": {
+    "v": {
+      "const": 2
+    },
+    "type": {
+      "enum": [
+        "registered",
+        "heartbeat",
+        "heartbeat_ack",
+        "capabilities",
+        "capabilities_ack",
+        "network_config_changed",
+        "session_open",
+        "session_accept",
+        "session_reject",
+        "offer",
+        "answer",
+        "ice_candidate",
+        "relay_request",
+        "relay_ready",
+        "lease_renew",
+        "lease_ack",
+        "ice_config_update",
+        "session_close",
+        "session_closed",
+        "error",
+        "lease_update"
+      ]
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "connection_generation": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$"
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "v",
+    "type",
+    "request_id",
+    "connection_generation",
+    "payload"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:control:v2",
+  "$defs": {
+    "network_config": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "valid_until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "stun_servers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^stuns?:[^\\s]+$",
+                  "maxLength": 2048
+                },
+                "minItems": 1,
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "urls"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 16
+        },
+        "ice_policy_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "revision",
+        "valid_until",
+        "stun_servers",
+        "ice_policy_revision"
+      ],
+      "additionalProperties": false
+    },
+    "ice_config": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "policy_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ice_transport_policy": {
+          "enum": [
+            "all",
+            "relay"
+          ]
+        },
+        "allow_wss": {
+          "type": "boolean"
+        },
+        "allow_http": {
+          "type": "boolean"
+        },
+        "ice_servers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^(stun|stuns|turn|turns):[^\\s]+$",
+                  "maxLength": 2048
+                },
+                "minItems": 1,
+                "maxItems": 8
+              },
+              "username": {
+                "type": "string",
+                "maxLength": 512
+              },
+              "credential": {
+                "type": "string",
+                "maxLength": 2048
+              },
+              "credential_expires_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "urls"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "urls": {
+                      "contains": {
+                        "type": "string",
+                        "pattern": "^turns?:"
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "username",
+                    "credential",
+                    "credential_expires_at"
+                  ]
+                }
+              }
+            ]
+          },
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "revision",
+        "policy_revision",
+        "expires_at",
+        "ice_transport_policy",
+        "allow_wss",
+        "ice_servers"
+      ],
+      "additionalProperties": false
+    },
+    "capability": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9.-]{0,63}$"
+        },
+        "supported": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "ready": {
+          "type": "boolean"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "id",
+        "supported",
+        "enabled",
+        "ready",
+        "protocols"
+      ],
+      "additionalProperties": false
+    },
+    "payload_registered": {
+      "type": "object",
+      "properties": {
+        "device_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "heartbeat_interval_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300
+        },
+        "device_lease_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "network_config": {
+          "$ref": "#/$defs/network_config"
+        }
+      },
+      "required": [
+        "device_id",
+        "heartbeat_interval_seconds",
+        "device_lease_seconds"
+      ],
+      "additionalProperties": false
+    },
+    "payload_heartbeat": {
+      "type": "object",
+      "properties": {
+        "applied_network_revision": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "network_config_status": {
+          "enum": [
+            "applied",
+            "failed"
+          ]
+        },
+        "capabilities_revision": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "error_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192,
+          "description": "Native admitted physical control only. Fresh host credential for the same account, device, desktop session and authorization versions; update must commit before old credential expiry. Never logged or persisted."
+        }
+      },
+      "required": [
+        "applied_network_revision",
+        "network_config_status",
+        "capabilities_revision"
+      ],
+      "additionalProperties": false
+    },
+    "payload_heartbeat_ack": {
+      "type": "object",
+      "properties": {
+        "lease_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "network_config": {
+          "$ref": "#/$defs/network_config"
+        }
+      },
+      "required": [
+        "lease_expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "payload_capabilities": {
+      "type": "object",
+      "properties": {
+        "local_ip": {"type": "string", "minLength": 7, "maxLength": 15},
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability"
+          },
+          "maxItems": 128
+        }
+      },
+      "required": [
+        "revision",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "payload_capabilities_ack": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "payload_network_config_changed": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "payload_session_open": {
+      "type": "object",
+      "properties": {
+        "grant": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16384
+        },
+        "ice_config": {
+          "$ref": "#/$defs/ice_config"
+        },
+        "capability": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "grant",
+        "ice_config",
+        "capability",
+        "target_id"
+      ],
+      "additionalProperties": false
+    },
+    "payload_session_accept": {
+      "type": "object",
+      "properties": {
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "maxItems": 128
+        }
+      },
+      "required": [
+        "features"
+      ],
+      "additionalProperties": false
+    },
+    "payload_session_reject": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "payload_offer": {
+      "type": "object",
+      "properties": {
+        "sdp": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 49152
+        },
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "sdp",
+        "negotiation_generation"
+      ],
+      "additionalProperties": false
+    },
+    "payload_answer": {
+      "type": "object",
+      "properties": {
+        "sdp": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 49152
+        },
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "sdp",
+        "negotiation_generation"
+      ],
+      "additionalProperties": false
+    },
+    "payload_ice_candidate": {
+      "type": "object",
+      "properties": {
+        "candidate": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "required": [
+                "candidate"
+              ],
+              "properties": {
+                "candidate": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "sdpMid": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sdpMLineIndex": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "usernameFragment": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "candidate",
+        "negotiation_generation"
+      ],
+      "additionalProperties": false
+    },
+    "payload_relay_request": {
+      "type": "object",
+      "properties": {
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "negotiation_generation"
+      ],
+      "additionalProperties": false
+    },
+    "payload_relay_ready": {
+      "type": "object",
+      "properties": {
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "negotiation_generation"
+      ],
+      "additionalProperties": false
+    },
+    "payload_lease_renew": {
+      "type": "object",
+      "properties": {
+        "grant": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16384
+        },
+        "lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "lease_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "grant",
+        "lease_version",
+        "lease_expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "payload_lease_ack": {
+      "type": "object",
+      "properties": {
+        "lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "accepted": {
+          "type": "boolean"
+        },
+        "lease_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "lease_version",
+        "accepted"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "accepted": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "lease_expires_at"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "accepted": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "code"
+            ]
+          }
+        }
+      ]
+    },
+    "payload_ice_config_update": {
+      "type": "object",
+      "properties": {
+        "ice_config": {
+          "$ref": "#/$defs/ice_config"
+        },
+        "negotiation_generation": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,19}$"
+        }
+      },
+      "required": [
+        "ice_config",
+        "negotiation_generation"
+      ],
+      "additionalProperties": false
+    },
+    "payload_session_close": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "payload_session_closed": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "payload_error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "retryable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "additionalProperties": false
+    },
+    "payload_lease_update": {
+      "type": "object",
+      "properties": {
+        "grant": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16384
+        },
+        "lease_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,18}$"
+        },
+        "lease_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "browser_access": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "minLength": 32,
+              "maxLength": 4096
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "audience": {
+              "const": "raccess-device-access-v2"
+            }
+          },
+          "required": [
+            "token",
+            "expires_at",
+            "audience"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "grant",
+        "lease_version",
+        "lease_expires_at"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "registered"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_registered"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "heartbeat"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_heartbeat"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "heartbeat_ack"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_heartbeat_ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "capabilities"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_capabilities"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "capabilities_ack"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_capabilities_ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "network_config_changed"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_network_config_changed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session_open"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_session_open"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session_accept"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_session_accept"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session_reject"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_session_reject"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "offer"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_offer"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "answer"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_answer"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "ice_candidate"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_ice_candidate"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "relay_request"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_relay_request"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "relay_ready"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_relay_ready"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "lease_renew"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_lease_renew"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "lease_ack"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_lease_ack"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "ice_config_update"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_ice_config_update"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session_close"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_session_close"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session_closed"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_session_closed"
+          }
+        },
+        "required": [
+          "session_id"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "error"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_error"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "lease_update"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "required": [
+          "session_id"
+        ],
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload_lease_update"
+          }
+        }
+      }
+    }
+  ]
+}

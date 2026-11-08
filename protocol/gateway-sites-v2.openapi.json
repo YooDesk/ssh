@@ -1,0 +1,53 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "Gateway site management", "version": "2.0.0-candidate"},
+  "servers": [{"url": "/{product_id}", "variables": {"product_id": {"default": "yoodesk"}}}],
+  "paths": {
+    "/admin/sites/": {
+      "get": {
+        "operationId": "showManagedSites",
+        "security": [{"AdministratorSession": []}],
+        "description": "Trusted server-rendered Global administrator page, linked from admin home. At most 25 sites per page. Shows create/edit/disable, user and enterprise grants, saved revision and current execution confirmation. No scripts or fetch required. Referrer-Policy same-origin preserves real form Origin; CSP default-src none. Only optional exclusive after cursor is accepted.",
+        "parameters": [{"name": "after", "in": "query", "schema": {"$ref": "#/components/schemas/ID"}}],
+        "responses": {"200": {"description": "HTML forms and current site state", "content": {"text/html": {"schema": {"type": "string"}}}}, "400": {"description": "Invalid query or host"}, "401": {"description": "Administrator login required"}, "503": {"description": "Cannot read current state"}}
+      },
+      "post": {
+        "operationId": "submitManagedSiteForm",
+        "security": [{"AdministratorSession": []}],
+        "description": "Exact Origin, current admin session/CSRF cookies and matching form csrf required. Exactly six unique fields, at most 64KiB. Users and enterprises are newline-separated IDs, trimmed with empty lines removed; duplicates/unknown principals reject. Reuses the same versioned site transaction as the JSON PUT. Success renders saved state and actual pending execution status, never implies runtime ACK. Conflicts return 409 with current forms for manual review; invalid input 400, capacity 429. Storage uncertainty returns 503 and instructs reread before retry. Optional after cursor retains the current page. No automatic write replay.",
+        "parameters": [{"name": "after", "in": "query", "schema": {"$ref": "#/components/schemas/ID"}}],
+        "requestBody": {"required": true, "content": {"application/x-www-form-urlencoded": {"schema": {"type": "object", "additionalProperties": false, "required": ["csrf", "site_id", "expected_revision", "enabled", "users", "enterprises"], "properties": {"csrf": {"type": "string", "minLength": 16, "maxLength": 128}, "site_id": {"$ref": "#/components/schemas/ID"}, "expected_revision": {"type": "string", "pattern": "^(0|[1-9][0-9]{0,15})$"}, "enabled": {"enum": ["true", "false"]}, "users": {"type": "string"}, "enterprises": {"type": "string"}}}}}},
+        "responses": {"200": {"description": "Desired state saved; execution confirmation displayed separately"}, "400": {"description": "Invalid form, origin, CSRF or principal"}, "401": {"description": "Administrator login required"}, "409": {"description": "Changed by another operation; current version shown"}, "429": {"description": "Capacity unavailable"}, "503": {"description": "Save result uncertain; reread before retry"}}
+      }
+    },
+    "/api/v2/admin/sites/": {
+      "get": {
+        "operationId": "listManagedSites",
+        "security": [{"AdministratorSession": []}],
+        "description": "Global platform administrator only. Requires independent current administrator and matching admin_csrf cookies, exact configured Host. No ordinary account, enterprise-only role or worker fallback. At most 25 full site records per page, ordered by site_id. Cursor is the last returned site_id; pages may observe subsequent committed changes, each page is transactionally consistent.",
+        "parameters": [{"name": "after", "in": "query", "schema": {"$ref": "#/components/schemas/ID"}, "description": "Optional exclusive site_id cursor; reject unknown or repeated query parameters."}],
+        "responses": {"200": {"description": "Bounded page", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SitePage"}}}}, "400": {"description": "Invalid request"}, "401": {"description": "Management identity denied"}, "503": {"description": "Authority unavailable"}}
+      },
+      "put": {
+        "operationId": "replaceManagedSite",
+        "security": [{"AdministratorSession": []}],
+        "description": "Global platform administrator only. Exact Host and Origin, X-Admin-CSRF equal to current admin_csrf cookie and persisted session CSRF hash. JSON body at most 64KiB, all fields required; reject duplicate or unknown fields and null arrays. expected_revision 0 creates an absent site; otherwise compare exact current revision. One transaction authenticates, compares, replaces existing authority grants, invalidates that site's admission challenges and device routes, marks management ownership and writes audit. Before route removal, active remote records belonging to devices currently routed at that site are permanently revoked. Their original encrypted issuance records, AAD identifiers, site revision and lease deadlines transfer to bounded durable cleanup storage before the original ciphertext is cleared. Capture or cleanup capacity failure rolls back the entire mutation; retained cleanup metadata is not a dispatched or acknowledged cleanup. Remote-session gate precedes site-write gate to serialize with creation and renewal. The existing runtime authority watcher cancels invalid runs; this does not establish a global runtime ACK. Unknown principals, stale revision, quota or audit/storage failure roll back all changes including remote revocation. No write replay. A committed management-owned site survives old/omitted startup configuration. applied_revision matches desired_revision when no older runtime obligations remain. Pending snapshots require verified original-scope cleanup and a durable drain receipt or atomic archival; retained metadata alone does not keep a verified revision pending. Older installation journals require exact Native ACK or retirement and matching TURN release evidence when applicable. Disabling is the supported non-destructive removal operation; no physical DELETE resource yet.",
+        "parameters": [{"name": "X-Admin-CSRF", "in": "header", "required": true, "schema": {"type": "string", "minLength": 16, "maxLength": 128}}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SiteWrite"}}}},
+        "responses": {"200": {"description": "Persisted desired site; runtime application unverified", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SiteResponse"}}}}, "400": {"description": "Invalid request or unknown principal"}, "401": {"description": "Management identity denied"}, "409": {"description": "management_revision_conflict; reread current state"}, "429": {"description": "management_capacity"}, "503": {"description": "Authority unavailable; reread before retrying an uncertain write"}}
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {"AdministratorSession": {"type": "apiKey", "in": "cookie", "name": "__Host-{product_id}_admin_session"}},
+    "schemas": {
+      "ID": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[^\\s\u0000-\u001f\u007f]([^\u0000-\u001f\u007f]*[^\\s\u0000-\u001f\u007f])?$", "description": "Also limited to 128 UTF-8 bytes; no surrounding Unicode whitespace or control characters."},
+      "Revision": {"type": "string", "pattern": "^[1-9][0-9]{0,15}$", "description": "Canonical decimal, at most 9007199254740991."},
+      "IDs": {"type": "array", "maxItems": 1024, "uniqueItems": true, "items": {"$ref": "#/components/schemas/ID"}},
+      "SiteWrite": {"type": "object", "additionalProperties": false, "required": ["site_id", "expected_revision", "enabled", "users", "enterprises"], "properties": {"site_id": {"$ref": "#/components/schemas/ID"}, "expected_revision": {"type": "string", "pattern": "^(0|[1-9][0-9]{0,15})$"}, "enabled": {"type": "boolean"}, "users": {"$ref": "#/components/schemas/IDs"}, "enterprises": {"$ref": "#/components/schemas/IDs"}}},
+      "Site": {"type": "object", "additionalProperties": false, "required": ["site_id", "enabled", "users", "enterprises", "desired_revision", "applied_revision", "source", "pending_reason", "cleanup_total", "cleanup_confirmed"], "properties": {"site_id": {"$ref": "#/components/schemas/ID"}, "enabled": {"type": "boolean"}, "users": {"$ref": "#/components/schemas/IDs"}, "enterprises": {"$ref": "#/components/schemas/IDs"}, "desired_revision": {"$ref": "#/components/schemas/Revision"}, "applied_revision": {"type": ["string", "null"], "description": "Current desired revision after its earlier runtime obligations are verified complete; otherwise null."}, "source": {"enum": ["configuration", "management"]}, "pending_reason": {"enum": ["", "runtime_ack_unverified"]}, "cleanup_total": {"type": "integer", "minimum": 0, "maximum": 32768, "description": "Currently retained known installations queued up to desired_revision; confirmed expired records may move to audit, while unarchived session snapshots are evaluated independently."}, "cleanup_confirmed": {"type": "integer", "minimum": 0, "maximum": 32768, "description": "Exact Native close ACK or explicit original-scope retirement proof durably committed. This count alone does not establish whole-site applied."}}},
+      "SiteResponse": {"type": "object", "additionalProperties": false, "required": ["v", "request_id", "data"], "properties": {"v": {"const": 2}, "request_id": {"type": "string", "minLength": 16}, "data": {"$ref": "#/components/schemas/Site"}}},
+      "SitePage": {"type": "object", "additionalProperties": false, "required": ["v", "request_id", "data"], "properties": {"v": {"const": 2}, "request_id": {"type": "string", "minLength": 16}, "data": {"type": "object", "additionalProperties": false, "required": ["sites", "next_cursor"], "properties": {"sites": {"type": "array", "maxItems": 25, "items": {"$ref": "#/components/schemas/Site"}}, "next_cursor": {"type": ["string", "null"]}}}}}
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "status": "CANDIDATE",
+  "base_path": "/{product_id}/",
+  "capabilities": {
+    "ssh": "terminal.v1",
+    "shell": "terminal.v1",
+    "sftp": "sftp.v1",
+    "vnc": "rfb.v1",
+    "rdp": "rdcleanpath.v1",
+    "desk": "rustdesk-message.v1"
+  },
+  "routes": {
+    "page": "/{product_id}/webclient/{capability}/",
+    "sessions": "/{product_id}/webclient/{capability}/api/v2/sessions/",
+    "stream": "/{product_id}/webclient/{capability}/api/v2/sessions/{business_session_id}/stream/",
+    "events": "/{product_id}/webclient/{capability}/api/v2/sessions/{business_session_id}/events/"
+  },
+  "limits": {
+    "control_json_bytes": 65536,
+    "stream_header_bytes": 16384,
+    "datachannel_message_bytes": 16384,
+    "yamux_frame_header_bytes": 12,
+    "yamux_body_bytes": 16372,
+    "sftp_upload_chunk_bytes": 1048576,
+    "desk_message_bytes": 16777216
+  },
+  "native_profiles": {
+    "rfb.v1": "Standard RFB byte stream over binary WS",
+    "rdcleanpath.v1": "RDCleanPath version 3390 then RDP TLS bridge",
+    "rustdesk-message.v1": "Provisional adapter profile; endpoint-only snapshot, no upstream UI/server compatibility claim."
+  },
+  "stream_magic": "RAX2",
+  "browser_modes": [
+    "trusted-ui",
+    "isolated-app"
+  ],
+  "media_gate": "T02/T13/T17/T18 required before stable desk media freeze",
+  "browser_policy": {
+    "default_mode": "trusted-ui",
+    "proxy_backend_executable_content_on_account_origin": false,
+    "isolated_app_requires_distinct_origins": true,
+    "embedding": {
+      "product_internal_allowed": true,
+      "external_requires_allowlist": true,
+      "auth_modes": [
+        "cookie",
+        "bearer"
+      ],
+      "cross_site_requires_third_party_cookie": false
+    },
+    "secrets_in_urls": false,
+    "bad_token_cookie_fallback": false
+  }
+}

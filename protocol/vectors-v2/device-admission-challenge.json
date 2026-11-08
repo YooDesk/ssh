@@ -1,0 +1,193 @@
+[
+  {
+    "name": "edge-challenge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "global-challenge",
+    "valid": true,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "global",
+      "node_id": "global",
+      "edge_connection_generation": "",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "missing-edge-generation",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "untrusted-extra-key",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "jwk": {},
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "ordinary-token-forbidden",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "host_token": "must-not-be-persisted",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "invalid-token-hash",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "short",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "insecure-issuer",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "http://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "invalid-expiry",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-02-30T12:00:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "fractional-time",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00.1Z",
+      "expires_at": "2026-10-31T12:01:00Z",
+      "request_id": "native-request-identity"
+    }
+  },
+  {
+    "name": "missing-native-request",
+    "valid": false,
+    "message": {
+      "v": 1,
+      "device_id": "device-a",
+      "site_id": "site-a",
+      "node_id": "edge-a",
+      "edge_connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "connector_generation": "1",
+      "challenge_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issuer": "https://global.example",
+      "commit_url": "https://global.example/yoodesk/api/v2/device-admission/commit/",
+      "host_token_hash": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "issued_at": "2026-10-31T12:00:00Z",
+      "expires_at": "2026-10-31T12:01:00Z"
+    }
+  }
+]

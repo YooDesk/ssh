@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-data-socket:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["v", "type", "node_id", "boot_id", "connection_generation", "request_id"],
+  "properties": {
+    "v": {"const": 1},
+    "type": {"enum": ["begin", "admitted"]},
+    "node_id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,63}$", "not": {"const": "global"}},
+    "boot_id": {"$ref": "#/$defs/nonce"},
+    "connection_generation": {"$ref": "#/$defs/nonce"},
+    "request_id": {"$ref": "#/$defs/nonce"},
+    "data_generation": {"$ref": "#/$defs/nonce"}
+  },
+  "allOf": [{
+    "if": {"properties": {"type": {"const": "admitted"}}},
+    "then": {"required": ["data_generation"]},
+    "else": {"not": {"required": ["data_generation"]}}
+  }],
+  "$defs": {"nonce": {"type": "string", "pattern": "^[0-9a-f]{32}$"}}
+}

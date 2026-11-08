@@ -1,0 +1,64 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "Gateway TURN runtime inventory", "version": "2.0.0-candidate"},
+  "servers": [{"url": "/{product_id}", "variables": {"product_id": {"default": "yoodesk"}}}],
+  "paths": {
+    "/api/v2/admin/runtime/": {
+      "get": {
+        "operationId": "readGatewayTURNRuntimeInventory",
+        "description": "Additive Global platform administrator endpoint. Exact configured Host; query parameters forbidden. Uses current platform administrator session and matching CSRF cookies; ordinary account and node credentials cannot authenticate. Listener acknowledgement and fresh probes are separate from desired configuration. No credentials, endpoints or pool ownership are exposed. Other methods return 405.",
+        "security": [{"AdministratorSession": [], "AdministratorCSRF": []}],
+        "responses": {
+          "200": {"description": "Snapshot", "headers": {"Cache-Control": {"schema": {"const": "no-store"}}}, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Inventory"}}}},
+          "400": {"description": "Invalid Host or query"},
+          "401": {"description": "Platform administrator session denied"},
+          "503": {"description": "Authority unavailable"}
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AdministratorSession": {"type": "apiKey", "in": "cookie", "name": "__Host-{product_id}_admin_session"},
+      "AdministratorCSRF": {"type": "apiKey", "in": "cookie", "name": "__Host-{product_id}_admin_csrf"}
+    },
+    "schemas": {
+      "Inventory": {
+        "type": "object", "required": ["data"], "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "object", "required": ["observed_at", "shared_pool", "turn_pools", "turn_nodes"], "additionalProperties": false,
+            "properties": {
+              "observed_at": {"type": "string", "format": "date-time"},
+              "shared_pool": {"type": "string"},
+              "turn_pools": {"type": "array", "items": {"$ref": "#/components/schemas/Pool"}},
+              "turn_nodes": {"type": "array", "items": {"$ref": "#/components/schemas/Node"}}
+            }
+          }
+        }
+      },
+      "Pool": {
+        "type": "object", "required": ["pool_id", "node_ids", "enabled"], "additionalProperties": false,
+        "properties": {"pool_id": {"type": "string", "minLength": 1}, "node_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}, "enabled": {"type": "boolean"}}
+      },
+      "Node": {
+        "type": "object", "required": ["node_id", "enabled", "max_allocations", "observed"], "additionalProperties": false,
+        "properties": {
+          "node_id": {"type": "string", "minLength": 1}, "enabled": {"type": "boolean"},
+          "max_allocations": {"type": "integer", "minimum": 1},
+          "observed": {"oneOf": [{"type": "null"}, {"$ref": "#/components/schemas/Observation"}], "description": "Null when no current eligible listener lease is observed."}
+        }
+      },
+      "Observation": {
+        "type": "object", "required": ["generation", "applied_revision", "lease_expires_at", "verified_until", "available_allocations"], "additionalProperties": false,
+        "properties": {
+          "generation": {"type": "string", "minLength": 1},
+          "applied_revision": {"type": "string", "pattern": "^[1-9][0-9]{0,19}$"},
+          "lease_expires_at": {"type": "string", "format": "date-time"},
+          "verified_until": {"type": ["string", "null"], "format": "date-time", "description": "Null without current generation probe evidence for all configured endpoints."},
+          "available_allocations": {"type": "integer", "minimum": 0}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:viewer-rate:v1",
+  "title": "Connector per-Viewer immutable rate snapshot (design draft)",
+  "description": "Design only. Signed inside session grant v3. 0 is explicit unlimited. No dynamic updates.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "v",
+    "from_viewer_bytes_per_second",
+    "to_viewer_bytes_per_second"
+  ],
+  "properties": {
+    "v": {
+      "type": "integer",
+      "const": 1
+    },
+    "from_viewer_bytes_per_second": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1250000000
+    },
+    "to_viewer_bytes_per_second": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1250000000
+    }
+  }
+}

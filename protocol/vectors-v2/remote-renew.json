@@ -1,0 +1,57 @@
+[
+  {
+    "name": "canonical",
+    "valid": true,
+    "message": {
+      "expected_lease_version": "1"
+    }
+  },
+  {
+    "name": "missing",
+    "valid": false,
+    "message": {}
+  },
+  {
+    "name": "zero",
+    "valid": false,
+    "message": {
+      "expected_lease_version": "0"
+    }
+  },
+  {
+    "name": "leading-zero",
+    "valid": false,
+    "message": {
+      "expected_lease_version": "01"
+    }
+  },
+  {
+    "name": "number",
+    "valid": false,
+    "message": {
+      "expected_lease_version": 1
+    }
+  },
+  {
+    "name": "null",
+    "valid": false,
+    "message": {
+      "expected_lease_version": null
+    }
+  },
+  {
+    "name": "extra",
+    "valid": false,
+    "message": {
+      "expected_lease_version": "1",
+      "grant": "forbidden"
+    }
+  },
+  {
+    "name": "too-long",
+    "valid": false,
+    "message": {
+      "expected_lease_version": "11111111111111111111"
+    }
+  }
+]

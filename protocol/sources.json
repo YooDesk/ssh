@@ -1,0 +1,15 @@
+{
+  "freeze_date": "2026-10-30",
+  "rustdesk": {
+    "url": "https://github.com/rustdesk/rustdesk",
+    "commit": "5217f32a123b100899596f77e771d0141e32e307",
+    "source_path": "libs/base/protos/message.proto",
+    "snapshot": "rustdesk/message-v1.proto",
+    "sha256": "7017ed73671c1b2920a2858c77b2a554ad64bab17c82bf7d61823955f1140c4d",
+    "declared_hbb_common_commit": "fae47e024dd83cef6aaecde0aa7d11731df11649",
+    "observed_reference_hbb_common_commit": "7e1c392c62d39c364127307cd408421dd5f8cfb0",
+    "scope": "endpoint messages only; no upstream UI or servers"
+  },
+  "yodesk_reference_commit": "75d9940",
+  "warpgate_reference_tag": "v0.30.2"
+}

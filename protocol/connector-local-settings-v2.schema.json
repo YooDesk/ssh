@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yoodesk:connector-local-settings:v2",
+  "title": "Connector local settings v2",
+  "description": "WebService loopback /{product_id}/internal/v2/connector-settings/ accepts GET and POST. Exact loopback Host, actual loopback peer, and X-YooDesk-Local-Management (base64 of the protected 32-byte backend key) are required. Origin and remote backend proofs are forbidden. Connector proxies through its same-origin admin API; The current access password is returned only through the protected local management read response; it is never included in capability reports or public snapshots. Failed writes do not return success. Protocol/master switches restrict Connector access only. Password rotation revokes all access sessions. Errors: 400 invalid update/body, 403 rejected boundary, 405 method, 500 persistence/read failure. Connector returns 400 for unavailable upstream operations.",
+  "oneOf": [
+    { "$ref": "#/$defs/settings" },
+    { "$ref": "#/$defs/update" },
+    { "$ref": "#/$defs/success" }
+  ],
+  "$defs": {
+    "protocol": { "enum": ["desk", "ssh", "rdp", "vnc"] },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disabled", "remote_enabled"],
+      "properties": {
+        "disabled": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/protocol" }, "maxItems": 4 },
+        "remote_enabled": { "type": "boolean", "description": "Master switch. Turning it off preserves individual protocol choices." },
+        "password": { "type": "string", "description": "Current access password for the authorized loopback management page only. Never forward in capability reports." }
+      }
+    },
+    "update": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action", "password"],
+          "properties": {
+            "action": { "const": "password" },
+            "password": { "type": "string", "minLength": 6, "maxLength": 256, "description": "At most 256 UTF-8 bytes. Whitespace and control characters are rejected." }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action", "protocol", "enabled"],
+          "properties": {
+            "action": { "const": "protocol" },
+            "protocol": { "$ref": "#/$defs/protocol" },
+            "enabled": { "type": "boolean" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action", "enabled"],
+          "properties": {
+            "action": { "const": "remote" },
+            "enabled": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "success": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ok"],
+      "properties": { "ok": { "const": true } }
+    }
+  }
+}

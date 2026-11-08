@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:raccess:edge-session:v1",
+  "$defs": {
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_generation",
+        "permit"
+      ],
+      "properties": {
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "permit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "device_id",
+            "header",
+            "stream",
+            "lease_version"
+          ],
+          "properties": {
+            "device_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "header": {
+              "$ref": "urn:raccess:edge-stream-header:v1"
+            },
+            "stream": {
+              "allOf": [
+                {
+                  "$ref": "urn:raccess:stream-header:v2"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "http",
+                        "relay"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "lease_version": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,18}$"
+            }
+          }
+        }
+      }
+    },
+    "revoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_generation",
+        "permit_id",
+        "expires_at"
+      ],
+      "properties": {
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "permit_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "expires_at": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "ack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_generation",
+        "permit_id",
+        "operation",
+        "command_digest",
+        "accepted"
+      ],
+      "properties": {
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "permit_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "operation": {
+          "enum": [
+            "install",
+            "revoke",
+            "renew"
+          ]
+        },
+        "command_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accepted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "abort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_generation",
+        "permit_id",
+        "stream_id"
+      ],
+      "properties": {
+        "data_generation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "permit_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "stream_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        }
+      }
+    }
+  }
+}
