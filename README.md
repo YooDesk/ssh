@@ -22,3 +22,11 @@ python ci/package.py ssh --platform linux-x64
 
 本地打包设置 `CARGO_BUILD_TARGET` 为相应 Rust target，使产物位于 `target/<target>/release`。
 浏览器依赖使用 `npm ci --prefix frontend --ignore-scripts`，构建命令是 `node ci/browser.mjs ssh`。
+
+## 2026-11-08 SFTP 路由修复
+
+SFTP 按字段名提取 `id`、`tid`，兼容动态插件前缀带来的额外 `capability` 参数，
+避免上传、下载、目录和传输接口因路径参数数量不匹配返回 500。
+真实 HTTP 路由回归覆盖五类接口，验证它们到达鉴权并正确返回 401。
+本机单元测试 67 项通过、2 项既有外部 sftp-server 测试忽略；新 DLL 已打包并安装到 Windows。
+四路真实浏览器 STUN SSH/SFTP 同时上传、下载各 16 MiB，SHA256 一致，共同保持超过 185 秒。

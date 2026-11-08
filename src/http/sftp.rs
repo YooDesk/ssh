@@ -52,6 +52,79 @@ fn session_closed() -> ApiError {
     ApiError::new(409, "state_conflict", "SSH session closed")
 }
 
+// 按名称读取业务标识，兼容原固定 SSH 前缀及拆仓后额外的 capability 参数。
+#[derive(serde::Deserialize)]
+pub struct SessionPath {
+    id: String,
+}
+#[derive(serde::Deserialize)]
+pub struct TransferPath {
+    id: String,
+    tid: String,
+}
+
+#[cfg(test)]
+mod route_tests {
+    use super::*;
+    use crate::access::{AccessPolicy, LocalPrincipal, SystemClock};
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
+    #[tokio::test]
+    async fn nested_sftp_routes_reach_authentication_with_extra_capability_parameter() {
+        let config = serde_json::from_value(json!({
+            "product_id":"test", "public_origin":"https://localhost", "bind":"127.0.0.1:0",
+            "certificate":"unused", "private_key":"unused", "access_key_file":"unused"
+        }))
+        .unwrap();
+        let access = Arc::new(
+            crate::access::AccessAuthority::new(
+                AccessPolicy::new(
+                    "test",
+                    vec![LocalPrincipal {
+                        principal_id: "test".into(),
+                        scopes: vec!["session.connect".into()],
+                    }],
+                ),
+                "0123456789abcdef",
+                Arc::new(SystemClock),
+            )
+            .unwrap(),
+        );
+        let state = Arc::new(AppState {
+            config,
+            access,
+            business: Arc::new(crate::business::BusinessHub::new()),
+            limiter: crate::access::LoginLimiter::new(10.0, 10.0),
+        });
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server = tokio::spawn(async move {
+            axum::serve(listener, crate::http::router(state))
+                .await
+                .unwrap();
+        });
+        for (method, path) in [
+            ("GET", "entries/"),
+            ("POST", "transfers/"),
+            ("GET", "transfers/transfer/"),
+            ("PATCH", "transfers/transfer/content/"),
+            ("POST", "transfers/transfer/complete/"),
+        ] {
+            let mut connection = tokio::net::TcpStream::connect(address).await.unwrap();
+            let request = format!("{method} /test/webclient/ssh/api/v2/sessions/session/{path} HTTP/1.1\r\nHost: localhost\r\nOrigin: https://localhost\r\nX-Request-ID: route-arguments\r\nContent-Type: application/json\r\nContent-Length: 2\r\nConnection: close\r\n\r\n{{}}");
+            connection.write_all(request.as_bytes()).await.unwrap();
+            let mut response = Vec::new();
+            connection.read_to_end(&mut response).await.unwrap();
+            assert!(
+                String::from_utf8_lossy(&response).starts_with("HTTP/1.1 401"),
+                "{method} {path}: {}",
+                String::from_utf8_lossy(&response)
+            );
+        }
+        server.abort();
+    }
+}
+
 #[derive(serde::Deserialize)]
 pub struct EntryQuery {
     #[serde(default)]
@@ -61,7 +134,7 @@ pub struct EntryQuery {
 }
 pub async fn entries(
     State(state): State<Arc<AppState>>,
-    Path(id): Path<String>,
+    Path(SessionPath { id }): Path<SessionPath>,
     Query(query): Query<EntryQuery>,
     method: Method,
     headers: HeaderMap,
@@ -114,7 +187,7 @@ pub async fn entries(
 }
 pub async fn create(
     State(state): State<Arc<AppState>>,
-    Path(id): Path<String>,
+    Path(SessionPath { id }): Path<SessionPath>,
     headers: HeaderMap,
     body: Bytes,
 ) -> Response {
@@ -211,7 +284,7 @@ async fn register_created_transfer(
 
 pub async fn transfer(
     State(state): State<Arc<AppState>>,
-    Path((id, tid)): Path<(String, String)>,
+    Path(TransferPath { id, tid }): Path<TransferPath>,
     method: Method,
     headers: HeaderMap,
 ) -> Response {
@@ -230,7 +303,7 @@ pub async fn transfer(
 }
 pub async fn content(
     State(state): State<Arc<AppState>>,
-    Path((id, tid)): Path<(String, String)>,
+    Path(TransferPath { id, tid }): Path<TransferPath>,
     method: Method,
     headers: HeaderMap,
     body: Bytes,
@@ -294,7 +367,7 @@ pub async fn content(
 }
 pub async fn complete(
     State(state): State<Arc<AppState>>,
-    Path((id, tid)): Path<(String, String)>,
+    Path(TransferPath { id, tid }): Path<TransferPath>,
     headers: HeaderMap,
     body: Bytes,
 ) -> Response {
@@ -438,7 +511,7 @@ mod tests {
             let body = json!({"direction":direction,"path":path,"size":"3","conflict":"fail"});
             let response = create(
                 State(state.clone()),
-                Path(id.clone()),
+                Path(SessionPath { id: id.clone() }),
                 headers.clone(),
                 Bytes::from(body.to_string()),
             )
@@ -455,7 +528,10 @@ mod tests {
             assert_eq!(
                 transfer(
                     State(state.clone()),
-                    Path(resource.clone()),
+                    Path(TransferPath {
+                        id: resource.0.clone(),
+                        tid: resource.1.clone()
+                    }),
                     Method::GET,
                     headers.clone()
                 )
@@ -473,7 +549,10 @@ mod tests {
             };
             let response = content(
                 State(state.clone()),
-                Path(resource.clone()),
+                Path(TransferPath {
+                    id: resource.0.clone(),
+                    tid: resource.1.clone(),
+                }),
                 method,
                 content_headers,
                 Bytes::from_static(b"abc"),
@@ -490,7 +569,10 @@ mod tests {
             assert_eq!(
                 complete(
                     State(state.clone()),
-                    Path(resource),
+                    Path(TransferPath {
+                        id: resource.0,
+                        tid: resource.1
+                    }),
                     headers.clone(),
                     Bytes::from_static(b"{\"size\":\"3\"}")
                 )
@@ -523,7 +605,10 @@ mod tests {
             assert_eq!(
                 transfer(
                     State(state.clone()),
-                    Path((id.clone(), tid)),
+                    Path(TransferPath {
+                        id: id.clone(),
+                        tid
+                    }),
                     Method::DELETE,
                     headers.clone()
                 )
@@ -549,7 +634,10 @@ mod tests {
                 assert_eq!(
                     transfer(
                         State(state.clone()),
-                        Path((id.clone(), tid.clone())),
+                        Path(TransferPath {
+                            id: id.clone(),
+                            tid: tid.clone()
+                        }),
                         method,
                         headers.clone()
                     )
@@ -561,7 +649,7 @@ mod tests {
             assert_eq!(
                 complete(
                     State(state.clone()),
-                    Path((id, tid)),
+                    Path(TransferPath { id, tid }),
                     headers,
                     Bytes::from_static(b"{\"size\":\"3\"}")
                 )
