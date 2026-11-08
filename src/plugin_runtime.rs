@@ -81,7 +81,29 @@ unsafe extern "C" fn start(
             {
                 return Err(error("host/plugin ABI mismatch"));
             }
-            let start: Start = decode(input, len)?;
+            let mut start: Start = decode(input, len)?;
+            // The legacy shared catalog seeds each plugin once; subsequent writes must be isolated.
+            if !start.config.connection_profiles_file.is_empty() {
+                let legacy = std::path::Path::new(&start.config.connection_profiles_file);
+                let own = legacy.with_extension(format!(
+                    "{}.json",
+                    env!("CARGO_PKG_NAME")
+                        .strip_prefix("yoodesk-")
+                        .ok_or_else(|| error("invalid plugin identity"))?
+                ));
+                if own.is_file() {
+                    let raw = std::fs::read(&own)
+                        .map_err(|_| error("plugin target catalog unavailable"))?;
+                    let value = crate::json::parse_json_strict(&raw)?;
+                    start.config.targets = serde_json::from_value(value)
+                        .map_err(|_| error("invalid plugin target catalog"))?;
+                    start
+                        .config
+                        .validate()
+                        .map_err(|_| error("invalid plugin target configuration"))?;
+                }
+                start.config.connection_profiles_file = own.to_string_lossy().into_owned();
+            }
             if start.token.len() != 64 {
                 return Err(error("invalid plugin transport token"));
             }
