@@ -11,6 +11,15 @@ import subprocess
 import tempfile
 import zipfile
 
+PUBLIC_EXPORTS={'yd_plugin_v1'}
+
+
+def prepare_plugin_exports(library):
+    subprocess.run(['strip','--strip-unneeded',str(library)],check=True)
+    symbols=subprocess.check_output(['nm','-D','--defined-only','--format=posix',str(library)],text=True)
+    exported={line.split()[0].split('@',1)[0] for line in symbols.splitlines() if line.strip()}
+    if exported!=PUBLIC_EXPORTS:raise ValueError(f'{library}: unexpected exported symbols: {sorted(exported)}')
+
 PLATFORMS = {
     "windows-x64": ("x86_64-pc-windows-msvc", 0x8664),
     "windows-arm64": ("aarch64-pc-windows-msvc", 0xAA64),
@@ -20,7 +29,8 @@ PLATFORMS = {
 
 
 def digest(path):
-    return hashlib.file_digest(path.open("rb"), "sha256").hexdigest()
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
 def verify_binary(path, platform):
@@ -59,9 +69,11 @@ def extract(bundle, destination):
 
 def plugin(root, platform, kind, output):
     target = PLATFORMS[platform][0]
-    filename = f"yoodesk_{kind}.dll" if platform.startswith("windows") else f"libyoodesk_{kind}.so"
+    stem=kind.replace('-','_')
+    filename = f"yoodesk_{stem}.dll" if platform.startswith("windows") else f"libyoodesk_{stem}.so"
     library = root / "target" / target / "release" / filename
     verify_binary(library, platform)
+    if platform.startswith('linux'):prepare_plugin_exports(library)
     with tempfile.TemporaryDirectory() as temporary:
         stage = Path(temporary)
         shutil.copy2(library, stage / filename)
@@ -94,8 +106,7 @@ def host(root, platform, plugins, output):
         shutil.copy2(binary, stage / filename)
         (stage / "plugins").mkdir()
         entries = []
-        for kind in ["desk", "ssh", "rdp", "vnc"]:
-            record = lock["repositories"][kind]
+        for kind,record in lock['repositories'].items():
             asset = record["assets"][platform]
             package = plugins / asset["name"]
             if digest(package) != asset["sha256"]: raise ValueError(f"{kind}: archive checksum mismatch")
@@ -104,11 +115,17 @@ def host(root, platform, plugins, output):
                 extract(package, unpack)
                 meta = json.loads((unpack / "plugin.json").read_text(encoding="utf-8"))
                 if (meta["id"], meta["platform"], meta["abi_version"]) != (kind, platform, 1): raise ValueError("Plugin release metadata mismatch")
+                stem=kind.replace('-','_')
+                expected_library=f"yoodesk_{stem}.dll" if platform.startswith("windows") else f"libyoodesk_{stem}.so"
+                if meta['library']!=expected_library: raise ValueError("Plugin release library name mismatch")
                 library = unpack / meta["library"]
                 if digest(library) != meta["sha256"]: raise ValueError("Plugin library checksum mismatch")
                 verify_binary(library, platform)
+                if platform.startswith('linux'):prepare_plugin_exports(library)
                 shutil.copy2(library, stage / "plugins" / library.name)
-                entries.append({"id":kind,"file":library.name,"sha256":meta["sha256"]})
+                entry={"id":kind,"file":library.name,"sha256":digest(library),"target_scope":record.get('target_scope','remote')}
+                if 'options' in record:entry['options']=record['options']
+                entries.append(entry)
                 if (unpack / "assets").exists(): shutil.copytree(unpack / "assets",stage / "assets",dirs_exist_ok=True)
                 if kind == "desk" and platform.startswith("linux"):
                     for name in ["libdrmtap.so.0", "libdrmtap.manifest.json", "LICENSE.libdrmtap"]: shutil.copy2(unpack / name,stage / name)
@@ -127,11 +144,12 @@ def host(root, platform, plugins, output):
 
 if __name__ == "__main__":
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("kind",choices=["webservice","desk","ssh","rdp","vnc"])
+    parser.add_argument("kind")
     parser.add_argument("--platform",choices=PLATFORMS,required=True)
     parser.add_argument("--plugins",type=Path,default=Path("artifacts/plugins"))
     parser.add_argument("--output",type=Path,default=Path("dist"))
     args=parser.parse_args()
+    if not re.fullmatch(r'[a-z][a-z0-9-]{0,31}',args.kind):parser.error('Invalid plugin id')
     root=Path(__file__).resolve().parents[1]
     if args.kind=="webservice":host(root,args.platform,args.plugins.resolve(),args.output.resolve())
     else:plugin(root,args.platform,args.kind,args.output.resolve())
