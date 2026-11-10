@@ -165,7 +165,7 @@ if [[ "$platform" == linux-mips64el ]]; then
     test_args+=(--skip tls_policy::tests::expired_wrong_name_client_only_certificate_still_connects_in_default_mode)
     test_args+=(--skip http::tests::websocket_write_deadline_releases_stalled_connection)
 fi
-cargo test --locked "${build_args[@]}" --lib "${test_args[@]}"
+cargo test --locked "${build_args[@]}" --lib -- "${test_args[@]}"
 
 if [[ "$kind" == webservice ]]; then
     cargo build --locked --release "${build_args[@]}" --features desk-engine --bin web-service
