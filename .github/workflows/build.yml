@@ -48,6 +48,8 @@ jobs:
           - {platform: windows-arm64, os: windows-11-arm, target: aarch64-pc-windows-msvc, triplet: arm64-windows-static, msvc: x64_arm64}
           - {platform: linux-x64, os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, triplet: x64-linux}
           - {platform: linux-arm64, os: ubuntu-22.04-arm, target: aarch64-unknown-linux-gnu, triplet: arm64-linux}
+          - {platform: linux-loong64, os: ubuntu-22.04, target: loongarch64-unknown-linux-gnu, triplet: loongarch64-linux, cross: true}
+          - {platform: linux-mips64el, os: ubuntu-22.04, target: mips64el-unknown-linux-gnuabi64, triplet: mips64el-linux, cross: true}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -61,7 +63,7 @@ jobs:
             .ci-cache/
             target/
             desk-engine/target/
-          key: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-${{ hashFiles('**/Cargo.lock', 'engine-patches/**', 'scripts/*.py', 'ci/linux-build.sh') }}
+          key: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-${{ hashFiles('**/Cargo.lock', 'engine-patches/**', 'scripts/*.py', 'ci/linux-build.sh', 'ci/cross-*.sh', 'ci/package.py') }}
           restore-keys: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-
       - uses: actions/setup-python@v5
         if: runner.os == 'Windows'
@@ -93,7 +95,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python ci/package.py ssh --platform '${{ matrix.platform }}'
       - name: Build every Linux native dependency and binary on Ubuntu 18.04
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && !matrix.cross
         shell: bash
         run: |
           mkdir -p .ci-cache/tools .ci-cache/vcpkg
@@ -101,6 +103,16 @@ jobs:
             -e GITHUB_SHA -e RELEASE_VERSION \
             -v "$PWD:/workspace" -v "$PWD/.ci-cache/tools:/opt/yoodesk-tools" \
             ubuntu:18.04 bash /workspace/ci/linux-build.sh ssh '${{ matrix.platform }}' '${{ matrix.target }}' '${{ matrix.triplet }}'
+      - name: Cross-compile loong64/mips64el plugin and verify archive under QEMU
+        if: matrix.cross
+        timeout-minutes: 240
+        shell: bash
+        run: |
+          mkdir -p .ci-cache/tools
+          docker run --rm \
+            -e GITHUB_SHA -e RELEASE_VERSION -e RUST_VERSION='${{ env.RUST_VERSION }}' \
+            -v "$PWD:/workspace" -v "$PWD/.ci-cache/tools:/opt/yoodesk-tools" \
+            ubuntu:18.04 bash /workspace/ci/cross-build.sh '${{ matrix.platform }}' '${{ matrix.target }}' ssh
       - uses: actions/upload-artifact@v4
         with:
           name: native-${{ matrix.platform }}
@@ -120,7 +132,7 @@ jobs:
           merge-multiple: true
       - name: Require all four platform archives before publishing
         run: |
-          for platform in windows-x64 windows-arm64 linux-x64 linux-arm64; do
+          for platform in windows-x64 windows-arm64 linux-x64 linux-arm64 linux-loong64 linux-mips64el; do
             test -s "dist/yoodesk-ssh-$platform.zip"
             (cd dist && sha256sum -c "yoodesk-ssh-$platform.zip.sha256")
           done

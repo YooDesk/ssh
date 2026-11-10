@@ -26,6 +26,17 @@ PLATFORMS = {
     "windows-arm64": ("aarch64-pc-windows-msvc", 0xAA64),
     "linux-x64": ("x86_64-unknown-linux-gnu", 62),
     "linux-arm64": ("aarch64-unknown-linux-gnu", 183),
+    "linux-loong64": ("loongarch64-unknown-linux-gnu", 258),
+    "linux-mips64el": ("mips64el-unknown-linux-gnuabi64", 8),
+}
+# glibc ceiling per Linux platform; cross ports use their pinned sysroot.
+GLIBC_BASELINE = {
+    "linux-x64": (2, 27), "linux-arm64": (2, 27),
+    "linux-loong64": (2, 43), "linux-mips64el": (2, 28),
+}
+QEMU_INTERPRETERS = {
+    "linux-loong64": ("/opt/yoodesk-tools/bin/qemu-loongarch64", "/opt/yoodesk-tools/cross-tools/target"),
+    "linux-mips64el": ("/opt/yoodesk-tools/bin/qemu-mips64el", "/opt/yoodesk-tools/mips-root/usr/mips64el-linux-gnuabi64"),
 }
 
 
@@ -46,9 +57,10 @@ def verify_binary(path, platform):
     else:
         if data[:4] != b"\x7fELF" or data[4:6] != b"\x02\x01": raise ValueError(f"Not a 64-bit little-endian ELF: {path}")
         machine = struct.unpack_from("<H", data, 18)[0]
+        baseline = GLIBC_BASELINE[platform]
         output = subprocess.check_output(["readelf", "--version-info", str(path)], text=True)
         versions = [tuple(map(int, value.split("."))) for value in re.findall(r"GLIBC_(\d+\.\d+)", output)]
-        if versions and max(versions) > (2, 27): raise ValueError(f"{path}: requires GLIBC {max(versions)}, above Ubuntu 18.04")
+        if versions and max(versions) > baseline: raise ValueError(f"{path}: requires GLIBC {max(versions)}, above the platform baseline {baseline}")
     if machine != expected: raise ValueError(f"{path}: machine {machine:#x}, expected {expected:#x}")
 
 
