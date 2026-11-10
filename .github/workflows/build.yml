@@ -63,8 +63,8 @@ jobs:
             .ci-cache/
             target/
             desk-engine/target/
-          key: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-${{ hashFiles('**/Cargo.lock', 'engine-patches/**', 'scripts/*.py', 'ci/linux-build.sh', 'ci/cross-*.sh', 'ci/package.py') }}
-          restore-keys: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v2-
+          key: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v3-${{ hashFiles('Cargo.lock') }}
+          restore-keys: native-ssh-${{ matrix.platform }}-rust199-ubuntu18-v3-
       - uses: actions/setup-python@v5
         if: runner.os == 'Windows'
         with:

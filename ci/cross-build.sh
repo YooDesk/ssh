@@ -47,14 +47,18 @@ done
 
 tools=/opt/yoodesk-tools
 mkdir -p "$tools"
+# Prebuilt CPython (python-build-standalone) instead of a 13-minute source
+# build: the build runs in a fresh container on every job, and the standalone
+# build targets glibc 2.17+, so it runs on this 18.04 image unchanged.
 if [[ ! -x "$tools/bin/python3.13" ]]; then
-    curl -fL --retry 3 https://www.python.org/ftp/python/3.13.5/Python-3.13.5.tgz -o /tmp/python.tgz
-    tar -xf /tmp/python.tgz -C /tmp
-    pushd /tmp/Python-3.13.5
-    ./configure --prefix="$tools" --with-ensurepip=install
-    make -j3
-    make install
-    popd
+    python_tarball=/tmp/python-standalone.tar.gz
+    python_url='https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-unknown-linux-gnu-install_only.tar.gz'
+    python_sha='126343c54daff4068efc1ac269518d0cc202d57857794948103dd1454e8881be'
+    curl -fL --retry 3 "$python_url" -o "$python_tarball"
+    echo "$python_sha  $python_tarball" | sha256sum -c -
+    mkdir -p "$tools"
+    tar -xzf "$python_tarball" -C "$tools" --strip-components=1
+    rm -f "$python_tarball"
 fi
 export PATH="$tools/bin:$PATH"
 
