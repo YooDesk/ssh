@@ -21,6 +21,11 @@ target="$2"
 kind="${3:-}"
 
 export DEBIAN_FRONTEND=noninteractive
+# archive.ubuntu.com is unreliable from CI runners (connection refused or
+# timeout). Canonical's Azure mirror serves the same bionic archive.
+if [[ -f /etc/apt/sources.list ]]; then
+    sed -i 's|http://archive.ubuntu.com/ubuntu|http://azure.archive.ubuntu.com/ubuntu|g; s|http://security.ubuntu.com/ubuntu|http://azure.archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+fi
 # archive.ubuntu.com occasionally refuses connections from runners; retry
 # the index update before declaring the build environment unusable.
 for attempt in 1 2 3; do
