@@ -21,8 +21,24 @@ target="$2"
 kind="${3:-}"
 
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y --no-install-recommends build-essential gcc-8 g++-8 ca-certificates curl git xz-utils pkg-config python3 binutils file dpkg zlib1g-dev libffi-dev libssl-dev libbz2-dev liblzma-dev libreadline-dev libsqlite3-dev
+# archive.ubuntu.com occasionally refuses connections from runners; retry
+# the index update before declaring the build environment unusable.
+for attempt in 1 2 3; do
+    apt-get update && break
+    if [[ "$attempt" == 3 ]]; then
+        echo "apt-get update failed after 3 attempts" >&2
+        exit 1
+    fi
+    sleep $((attempt * 15))
+done
+for attempt in 1 2 3; do
+    apt-get install -y --no-install-recommends build-essential gcc-8 g++-8 ca-certificates curl git xz-utils pkg-config python3 binutils file dpkg zlib1g-dev libffi-dev libssl-dev libbz2-dev liblzma-dev libreadline-dev libsqlite3-dev && break
+    if [[ "$attempt" == 3 ]]; then
+        echo "dependency install failed after 3 attempts" >&2
+        exit 1
+    fi
+    apt-get update && sleep $((attempt * 15))
+done
 
 tools=/opt/yoodesk-tools
 mkdir -p "$tools"
