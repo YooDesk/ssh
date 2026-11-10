@@ -74,7 +74,10 @@ linux-loong64)
     export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_LINKER="$CC"
     export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_AR="$AR"
     export QEMU="$tools/bin/qemu-loongarch64"
+    # The toolchain keeps glibc under target/usr/lib64 but libgcc_s.so.1
+    # under <triple>/lib; give QEMU both search roots.
     export QEMU_LD_PREFIX="$tools/cross-tools/target/usr"
+    export LD_LIBRARY_PATH="$tools/cross-tools/loongarch64-unknown-linux-gnu/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     build_args=()
     ;;
 linux-mips64el)
