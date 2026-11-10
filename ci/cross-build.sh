@@ -127,8 +127,12 @@ linux-mips64el)
     export CARGO_TARGET_MIPS64EL_UNKNOWN_LINUX_GNUABI64_AR="$AR"
     # The cross gcc's default search path omits the multiarch libdir where
     # libgcc_s.so.1 and the C library live; the final link needs it.
-    mips_libdir="$tools/mips-root/usr/mips64el-linux-gnuabi64/lib"
-    export CARGO_TARGET_MIPS64EL_UNKNOWN_LINUX_GNUABI64_RUSTFLAGS="-L $mips_libdir -C link-arg=-L$mips_libdir -C link-arg=-Wl,-rpath-link,$mips_libdir"
+    # libc.so is a linker script with absolute paths (/usr/mips64el-...) and
+    # libc_nonshared.a/ld.so.1 must resolve inside the extracted root, so the
+    # driver needs --sysroot pointing at mips-root.
+    mips_root="$tools/mips-root"
+    mips_libdir="$mips_root/usr/mips64el-linux-gnuabi64/lib"
+    export CARGO_TARGET_MIPS64EL_UNKNOWN_LINUX_GNUABI64_RUSTFLAGS="-C link-arg=--sysroot=$mips_root -C link-arg=-L$mips_libdir -C link-arg=-Wl,-rpath-link,$mips_libdir"
     export QEMU="$tools/bin/qemu-mips64el"
     # Debian's cross binutils keeps libopcodes/libbfd for the host in the
     # multiarch directory; `as` and `ld` fail to start without it.
