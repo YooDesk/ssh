@@ -162,8 +162,12 @@ cargo build --locked --release "${build_args[@]}" --lib
 # They pass on the native platforms and on loong64, so only skip them here.
 test_args=()
 if [[ "$platform" == linux-mips64el ]]; then
-    test_args+=(--skip tls_policy::tests::expired_wrong_name_client_only_certificate_still_connects_in_default_mode)
+    # QEMU user mode rejects some socket options (ENOPROTOOPT), so tests
+    # that bind a real TCP listener fail before reaching product code.
+    test_args+=(--skip expired_wrong_name_client_only_certificate_still_connects_in_default_mode)
     test_args+=(--skip websocket_write_deadline_releases_stalled_connection)
+    test_args+=(--skip nested_sftp_routes_reach_authentication_with_extra_capability_parameter)
+    test_args+=(--skip duplex_forwarding_reads_while_target_write_is_backpressured)
 fi
 cargo test --locked "${build_args[@]}" --lib -- "${test_args[@]}"
 

@@ -78,10 +78,10 @@ EOF
     # the ELF interpreter because binfmt_misc is not available in the container.
     if [[ ! -x "$prefix/bin/qemu-mips64el" ]]; then
         mkdir -p "$prefix/bin"
-        # buster's qemu 3.1 cannot run Go binaries on mips64: the Go runtime
-        # calls rt_sigaction at startup and qemu 3.1 rejects it ("fatal
-        # error: sigaction failed"). Use Ubuntu 22.04 qemu 6.2, a static
-        # x86-64 binary that also runs on glibc 2.27 hosts.
+        # buster's qemu 3.1 cannot run Go binaries on mips64 (rt_sigaction is
+        # rejected) and its socket emulation breaks several tests. Use
+        # Ubuntu 24.04's qemu 8.2, a static x86-64 binary that also runs on
+        # glibc 2.27 hosts.
         fetch 'https://github.com/YooDesk/desk/releases/download/sysroot-mips64el-loongnix-d10/qemu-user-static_6.2.dfsg-2ubuntu6_amd64.deb' \
               '95e89161615a06c4cc319eeec98ff0057510d775d05336e1ba7c2b86c320bb2a' \
               "$prefix/qemu-user-static.deb"
