@@ -12,12 +12,38 @@ import tempfile
 import zipfile
 from windows_crt import verify as verify_windows_dependencies
 
+import os as _os
+import shutil as _shutil
+
+
+def _binutils(tool, platform):
+    """Return the target binutils tool for cross platforms.
+
+    The host `strip`/`nm` cannot read loongarch64 or mips64el ELF files, so
+    the cross toolchain's tools are used when the target differs from the
+    build host.
+    """
+    prefixes = {
+        'linux-loong64': 'loongarch64-unknown-linux-gnu-',
+        'linux-mips64el': 'mips64el-linux-gnuabi64-',
+    }
+    prefix = prefixes.get(platform)
+    if not prefix:
+        return tool
+    for base in ('/opt/yoodesk-tools/cross-tools/bin',
+                 '/opt/yoodesk-tools/bin'):
+        candidate = _os.path.join(base, prefix + tool)
+        if _os.path.exists(candidate):
+            return candidate
+    found = _shutil.which(prefix + tool)
+    return found or tool
+
 PUBLIC_EXPORTS={'yd_plugin_v1'}
 
 
-def prepare_plugin_exports(library):
-    subprocess.run(['strip','--strip-unneeded',str(library)],check=True)
-    symbols=subprocess.check_output(['nm','-D','--defined-only','--format=posix',str(library)],text=True)
+def prepare_plugin_exports(library,platform):
+    subprocess.run([_binutils('strip',platform),'--strip-unneeded',str(library)],check=True)
+    symbols=subprocess.check_output([_binutils('nm',platform),'-D','--defined-only','--format=posix',str(library)],text=True)
     exported={line.split()[0].split('@',1)[0] for line in symbols.splitlines() if line.strip()}
     if exported!=PUBLIC_EXPORTS:raise ValueError(f'{library}: unexpected exported symbols: {sorted(exported)}')
 
@@ -87,7 +113,7 @@ def plugin(root, platform, kind, output):
     filename = f"yoodesk_{stem}.dll" if platform.startswith("windows") else f"libyoodesk_{stem}.so"
     library = root / "target" / target / "release" / filename
     verify_binary(library, platform)
-    if platform.startswith('linux'):prepare_plugin_exports(library)
+    if platform.startswith('linux'):prepare_plugin_exports(library,platform)
     with tempfile.TemporaryDirectory() as temporary:
         stage = Path(temporary)
         shutil.copy2(library, stage / filename)
@@ -135,7 +161,7 @@ def host(root, platform, plugins, output):
                 library = unpack / meta["library"]
                 if digest(library) != meta["sha256"]: raise ValueError("Plugin library checksum mismatch")
                 verify_binary(library, platform)
-                if platform.startswith('linux'):prepare_plugin_exports(library)
+                if platform.startswith('linux'):prepare_plugin_exports(library,platform)
                 shutil.copy2(library, stage / "plugins" / library.name)
                 entry={"id":kind,"file":library.name,"sha256":digest(library),"target_scope":record.get('target_scope','remote')}
                 if 'options' in record:entry['options']=record['options']
