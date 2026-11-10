@@ -22,7 +22,7 @@ kind="${3:-}"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y --no-install-recommends build-essential gcc-8 g++-8 ca-certificates curl git xz-utils pkg-config python3 binutils file dpkg
+apt-get install -y --no-install-recommends build-essential gcc-8 g++-8 ca-certificates curl git xz-utils pkg-config python3 binutils file dpkg zlib1g-dev libffi-dev libssl-dev libbz2-dev liblzma-dev libreadline-dev libsqlite3-dev
 
 tools=/opt/yoodesk-tools
 mkdir -p "$tools"
