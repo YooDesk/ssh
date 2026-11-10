@@ -74,7 +74,7 @@ linux-loong64)
     export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_LINKER="$CC"
     export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_AR="$AR"
     export QEMU="$tools/bin/qemu-loongarch64"
-    export QEMU_LD_PREFIX="$tools/cross-tools/target"
+    export QEMU_LD_PREFIX="$tools/cross-tools/target/usr"
     build_args=()
     ;;
 linux-mips64el)
@@ -91,7 +91,7 @@ linux-mips64el)
     export CARGO_TARGET_MIPS64EL_UNKNOWN_LINUX_GNUABI64_LINKER="$CC"
     export CARGO_TARGET_MIPS64EL_UNKNOWN_LINUX_GNUABI64_AR="$AR"
     export QEMU="$tools/bin/qemu-mips64el"
-    export QEMU_LD_PREFIX="$tools/mips-root/usr/mips64el-linux-gnuabi64"
+    export QEMU_LD_PREFIX="${YOODESK_QEMU_ROOT:-$tools/mips-root/usr/mips64el-linux-gnuabi64}"
     export RUSTC_BOOTSTRAP=1
     build_args=(-Z build-std=std,panic_abort)
     ;;
