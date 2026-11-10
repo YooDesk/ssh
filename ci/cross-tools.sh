@@ -27,7 +27,7 @@ loongarch64)
     # Official Loongson x86_64 -> loongarch64 cross-tools (binutils 2.44,
     # GCC 14.2.0, glibc 2.41 sysroot). Host binary needs only glibc 2.27+.
     if [[ ! -x "$prefix/cross-tools/bin/loongarch64-unknown-linux-gnu-gcc" ]]; then
-        fetch 'https://github.com/loongson/build-tools/releases/download/2025.02.21/x86_64-cross-tools-loongarch64-binutils_2.44-gcc_14.2.0-glibc_2.41.tar.xz' \
+        fetch 'https://github.com/YooDesk/desk/releases/download/sysroot-mips64el-loongnix-d10/loongarch64-cross-tools.tar.xz' \
               'b6b058ab77cf21c806db409d1fb2ad4b43fa23832616216099cf8168274f16b6' \
               "$prefix/loongson-cross-tools.tar.xz"
         tar -xJf "$prefix/loongson-cross-tools.tar.xz" -C "$prefix"

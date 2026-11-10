@@ -52,7 +52,7 @@ mkdir -p "$tools"
 # build targets glibc 2.17+, so it runs on this 18.04 image unchanged.
 if [[ ! -x "$tools/bin/python3.13" ]]; then
     python_tarball=/tmp/python-standalone.tar.gz
-    python_url='https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-unknown-linux-gnu-install_only.tar.gz'
+    python_url='https://github.com/YooDesk/desk/releases/download/sysroot-mips64el-loongnix-d10/python-3.13.18-standalone.tar.gz'
     python_sha='126343c54daff4068efc1ac269518d0cc202d57857794948103dd1454e8881be'
     curl -fL --retry 3 "$python_url" -o "$python_tarball"
     echo "$python_sha  $python_tarball" | sha256sum -c -
