@@ -96,12 +96,20 @@ linux-loong64)
     export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_AR="$AR"
     export QEMU="$tools/bin/qemu-loongarch64"
     # The toolchain keeps glibc under target/usr/lib64 but libgcc_s.so.1
-    # under <triple>/lib. Link it into the sysroot so the QEMU prefix alone
-    # resolves every test binary dependency.
+    # under <triple>/lib. Copy it in and also expose the directory to the
+    # test process, since the loader may resolve DT_NEEDED before consulting
+    # the QEMU prefix.
     export QEMU_LD_PREFIX="$tools/cross-tools/target/usr"
-    if [[ -d "$tools/cross-tools/loongarch64-unknown-linux-gnu/lib" && ! -e "$QEMU_LD_PREFIX/lib64/libgcc_s.so.1" ]]; then
-        cp -L "$tools/cross-tools/loongarch64-unknown-linux-gnu/lib/libgcc_s.so.1" "$QEMU_LD_PREFIX/lib64/" 2>/dev/null || true
+    gcc_lib="$tools/cross-tools/loongarch64-unknown-linux-gnu/lib"
+    if [[ -d "$gcc_lib" ]]; then
+        mkdir -p "$QEMU_LD_PREFIX/lib64"
+        cp -L "$gcc_lib/libgcc_s.so.1" "$QEMU_LD_PREFIX/lib64/" 2>/dev/null || true
     fi
+    # The qemu runner needs -L explicitly: the loader resolves DT_NEEDED
+    # entries (libgcc_s.so.1 among them) relative to the given root, and
+    # QEMU_LD_PREFIX alone is not consulted by every loader path.
+    export QEMU_RUNNER_ARGS="-L $QEMU_LD_PREFIX"
+    export LD_LIBRARY_PATH="$gcc_lib:$QEMU_LD_PREFIX/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     build_args=()
     ;;
 linux-mips64el)
@@ -121,6 +129,7 @@ linux-mips64el)
     # Debian's cross binutils keeps libopcodes/libbfd for the host in the
     # multiarch directory; `as` and `ld` fail to start without it.
     export LD_LIBRARY_PATH="$tools/mips-root/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    export QEMU_RUNNER_ARGS="-L ${YOODESK_QEMU_ROOT:-$tools/mips-root/usr/mips64el-linux-gnuabi64}"
     export QEMU_LD_PREFIX="${YOODESK_QEMU_ROOT:-$tools/mips-root/usr/mips64el-linux-gnuabi64}"
     export RUSTC_BOOTSTRAP=1
     build_args=(-Z build-std=std,panic_abort)
@@ -132,7 +141,7 @@ rustc --version
 
 # Unit tests run under the user-mode emulator.
 runner_var="CARGO_TARGET_$(echo "$target" | tr 'a-z-' 'A-Z_')_RUNNER"
-export "$runner_var=$QEMU"
+export "$runner_var=$QEMU $QEMU_RUNNER_ARGS"
 
 cargo build --locked --release "${build_args[@]}" --lib
 cargo test --locked "${build_args[@]}" --lib
