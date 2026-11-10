@@ -56,6 +56,7 @@ c2058dcc74a9cf8bba4da98809ed1725e11fd34d55ddd8191a4f71ca27bf4b45 pool/main/g/gcc
 a62264aa8b32c0c996b7aaed3fa03412631f7e15b0a3488c796e1759909ea69d pool/main/g/gcc-8-cross/gcc-8-mips64el-linux-gnuabi64-base_8.3.0-2cross1_amd64.deb
 3c5c67a62350b5717e30ba3ce6c77556d8ea7e941ca644437e39118f8f89a8fc pool/main/g/gcc-8-cross/gcc-8-mips64el-linux-gnuabi64_8.3.0-2cross1_amd64.deb
 98af5ac95e4ddcc883b601cc98c61bd20b08675f913540a09c9e1f92c853b139 pool/main/g/gcc-8-cross/libgcc-8-dev-mips64el-cross_8.3.0-2cross1_all.deb
+4d192abfaeb60fad524d3dfa351bded9b757ab36c549f6a22a13c322ca967b83 pool/main/g/gcc-8-cross/libgcc1-mips64el-cross_8.3.0-2cross1_all.deb
 d60da2b8d88624fe3b4d2c5c5b28f45fcff66865c34d92204a7438be80849b12 pool/main/c/cross-toolchain-base/libc6-dev-mips64el-cross_2.28-7cross1_all.deb
 baed1cb18cb435f4fbb6b2d061f487823f3bcef06cb188a62d2bd0463bdd49f0 pool/main/c/cross-toolchain-base/libc6-mips64el-cross_2.28-7cross1_all.deb
 f212732859f9773f289a06496230c062cd0f922e159fd189061829a7dc1f3372 pool/main/c/cross-toolchain-base/linux-libc-dev-mips64el-cross_4.19.20-1cross1_all.deb
