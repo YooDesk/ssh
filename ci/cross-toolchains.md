@@ -75,3 +75,15 @@ hwcodec and scrap run bindgen 0.59 against libclang 10 (Ubuntu 18.04).
   direct download + sha256); its apt indexes are empty, hence URL pinning.
 - snapshot.debian.org serves the full sid loong64 archive at
   20261108T000000Z (both the Packages index and every resolved deb).
+
+## CI environment requirements for the cross builds
+
+Python 3.13.5 is built from source inside the Ubuntu 18.04 container. It
+needs the same development headers the native flow installs, or its
+stdlib modules silently drop out and `ensurepip` fails:
+
+    zlib1g-dev libffi-dev libssl-dev libbz2-dev liblzma-dev     libreadline-dev libsqlite3-dev
+
+Symptom when missing: `zipimport.ZipImportError: can't decompress data;
+zlib not available` and `SSL module is not available` from pip. The
+container's `ubuntu:18.04` image has none of these.
