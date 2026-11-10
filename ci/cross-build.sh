@@ -75,9 +75,12 @@ linux-loong64)
     export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_AR="$AR"
     export QEMU="$tools/bin/qemu-loongarch64"
     # The toolchain keeps glibc under target/usr/lib64 but libgcc_s.so.1
-    # under <triple>/lib; give QEMU both search roots.
+    # under <triple>/lib. Link it into the sysroot so the QEMU prefix alone
+    # resolves every test binary dependency.
     export QEMU_LD_PREFIX="$tools/cross-tools/target/usr"
-    export LD_LIBRARY_PATH="$tools/cross-tools/loongarch64-unknown-linux-gnu/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    if [[ -d "$tools/cross-tools/loongarch64-unknown-linux-gnu/lib" && ! -e "$QEMU_LD_PREFIX/lib64/libgcc_s.so.1" ]]; then
+        cp -L "$tools/cross-tools/loongarch64-unknown-linux-gnu/lib/libgcc_s.so.1" "$QEMU_LD_PREFIX/lib64/" 2>/dev/null || true
+    fi
     build_args=()
     ;;
 linux-mips64el)
