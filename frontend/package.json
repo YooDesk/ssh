@@ -13,6 +13,7 @@
     "format:check": "prettier --check packages tests"
   },
   "devDependencies": {
+    "@resvg/resvg-wasm": "2.6.2",
     "esbuild": "^0.28.2",
     "eslint": "^10.14.0",
     "globals": "^17.13.0",

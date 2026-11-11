@@ -1,3 +1,7 @@
+import { ConnectivityError } from './rtc.js';
+
+export class NegotiationInterrupted extends Error {}
+
 // 调用者保留原session/path/requestID，响应丢失后仅精确重试，不重放业务。
 export async function negotiateSession({
   origin,
@@ -64,7 +68,16 @@ export async function negotiateSession({
       },
     );
     // 授权/候选错误不是ConnectivityError，选择器不得据此继续试其他权限范围。
-    if (!response.ok) throw new Error(`session negotiation rejected (${response.status})`);
+    if (!response.ok) {
+      if (response.status === 503) {
+        const failure = await response.json().catch(() => null);
+        if (failure?.v === 2 && failure.error?.code === 'remote_negotiation_interrupted')
+          throw new NegotiationInterrupted('session negotiation interrupted');
+        if (path !== 'websocket' && failure?.v === 2 && failure.error?.code === 'remote_path_unavailable')
+          throw new ConnectivityError('negotiated path unavailable');
+      }
+      throw new Error(`session negotiation rejected (${response.status})`);
+    }
     const value = await response.json();
     const next = value.data;
     const fixed = [

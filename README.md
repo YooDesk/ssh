@@ -8,8 +8,9 @@ webservice 在运行时加载本库，转发 HTTP/WebSocket；本仓库不依赖
 
 ## 构建与发布
 
-`.github/workflows/build.yml` 在 push/手动运行时构建 Windows x64/arm64、Linux x64/arm64。
+`.github/workflows/build.yml` 在 push/手动运行时构建 Windows x64/arm64、Linux x64/arm64 和 macOS arm64/x64。
 Linux 原生代码及依赖在 Ubuntu 18.04 中编译，发布包验证 glibc <= 2.27。
+macOS 动态库为 `.dylib`，只允许链接 Apple 系统库，x64 切片在 arm64 runner 上交叉编译。
 只有全部平台成功才发布最新 Release。每个平台产物为 `yoodesk-ssh-<platform>.zip`
 及 `.sha256`，包含动态库、`plugin.json`、浏览器 JS/WASM 和相应运行附件/许可证。
 webservice 流水线通过公共 Release API 下载这些产物，不需要额外 PAT。

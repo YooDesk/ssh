@@ -77,11 +77,22 @@ export async function connectPreferred({
     const remaining = () => Math.max(1, Math.ceil(stageDeadline - performance.now()));
     const stageTimeout = AbortSignal.timeout(budget);
     const stageSignal = signal ? AbortSignal.any([signal, stageTimeout]) : stageTimeout;
-    const prepared = await withinSignal(
-      () => prepare(path, { signal: stageSignal, remaining }),
-      stageSignal,
-      (late) => late.dispose?.({ retrying: false }),
-    );
+    let prepared;
+    try {
+      prepared = await withinSignal(
+        () => prepare(path, { signal: stageSignal, remaining }),
+        stageSignal,
+        (late) => late.dispose?.({ retrying: false }),
+      );
+    } catch (error) {
+      signal?.throwIfAborted();
+      if (stageTimeout.aborted && error === stageSignal.reason)
+        error = new ConnectivityError('transport preparation deadline exceeded', { cause: error });
+      if (!(error instanceof ConnectivityError)) throw error;
+      attempts.push({ path, outcome: 'unavailable' });
+      errors.push(error);
+      continue;
+    }
     const next = prepared.context;
     try {
       if (

@@ -10,6 +10,7 @@ import struct
 import subprocess
 import tempfile
 import zipfile
+from macho import verify as verify_macos
 from windows_crt import verify as verify_windows_dependencies
 
 import os as _os
@@ -54,6 +55,8 @@ PLATFORMS = {
     "linux-arm64": ("aarch64-unknown-linux-gnu", 183),
     "linux-loong64": ("loongarch64-unknown-linux-gnu", 258),
     "linux-mips64el": ("mips64el-unknown-linux-gnuabi64", 8),
+    "macos-arm64": ("aarch64-apple-darwin", None),
+    "macos-x64": ("x86_64-apple-darwin", None),
 }
 # glibc ceiling per Linux platform; cross ports use their pinned sysroot.
 GLIBC_BASELINE = {
@@ -74,6 +77,10 @@ def digest(path):
 def verify_binary(path, platform):
     data = path.read_bytes()
     expected = PLATFORMS[platform][1]
+    if platform.startswith("macos"):
+        # 插件只能链接 Apple 系统库，且发行物不能带构建 rpath。
+        verify_macos(path, platform)
+        return
     if platform.startswith("windows"):
         if data[:2] != b"MZ": raise ValueError(f"Not a PE binary: {path}")
         offset = struct.unpack_from("<I", data, 0x3C)[0]
@@ -110,7 +117,12 @@ def extract(bundle, destination):
 def plugin(root, platform, kind, output):
     target = PLATFORMS[platform][0]
     stem=kind.replace('-','_')
-    filename = f"yoodesk_{stem}.dll" if platform.startswith("windows") else f"libyoodesk_{stem}.so"
+    if platform.startswith("windows"):
+        filename = f"yoodesk_{stem}.dll"
+    elif platform.startswith("macos"):
+        filename = f"libyoodesk_{stem}.dylib"
+    else:
+        filename = f"libyoodesk_{stem}.so"
     library = root / "target" / target / "release" / filename
     verify_binary(library, platform)
     if platform.startswith('linux'):prepare_plugin_exports(library,platform)

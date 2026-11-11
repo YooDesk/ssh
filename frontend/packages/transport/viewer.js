@@ -1,5 +1,5 @@
 import { connectPreferredControl } from './preferred-control.js';
-import { negotiateSession } from './negotiation.js';
+import { NegotiationInterrupted, negotiateSession } from './negotiation.js';
 import { releaseSession } from './release.js';
 import { maintainSessionLease } from './lease.js';
 import { signalSubprotocols } from './protocols.js';
@@ -19,7 +19,9 @@ export async function attachViewer(productID) {
   } catch (error) {
     if (error.name !== 'SecurityError') throw error;
   }
-  owner.__yoodeskTransportReady ||= connectViewer(productID);
+  owner.__yoodeskTransportReady ||= owner === window && location.pathname.endsWith('/desk/')
+    ? connectDeskEntry(productID)
+    : connectViewer(productID);
   const transport = await owner.__yoodeskTransportReady;
   if (transport.productID !== productID || transport.origin !== location.origin)
     throw new Error('viewer transport identity changed');
@@ -27,9 +29,71 @@ export async function attachViewer(productID) {
   return transport.state;
 }
 
+async function refreshDeskEntry(scope, signal) {
+  const entry = new URL(location.pathname, location.origin);
+  entry.searchParams.set('device_id', scope.deviceID);
+  if (scope.path) entry.searchParams.set('transport', scope.path);
+  const timeout = AbortSignal.timeout(8000);
+  const response = await scope.nativeFetch(entry, {
+    credentials: 'same-origin', cache: 'no-store',
+    signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+  });
+  if (!response.ok || new URL(response.url).origin !== entry.origin ||
+      !(response.headers.get('content-type') || '').includes('text/html')) {
+    const error = new Error(`viewer recovery entry unavailable (${response.status})`);
+    error.status = response.status;
+    throw error;
+  }
+  await response.body?.cancel().catch(() => {});
+}
+
+function waitForRetry(delay, signal) {
+  return new Promise((resolve, reject) => {
+    const abort = () => { clearTimeout(timer); reject(signal.reason); };
+    const timer = setTimeout(() => { signal.removeEventListener('abort', abort); resolve(); }, delay);
+    if (signal.aborted) abort();
+    else signal.addEventListener('abort', abort, { once: true });
+  });
+}
+
+async function connectDeskEntry(productID) {
+  const controller = new AbortController();
+  const leaving = () => controller.abort(new DOMException('Viewer closed', 'AbortError'));
+  addEventListener('pagehide', leaving, { once: true });
+  let scope;
+  const delays = [1000, 2000, 5000, 10000, 15000];
+  try {
+    for (let attempt = 0; ; attempt++) {
+      controller.signal.throwIfAborted();
+      if (scope) {
+        await waitForRetry(delays[Math.min(attempt - 1, delays.length - 1)], controller.signal);
+        try {
+          await refreshDeskEntry(scope, controller.signal);
+        } catch (error) {
+          if (attempt >= 10 || [401, 403, 410].includes(error.status)) throw error;
+          continue;
+        }
+      }
+      try {
+        const transport = await connectViewer(productID, scope);
+        if (controller.signal.aborted) {
+          await transport.close();
+          controller.signal.throwIfAborted();
+        }
+        return transport;
+      } catch (error) {
+        if (!(error instanceof NegotiationInterrupted) || !error.deskScope || attempt >= 10) throw error;
+        scope ||= error.deskScope;
+      }
+    }
+  } finally {
+    removeEventListener('pagehide', leaving);
+  }
+}
+
 // 一个顶层页面拥有一个业务连接，协议工作区的同源子窗口只安装各自可卸载的 shim。
 // 导航/静态资源仍由浏览器加载；只有当前产品 webclient 范围内的业务流进入 SDK。
-export async function connectViewer(productID) {
+export async function connectViewer(productID, recovery) {
   if (!/^[a-z][a-z0-9-]{0,31}$/.test(productID)) throw new TypeError('invalid product');
   const origin = location.origin;
   const requestedTransport = new URLSearchParams(location.search).get('transport');
@@ -37,8 +101,8 @@ export async function connectViewer(productID) {
     requestedTransport === 'wss' ? 'websocket' : requestedTransport || undefined;
   if (requestedPath !== undefined && !['stun', 'turn', 'websocket'].includes(requestedPath))
     throw new TypeError('invalid viewer transport');
-  const nativeFetch = globalThis.fetch.bind(globalThis);
-  const NativeWebSocket = globalThis.WebSocket;
+  const nativeFetch = recovery?.nativeFetch ?? globalThis.fetch.bind(globalThis);
+  const NativeWebSocket = recovery?.NativeWebSocket ?? globalThis.WebSocket;
   const endpoint = `/${productID}/transport/session/`;
   const selectionDeadline = performance.now() + 20000;
   const selectionSignal = AbortSignal.timeout(20000);
@@ -62,6 +126,10 @@ export async function connectViewer(productID) {
     'X-YooDesk-Viewer-Page': bootstrap.page_id,
   };
   let authorized, context, common;
+  const deskScope = () => ({
+    deviceID: authorized.device_id, capability: authorized.capability,
+    targetID: authorized.target_id, path: requestedPath, nativeFetch, NativeWebSocket,
+  });
   const abort = new AbortController();
   const removers = new Map();
   let link,
@@ -150,6 +218,10 @@ export async function connectViewer(productID) {
     });
     if (closed) throw abort.signal.reason;
     authorized = created.session;
+    if (recovery && (authorized.device_id !== recovery.deviceID ||
+        authorized.capability !== recovery.capability || authorized.target_id !== recovery.targetID)) {
+      throw new Error('viewer recovery scope changed');
+    }
     const csrfToken = created.csrf_token;
     context = {
       origin,
@@ -244,6 +316,26 @@ export async function connectViewer(productID) {
       productID,
       origin,
       state,
+      // Only the top-level Desk owns this grant. Re-enter the normal device
+      // launch route after a connector restart; never reuse the old grant.
+      async reconnect(signal) {
+        if (window.parent !== window || !location.pathname.endsWith('/desk/'))
+          throw new Error('viewer recovery requires the standalone Desk entry');
+        const scope = deskScope();
+        await close();
+        signal?.throwIfAborted();
+        await refreshDeskEntry(scope, signal);
+        const replacement = connectViewer(productID, scope);
+        const next = await replacement;
+        if (signal?.aborted) {
+          await next.close();
+          signal.throwIfAborted();
+        }
+        try { next.attach(window); }
+        catch (error) { await next.close(); throw error; }
+        window.__yoodeskTransportReady = replacement;
+        return next;
+      },
       attach(frame) {
         if (
           closed ||
@@ -265,6 +357,7 @@ export async function connectViewer(productID) {
       close,
     };
   } catch (error) {
+    if (authorized && error instanceof NegotiationInterrupted) error.deskScope = deskScope();
     removeEventListener('pagehide', leaving);
     await close().catch(() => {});
     throw error;

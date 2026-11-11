@@ -1,6 +1,6 @@
 {
   "repository": "https://gitcode.com/rustzhang/YooDesk",
-  "commit": "cb78bd2bb8cb8fac916809920d5d6589e6664c17",
+  "commit": "b9fc78a121d7d7e88761600e7af433010c317a91",
   "modules": [
     "web-service",
     "protocol",

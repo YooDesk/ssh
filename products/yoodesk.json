@@ -4,5 +4,6 @@
   "display_name": "YooDesk",
   "publisher": "Example",
   "version": "0.1.0",
-  "logo": "branding/logo.svg"
+  "logo": "branding/logo.svg",
+  "host_ports": { "https": 30443, "loopback": 30445, "connector": 19446 }
 }

@@ -50,8 +50,23 @@ jobs:
           - {platform: linux-arm64, os: ubuntu-22.04-arm, target: aarch64-unknown-linux-gnu, triplet: arm64-linux}
           - {platform: linux-loong64, os: ubuntu-22.04, target: loongarch64-unknown-linux-gnu, triplet: loongarch64-linux, cross: true}
           - {platform: linux-mips64el, os: ubuntu-22.04, target: mips64el-unknown-linux-gnuabi64, triplet: mips64el-linux, cross: true}
+          - {platform: macos-arm64, os: macos-14, target: aarch64-apple-darwin, triplet: arm64-osx, macos: true}
+          - {platform: macos-x64, os: macos-14, target: x86_64-apple-darwin, triplet: x64-osx, macos: true}
     steps:
       - uses: actions/checkout@v4
+      # Windows 的 build.rs 用这里的 Node 依赖生成可执行文件图标。
+      - uses: actions/setup-node@v4
+        if: runner.os == 'Windows'
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install the native icon generator
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          npm ci --prefix frontend --ignore-scripts
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/download-artifact@v4
         with:
           name: browser
@@ -94,6 +109,21 @@ jobs:
           cargo test --locked --lib
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python ci/package.py ssh --platform '${{ matrix.platform }}'
+      - name: Build macOS plugin and verify archive
+        if: matrix.macos
+        shell: bash
+        env:
+          CARGO_BUILD_TARGET: ${{ matrix.target }}
+          MACOSX_DEPLOYMENT_TARGET: '11.0'
+        run: |
+          rustup target add '${{ matrix.target }}'
+          cargo build --locked --release --lib --target '${{ matrix.target }}'
+          # 只有原生架构能在 arm64 runner 上执行单元测试。
+          if [ '${{ matrix.platform }}' = 'macos-arm64' ]; then
+            cargo test --locked --lib --target '${{ matrix.target }}'
+          fi
+          python3 ci/package.py ssh --platform '${{ matrix.platform }}'
+          python3 -m unittest discover -s ci -p 'test_*.py'
       - name: Build every Linux native dependency and binary on Ubuntu 18.04
         if: runner.os == 'Linux' && !matrix.cross
         shell: bash
@@ -132,7 +162,7 @@ jobs:
           merge-multiple: true
       - name: Require all four platform archives before publishing
         run: |
-          for platform in windows-x64 windows-arm64 linux-x64 linux-arm64 linux-loong64 linux-mips64el; do
+          for platform in windows-x64 windows-arm64 linux-x64 linux-arm64 linux-loong64 linux-mips64el macos-arm64 macos-x64; do
             test -s "dist/yoodesk-ssh-$platform.zip"
             (cd dist && sha256sum -c "yoodesk-ssh-$platform.zip.sha256")
           done

@@ -1,5 +1,5 @@
 // WebService与独立原生引擎共享品牌构建输入；修改显示名不改变稳定产品身份。
-pub fn configure(root: &std::path::Path) {
+pub fn configure(root: &std::path::Path) -> std::path::PathBuf {
     use std::{env, fs, path::PathBuf};
     println!("cargo:rerun-if-env-changed=PRODUCT_BRAND_FILE");
     println!(
@@ -21,7 +21,8 @@ pub fn configure(root: &std::path::Path) {
             "display_name",
             "publisher",
             "version",
-            "logo"
+            "logo",
+            "host_ports"
         ]
         .contains(&k.as_str())),
         "未知品牌字段"
@@ -83,4 +84,71 @@ pub fn configure(root: &std::path::Path) {
     println!("cargo:rustc-env=PRODUCT_DISPLAY_NAME={name}");
     println!("cargo:rustc-env=PRODUCT_ICON_PATH={}", output.display());
     println!("cargo:rustc-env=PRODUCT_ICON_MIME={mime}");
+    icon
+}
+
+/// Windows Explorer reads the native icon from the EXE resources. Link the
+/// same product icon into both installed executables before signing.
+#[allow(dead_code)]
+pub fn configure_executable_icon(root: &std::path::Path, logo: &std::path::Path) {
+    use std::{env, fs, path::PathBuf, process::Command};
+    if env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
+        return;
+    }
+    let script = root.join("frontend/build-native-icon.mjs");
+    println!("cargo:rerun-if-changed={}", script.display());
+    println!(
+        "cargo:rerun-if-changed={}",
+        root.join("frontend/package-lock.json").display()
+    );
+    let out = PathBuf::from(env::var_os("OUT_DIR").expect("OUT_DIR"));
+    assert!(
+        Command::new("node")
+            .arg(script)
+            .arg(logo)
+            .arg(out.join("product.ico"))
+            .status()
+            .expect("启动 Node 生成产品图标")
+            .success(),
+        "生成 Windows 产品图标失败；请先在 frontend 执行 npm ci"
+    );
+    fs::write(out.join("product.rc"), "1 ICON \"product.ico\"\r\n").expect("写入 Windows 图标资源");
+    let compile = |compiler: &std::path::Path| {
+        Command::new(compiler)
+            .current_dir(&out)
+            .args(["/nologo", "/fo", "product.res", "product.rc"])
+            .status()
+    };
+    let status = compile(std::path::Path::new("rc.exe"))
+        .or_else(|error| {
+            if error.kind() != std::io::ErrorKind::NotFound {
+                return Err(error);
+            }
+            let kits = env::var_os("ProgramFiles(x86)")
+                .map(PathBuf::from)
+                .ok_or(error)?
+                .join("Windows Kits/10/bin");
+            let arch = if cfg!(target_arch = "aarch64") {
+                "arm64"
+            } else if cfg!(target_arch = "x86") {
+                "x86"
+            } else {
+                "x64"
+            };
+            let compiler = fs::read_dir(kits)?
+                .filter_map(Result::ok)
+                .map(|entry| entry.path().join(arch).join("rc.exe"))
+                .filter(|path| path.is_file())
+                .max()
+                .ok_or_else(|| {
+                    std::io::Error::new(std::io::ErrorKind::NotFound, "Windows SDK rc.exe")
+                })?;
+            compile(&compiler)
+        })
+        .expect("编译 Windows 图标资源需要 Windows SDK");
+    assert!(status.success(), "Windows 图标资源编译失败");
+    println!(
+        "cargo:rustc-link-arg-bins={}",
+        out.join("product.res").display()
+    );
 }

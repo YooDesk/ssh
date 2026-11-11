@@ -5,5 +5,7 @@ fn main() {
         println!("cargo:rustc-cdylib-link-arg=-Wl,--exclude-libs,ALL");
     }
 
-    brand_build::configure(std::path::Path::new(env!("CARGO_MANIFEST_DIR")));
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+    let logo = brand_build::configure(root);
+    brand_build::configure_executable_icon(root, &logo);
 }
