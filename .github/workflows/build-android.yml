@@ -1,0 +1,96 @@
+name: Build and release Android component
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  android:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: '1.99.0'
+          targets: aarch64-linux-android
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Install pinned NDK and native build tools
+        run: |
+          sdkmanager 'ndk;26.1.10909125'
+          sudo apt-get update
+          sudo apt-get install -y clang libclang-dev ninja-build nasm autoconf autoconf-archive automake libtool pkg-config
+      - uses: actions/cache/restore@v4
+        id: android-cache
+        with:
+          path: |
+            ~/.cargo/registry/
+            ~/.cargo/git/
+            target/
+            artifacts/android/target/
+            artifacts/android/vcpkg-installed/
+            artifacts/android/vcpkg-build/
+            ~/.cache/vcpkg/archives/
+          key: android-ssh-rust199-ndk26-v1-${{ hashFiles('Cargo.lock', 'dependencies.lock.json', 'engine-patches/android-frame-sink.rs', 'ci/android.py', 'scripts/android_capture.py') }}-${{ github.sha }}
+          restore-keys: android-ssh-rust199-ndk26-v1-
+      - name: Build browser assets
+        run: |
+          npm ci --prefix frontend --ignore-scripts
+          node ci/browser.mjs ssh
+      - name: Run component tests
+        run: |
+          cargo test --locked
+      - name: Cross compile and validate Android ARM64 release
+        run: python ci/android.py ssh
+      - name: Preserve completed native compilation even after a failed build
+        if: always() && steps.android-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cargo/registry/
+            ~/.cargo/git/
+            target/
+            artifacts/android/target/
+            artifacts/android/vcpkg-installed/
+            artifacts/android/vcpkg-build/
+            ~/.cache/vcpkg/archives/
+          key: ${{ steps.android-cache.outputs.cache-primary-key }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-ssh
+          path: dist/*android-arm64.zip*
+          if-no-files-found: error
+  release:
+    needs: android
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-ssh
+          path: dist/
+      - name: Verify release checksum
+        run: cd dist && sha256sum -c yoodesk-ssh-android-arm64.zip.sha256
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-v0.1.0-ci.${{ github.run_number }}
+          name: 'Android ssh ${{ github.sha }}'
+          target_commitish: ${{ github.sha }}
+          make_latest: false
+          fail_on_unmatched_files: true
+          files: dist/*android-arm64.zip*
