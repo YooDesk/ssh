@@ -96,6 +96,12 @@ jobs:
         if: runner.os == 'Windows'
         with:
           arch: ${{ matrix.msvc }}
+      # macOS 也使用固定 rustc 版本，避免 runner 预装工具链漂移。
+      - uses: dtolnay/rust-toolchain@stable
+        if: runner.os == 'macOS'
+        with:
+          toolchain: '1.99.0'
+          targets: ${{ matrix.target }}
 
       - name: Build Windows native code and run tests
         if: runner.os == 'Windows'
