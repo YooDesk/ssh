@@ -97,7 +97,7 @@ Native数据连接新增独立device-data-challenge/proof/socket-v1契约及12/1
 Android/account-device migration from upstream c0975f2 adds authenticated Connector
 PATCH/DELETE account-device operations and the current node-control candidate's
 `device_revoke` message, bound to device ID, route epoch and connector generation.
-The optional `info.device_revoke` capability gates revocation notifications to upgraded
+The optional `hello.device_revoke` capability gates revocation notifications to upgraded
 Edge peers; old peers retain their existing lease and authority checks. Node schemas
 and positive/negative vectors are synchronized across repository snapshots. Historical
 client v1 and history/v1 remain unchanged; the native plugin ABI remains version 1.
