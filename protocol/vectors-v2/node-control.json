@@ -2808,6 +2808,32 @@
     }
   },
   {
+    "name": "device-revoke-exact-physical-generation",
+    "valid": true,
+    "plane": "edge",
+    "message": {
+      "v": 1, "plane": "edge", "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_revoke",
+      "payload": {"device_id": "device-a", "route_epoch": 1, "connector_generation": "1"}
+    }
+  },
+  {
+    "name": "device-revoke-missing-generation",
+    "valid": false,
+    "plane": "edge",
+    "message": {
+      "v": 1, "plane": "edge", "node_id": "edge-a",
+      "boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "connection_generation": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "request_id": "cccccccccccccccccccccccccccccccc",
+      "type": "device_revoke",
+      "payload": {"device_id": "device-a", "route_epoch": 1}
+    }
+  },
+  {
     "name": "device-session-scoped-cancel",
     "valid": true,
     "plane": "edge",

@@ -15,6 +15,20 @@
     }
   ],
   "paths": {
+    "/api/v2/devices/{device_id}/": {
+      "parameters": [{"name":"device_id","in":"path","required":true,"schema":{"type":"string","pattern":"^[A-Za-z0-9_-][A-Za-z0-9._~-]{0,127}$"}}],
+      "patch": {
+        "operationId":"updateConnectorDeviceRemark",
+        "description":"Requires a current Connector access bearer token. Edits only a bound device owned by that account; empty remark clears it. Trimmed remark is limited to 100 Unicode characters and 256 UTF-8 bytes.",
+        "requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","required":["remark"],"additionalProperties":false,"properties":{"remark":{"type":"string","maxLength":100}}}}}},
+        "responses":{"200":{"description":"v2 envelope with data.device_id and canonical data.remark"},"400":{"description":"Invalid remark"},"401":{"description":"Invalid or revoked access"},"404":{"description":"No matching bound device owned by the account"},"503":{"description":"Authority unavailable"}}
+      },
+      "delete": {
+        "operationId":"unbindConnectorDevice",
+        "description":"Requires a current Connector access bearer token. Unbinds another device owned by the account, clears its remark and revokes its sessions and routes. The calling device cannot unbind itself through this endpoint.",
+        "responses":{"200":{"description":"v2 envelope with data.device_id and data.deleted=true"},"401":{"description":"Invalid or revoked access"},"404":{"description":"No matching bound device owned by the account"},"409":{"description":"Calling device cannot be unbound here"},"503":{"description":"Authority unavailable"}}
+      }
+    },
     "/login/": {
       "get": {
         "operationId": "showConnectorConsent",

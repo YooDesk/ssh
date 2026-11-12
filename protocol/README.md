@@ -92,3 +92,12 @@ Native数据连接新增独立device-data-challenge/proof/socket-v1契约及12/1
 `node --test frontend/tests/connector-local-settings.test.mjs`。
 
 冻结资产 Git 属性设为保留原字节，避免跨平台 CRLF 转换使快照摘要漂移。第三方 proto 的许可证保存在 rustdesk/LICENSE.AGPL-3.0，不能将其当成本项目原创或不同许可。
+
+
+Android/account-device migration from upstream c0975f2 adds authenticated Connector
+PATCH/DELETE account-device operations and the current node-control candidate's
+`device_revoke` message, bound to device ID, route epoch and connector generation.
+The optional `info.device_revoke` capability gates revocation notifications to upgraded
+Edge peers; old peers retain their existing lease and authority checks. Node schemas
+and positive/negative vectors are synchronized across repository snapshots. Historical
+client v1 and history/v1 remain unchanged; the native plugin ABI remains version 1.

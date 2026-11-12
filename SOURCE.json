@@ -6,5 +6,6 @@
     "protocol",
     "products"
   ],
-  "migration": "native-plugin-abi-v1"
+  "migration": "native-plugin-abi-v1",
+  "android_and_devices_upstream_commit": "c0975f27b05dc33dd303742cea519f390552fb4c"
 }

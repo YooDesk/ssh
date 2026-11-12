@@ -836,7 +836,9 @@
                   "method": {
                     "enum": [
                       "GET",
-                      "POST"
+                      "POST",
+                      "PATCH",
+                      "DELETE"
                     ]
                   },
                   "path": {

@@ -38,6 +38,7 @@
         "device_request",
         "device_response",
         "device_cancel",
+        "device_revoke",
         "stream_install",
         "stream_revoke",
         "stream_ack",
@@ -77,6 +78,18 @@
     }
   },
   "allOf": [
+    {
+      "if": {"properties": {"type": {"const": "device_revoke"}}},
+      "then": {"properties": {"plane": {"const": "edge"}, "payload": {
+        "type": "object", "additionalProperties": false,
+        "required": ["device_id", "route_epoch", "connector_generation"],
+        "properties": {
+          "device_id": {"type": "string", "minLength": 1, "maxLength": 128},
+          "route_epoch": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+          "connector_generation": {"type": "string", "pattern": "^[1-9][0-9]{0,19}$"}
+        }
+      }}}
+    },
     {
       "if": {
         "properties": {
@@ -798,6 +811,9 @@
           "const": true
         },
         "turn_retirement_confirm": {
+          "const": true
+        },
+        "device_revoke": {
           "const": true
         }
       }
