@@ -354,3 +354,59 @@ pub extern "C" fn yd_plugin_v1() -> *const PluginApi {
 // The repository-specific ID is appended by tools/configure_plugins.py.
 
 const PLUGIN_ID: &[u8] = b"ssh\0";
+
+#[cfg(test)]
+mod startup_tests {
+    use super::*;
+    use std::io::{Read, Write};
+
+    unsafe extern "C" fn deny_access(
+        _: *mut c_void, _: *const u8, _: usize, output: *mut Buffer,
+    ) -> i32 {
+        response(output, Err(ApiError::new(401, "unauthorized", "test host denies access")))
+    }
+
+    #[test]
+    fn plugin_start_binds_authenticated_loopback_and_stop_releases_it() {
+        let host = HostApi {
+            abi_version: ABI_VERSION,
+            struct_size: std::mem::size_of::<HostApi>(),
+            context: std::ptr::null_mut(),
+            access: deny_access,
+            free: plugin_abi::free,
+        };
+        let input = serde_json::to_vec(&json!({
+            "config": {
+                "product_id":"yoodesk", "public_origin":"https://localhost:30443",
+                "bind":"127.0.0.1:30443", "loopback_bind":"127.0.0.1:0",
+                "certificate":"test-unused.pem", "private_key":"test-unused.key",
+                "access_key_file":"test-unused-access.key", "enable_drm":false
+            },
+            "service":false, "token":"a".repeat(64)
+        })).unwrap();
+        let api = unsafe { &*yd_plugin_v1() };
+        let mut handle = std::ptr::null_mut();
+        let mut output = Buffer::empty();
+        let status = unsafe { (api.start)(&host, input.as_ptr(), input.len(), &mut handle, &mut output) };
+        let value: Value = unsafe { serde_json::from_slice(output.bytes().unwrap()).unwrap() };
+        unsafe { (api.free)(output) };
+        assert_eq!(status, 0);
+        assert!(!handle.is_null(), "plugin startup failed: {value}");
+        struct Stop(*mut c_void);
+        impl Drop for Stop {
+            fn drop(&mut self) { unsafe { (API.stop)(self.0) } }
+        }
+        let stop = Stop(handle);
+        let address: std::net::SocketAddr = value["data"]["address"].as_str().unwrap().parse().unwrap();
+        assert!(address.ip().is_loopback());
+        let mut socket = std::net::TcpStream::connect_timeout(&address, Duration::from_secs(10)).unwrap();
+        socket.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
+        socket.write_all(b"GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n").unwrap();
+        let mut reply = String::new();
+        socket.read_to_string(&mut reply).unwrap();
+        assert!(reply.starts_with("HTTP/1.1 403"), "plugin token boundary rejected incorrectly: {reply}");
+        drop(socket);
+        drop(stop);
+        assert!(std::net::TcpStream::connect_timeout(&address, Duration::from_secs(1)).is_err());
+    }
+}

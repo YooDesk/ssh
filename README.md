@@ -33,3 +33,8 @@ SFTP 按字段名提取 `id`、`tid`，兼容动态插件前缀带来的额外 `
 四路真实浏览器 STUN SSH/SFTP 同时上传、下载各 16 MiB，SHA256 一致，共同保持超过 185 秒。
 
 ?????`windows-x86` ?? i686 MSVC ??? CRT?`linux-loong64-oldworld` ???? ABI 1.0?glibc 2.28??????????????????? sysroot ???? SHA256 ? Desk Release ????????????????? `release_id`?????????????????
+
+
+## 2026-11-21 MIPS plugin startup correction
+
+WebService dynamic-plugin acceptance exposed startup failure in released MIPS plugins. Vendor the exact libc 0.2.191 archive with Connector's reviewed five MIPS64 architecture-selector corrections (socket options/types, signals, sigaction and pthread mutex ABI). Keep upstream licenses and PATCHES provenance. Remove the old MIPS socket-test exclusions. Add an exported-C-ABI startup regression that binds the actual plugin loopback listener, verifies missing transport token returns HTTP 403, stops the runtime and checks the listener is released. Full platform builds and WebService dynamic integration remain required before replacing released dependencies.

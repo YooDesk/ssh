@@ -156,20 +156,8 @@ runner_var="CARGO_TARGET_$(echo "$target" | tr 'a-z-' 'A-Z_')_RUNNER"
 export "$runner_var=$QEMU $QEMU_RUNNER_ARGS"
 
 cargo build --locked --release "${build_args[@]}" --lib
-# QEMU user mode does not implement every socket option for the emulated
-# kernels; on mips64el two tests that bind a real TCP listener fail with
-# ENOPROTOOPT ("Protocol not available") before exercising product code.
-# They pass on the native platforms and on loong64, so only skip them here.
-test_args=()
-if [[ "$platform" == linux-mips64el ]]; then
-    # QEMU user mode rejects some socket options (ENOPROTOOPT), so tests
-    # that bind a real TCP listener fail before reaching product code.
-    test_args+=(--skip expired_wrong_name_client_only_certificate_still_connects_in_default_mode)
-    test_args+=(--skip websocket_write_deadline_releases_stalled_connection)
-    test_args+=(--skip nested_sftp_routes_reach_authentication_with_extra_capability_parameter)
-    test_args+=(--skip duplex_forwarding_reads_while_target_write_is_backpressured)
-fi
-cargo test --locked "${build_args[@]}" --lib -- "${test_args[@]}"
+# Corrected libc MIPS selectors permit all real socket and plugin startup tests.
+cargo test --locked "${build_args[@]}" --lib
 
 if [[ "$kind" == webservice ]]; then
     cargo build --locked --release "${build_args[@]}" --features desk-engine --bin web-service
