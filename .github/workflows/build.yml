@@ -4,11 +4,30 @@ on:
     branches: [main]
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      platform:
+        description: Build one platform for diagnosis, or all platforms for release
+        type: choice
+        default: all
+        options: [all, windows-x86, windows-x64, windows-arm64, linux-x64, linux-arm64, linux-loong64, linux-loong64-oldworld, linux-mips64el, macos-arm64, macos-x64]
+      source_ref:
+        description: Exact source commit for a reviewed build-only adapter
+        type: string
+        default: ''
+      release_id:
+        description: Prepared draft release ID for a historical source_ref
+        type: string
+        default: ''
+      reuse_run_id:
+        description: Completed run at source_ref with verified native artifacts
+        type: string
+        default: ''
 
 permissions:
   contents: read
+  actions: read
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-${{ github.ref }}-${{ inputs.platform || 'all' }}
   cancel-in-progress: true
 env:
   RUST_VERSION: '1.99.0'
@@ -17,11 +36,28 @@ env:
   VCPKG_CMAKE_VERSION: '4.3.0'
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
 jobs:
+  targets:
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+      source_sha: ${{ steps.select.outputs.source_sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: select
+        env:
+          PLATFORM: ${{ inputs.platform || 'all' }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          REUSE_RUN_ID: ${{ inputs.reuse_run_id }}
+          GH_TOKEN: ${{ github.token }}
+        run: python ci/build_matrix.py >> "$GITHUB_OUTPUT"
 
   browser:
+    needs: targets
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.targets.outputs.source_sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -37,24 +73,27 @@ jobs:
           path: browser/
           if-no-files-found: error
   native:
-    needs: [browser]
+    env:
+      YOODESK_SOURCE_SHA: ${{ needs.targets.outputs.source_sha }}
+    needs: [browser, targets]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - {platform: windows-x64, os: windows-2022, target: x86_64-pc-windows-msvc, triplet: x64-windows-static, msvc: x64}
-          - {platform: windows-arm64, os: windows-11-arm, target: aarch64-pc-windows-msvc, triplet: arm64-windows-static, msvc: x64_arm64}
-          - {platform: linux-x64, os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, triplet: x64-linux}
-          - {platform: linux-arm64, os: ubuntu-22.04-arm, target: aarch64-unknown-linux-gnu, triplet: arm64-linux}
-          - {platform: linux-loong64, os: ubuntu-22.04, target: loongarch64-unknown-linux-gnu, triplet: loongarch64-linux, cross: true}
-          - {platform: linux-mips64el, os: ubuntu-22.04, target: mips64el-unknown-linux-gnuabi64, triplet: mips64el-linux, cross: true}
-          # 两个架构各用一台原生 runner，原生编译原生依赖。
-          - {platform: macos-arm64, os: macos-15, target: aarch64-apple-darwin, triplet: arm64-osx, macos: true}
-          - {platform: macos-x64, os: macos-15-intel, target: x86_64-apple-darwin, triplet: x64-osx, macos: true}
+      matrix: ${{ fromJSON(needs.targets.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.targets.outputs.source_sha }}
+      - name: Apply reviewed build-only adapters to the pinned source
+        if: inputs.source_ref != ''
+        shell: bash
+        env:
+          BUILD_TOOLS_SHA: ${{ github.sha }}
+        run: |
+          git fetch --depth 1 origin "$BUILD_TOOLS_SHA"
+          git show "$BUILD_TOOLS_SHA:ci/build_adapters.py" > "$RUNNER_TEMP/yoodesk-build-adapters.py"
+          python "$RUNNER_TEMP/yoodesk-build-adapters.py" "$YOODESK_SOURCE_SHA" "$BUILD_TOOLS_SHA"
       # Windows 的 build.rs 用这里的 Node 依赖生成可执行文件图标。
       - uses: actions/setup-node@v4
         if: runner.os == 'Windows'
@@ -111,6 +150,7 @@ jobs:
           RUSTFLAGS: '-C target-feature=+crt-static'
           _CL_: '/MT'
         run: |
+          $env:GITHUB_SHA=$env:YOODESK_SOURCE_SHA
           cargo build --locked --release --lib
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo test --locked --lib
@@ -124,6 +164,7 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: '11.0'
         run: |
           rustup target add '${{ matrix.target }}'
+          export GITHUB_SHA="$YOODESK_SOURCE_SHA"
           cargo build --locked --release --lib --target '${{ matrix.target }}'
           cargo test --locked --lib --target '${{ matrix.target }}'
           python3 ci/package.py ssh --platform '${{ matrix.platform }}'
@@ -134,47 +175,113 @@ jobs:
         run: |
           mkdir -p .ci-cache/tools .ci-cache/vcpkg
           docker run --rm \
-            -e GITHUB_SHA -e RELEASE_VERSION \
+            -e GITHUB_SHA="$YOODESK_SOURCE_SHA" -e RELEASE_VERSION \
             -v "$PWD:/workspace" -v "$PWD/.ci-cache/tools:/opt/yoodesk-tools" \
             ubuntu:18.04 bash /workspace/ci/linux-build.sh ssh '${{ matrix.platform }}' '${{ matrix.target }}' '${{ matrix.triplet }}'
       - name: Cross-compile loong64/mips64el plugin and verify archive under QEMU
-        if: matrix.cross
+        if: matrix.cross && !matrix.oldworld
         timeout-minutes: 240
         shell: bash
         run: |
           mkdir -p .ci-cache/tools
           docker run --rm \
-            -e GITHUB_SHA -e RELEASE_VERSION -e RUST_VERSION='${{ env.RUST_VERSION }}' \
+            -e GITHUB_SHA="$YOODESK_SOURCE_SHA" -e RELEASE_VERSION -e RUST_VERSION='${{ env.RUST_VERSION }}' \
             -v "$PWD:/workspace" -v "$PWD/.ci-cache/tools:/opt/yoodesk-tools" \
             ubuntu:18.04 bash /workspace/ci/cross-build.sh '${{ matrix.platform }}' '${{ matrix.target }}' ssh
+      - uses: actions/cache/restore@v4
+        if: matrix.oldworld
+        id: oldworld-inputs
+        with:
+          path: |
+            .ci-cache/oldworld-toolchain.tar.xz
+            .ci-cache/oldworld-sysroot-inputs.tar
+            .ci-cache/oldworld-upstream-cargo.tar.xz
+            .ci-cache/oldworld-debs/
+            .ci-cache/cargo-oldworld/
+          key: oldworld-inputs-v2-${{ hashFiles('ci/oldworld-tools.lock.json', 'ci/oldworld-sysroot.lock.json', 'ci/oldworld-sysroot-download.lock.json') }}
+          restore-keys: oldworld-inputs-v1-
+      - name: Build and test the LoongArch old-world ABI 1.0 ssh plugin
+        if: matrix.oldworld
+        shell: bash
+        run: |
+          export GITHUB_SHA="$YOODESK_SOURCE_SHA"
+          bash ci/oldworld-build.sh ssh
+      - uses: actions/cache/save@v4
+        if: always() && matrix.oldworld && steps.oldworld-inputs.outputs.cache-hit != 'true'
+        with:
+          path: |
+            .ci-cache/oldworld-toolchain.tar.xz
+            .ci-cache/oldworld-sysroot-inputs.tar
+            .ci-cache/oldworld-upstream-cargo.tar.xz
+            .ci-cache/oldworld-debs/
+            .ci-cache/cargo-oldworld/
+          key: ${{ steps.oldworld-inputs.outputs.cache-primary-key }}
       - uses: actions/upload-artifact@v4
         with:
           name: native-${{ matrix.platform }}
           path: dist/
           if-no-files-found: error
   release:
-    if: github.event_name != 'pull_request'
-    needs: native
+    if: github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.platform == 'all')
+    needs: [native, targets]
     runs-on: ubuntu-24.04-arm
     permissions:
       contents: write
+      actions: read
     steps:
+      - uses: actions/checkout@v4
+        if: inputs.release_id != ''
+      - uses: actions/download-artifact@v4
+        if: inputs.reuse_run_id != ''
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.reuse_run_id }}
+          pattern: native-*
+          path: dist/
+          merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
           pattern: native-*
           path: dist/
           merge-multiple: true
-      - name: Require all four platform archives before publishing
+      - name: Require every platform archive before publishing
         run: |
-          for platform in windows-x64 windows-arm64 linux-x64 linux-arm64 linux-loong64 linux-mips64el macos-arm64 macos-x64; do
+          for platform in windows-x86 windows-x64 windows-arm64 linux-x64 linux-arm64 linux-loong64 linux-loong64-oldworld linux-mips64el macos-arm64 macos-x64; do
             test -s "dist/yoodesk-ssh-$platform.zip"
             (cd dist && sha256sum -c "yoodesk-ssh-$platform.zip.sha256")
           done
+      - name: Verify every archive identifies the pinned runtime source
+        env:
+          SOURCE_SHA: ${{ needs.targets.outputs.source_sha }}
+        run: |
+          python3 - <<'PY'
+          import glob, hashlib, json, os, zipfile
+          archives = glob.glob('dist/*.zip')
+          assert len(archives) == 10
+          for archive in archives:
+              with zipfile.ZipFile(archive) as bundle:
+                  metadata = json.loads(bundle.read('plugin.json'))
+                  assert archive == 'dist/yoodesk-ssh-'+metadata['platform']+'.zip', archive
+                  assert metadata['id'] == 'ssh' and metadata['abi_version'] == 1, archive
+                  assert metadata['source_commit'] == os.environ['SOURCE_SHA'], archive
+                  assert hashlib.sha256(bundle.read(metadata['library'])).hexdigest() == metadata['sha256'], archive
+          PY
+      - name: Upload verified historical-source archives to the prepared release
+        if: inputs.release_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.targets.outputs.source_sha }}
+          RELEASE_ID: ${{ inputs.release_id }}
+        run: python3 ci/publish_verified_plugins.py
       - uses: softprops/action-gh-release@v2
+        if: inputs.release_id == ''
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('v0.1.0-ci.{0}', github.run_number) }}
-          name: 'ssh ${{ github.sha }}'
-          target_commitish: ${{ github.sha }}
+          name: 'ssh ${{ needs.targets.outputs.source_sha }}'
+          target_commitish: ${{ needs.targets.outputs.source_sha }}
+          body: |
+            Runtime source: `${{ needs.targets.outputs.source_sha }}`
+            Build configuration: `${{ github.sha }}`
           make_latest: true
           fail_on_unmatched_files: true
           files: dist/*

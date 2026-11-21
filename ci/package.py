@@ -24,6 +24,12 @@ def _binutils(tool, platform):
     the cross toolchain's tools are used when the target differs from the
     build host.
     """
+    if platform == 'linux-loong64-oldworld':
+        base = Path(os.environ['YOODESK_OLDWORLD_TOOLS'])
+        candidate = base / 'toolchain/llvm/bin' / ('llvm-' + tool)
+        if not candidate.is_file():
+            raise ValueError('Missing old-world binutils: ' + str(candidate))
+        return str(candidate)
     prefixes = {
         'linux-loong64': 'loongarch64-unknown-linux-gnu-',
         'linux-mips64el': 'mips64el-linux-gnuabi64-',
@@ -49,11 +55,13 @@ def prepare_plugin_exports(library,platform):
     if exported!=PUBLIC_EXPORTS:raise ValueError(f'{library}: unexpected exported symbols: {sorted(exported)}')
 
 PLATFORMS = {
+    "windows-x86": ("i686-pc-windows-msvc", 0x014C),
     "windows-x64": ("x86_64-pc-windows-msvc", 0x8664),
     "windows-arm64": ("aarch64-pc-windows-msvc", 0xAA64),
     "linux-x64": ("x86_64-unknown-linux-gnu", 62),
     "linux-arm64": ("aarch64-unknown-linux-gnu", 183),
     "linux-loong64": ("loongarch64-unknown-linux-gnu", 258),
+    "linux-loong64-oldworld": ("loongarch64-unknown-linux-gnu", 258),
     "linux-mips64el": ("mips64el-unknown-linux-gnuabi64", 8),
     "macos-arm64": ("aarch64-apple-darwin", None),
     "macos-x64": ("x86_64-apple-darwin", None),
@@ -61,6 +69,7 @@ PLATFORMS = {
 # glibc ceiling per Linux platform; cross ports use their pinned sysroot.
 GLIBC_BASELINE = {
     "linux-x64": (2, 27), "linux-arm64": (2, 27),
+    "linux-loong64-oldworld": (2, 28),
     "linux-loong64": (2, 43), "linux-mips64el": (2, 28),
 }
 QEMU_INTERPRETERS = {
@@ -90,6 +99,8 @@ def verify_binary(path, platform):
     else:
         if data[:4] != b"\x7fELF" or data[4:6] != b"\x02\x01": raise ValueError(f"Not a 64-bit little-endian ELF: {path}")
         machine = struct.unpack_from("<H", data, 18)[0]
+        if platform == 'linux-loong64-oldworld' and struct.unpack_from('<I', data, 48)[0] != 3:
+            raise ValueError(f'{path}: expected LoongArch old-world ABI 1.0 (ELF flags 0x3)')
         baseline = GLIBC_BASELINE[platform]
         output = subprocess.check_output(["readelf", "--version-info", str(path)], text=True)
         versions = [tuple(map(int, value.split("."))) for value in re.findall(r"GLIBC_(\d+\.\d+)", output)]

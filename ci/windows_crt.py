@@ -22,8 +22,15 @@ def imports(blob):
     count=struct.unpack_from('<H',blob,pe+6)[0]
     size=struct.unpack_from('<H',blob,pe+20)[0]
     optional=pe+24
-    if struct.unpack_from('<H',blob,optional)[0]!=0x20b:raise ValueError('Expected PE32+')
-    image_base=struct.unpack_from('<Q',blob,optional+24)[0]
+    magic=struct.unpack_from('<H',blob,optional)[0]
+    if magic == 0x20b:
+        image_base=struct.unpack_from('<Q',blob,optional+24)[0]
+        directories=optional+112
+    elif magic == 0x10b:
+        image_base=struct.unpack_from('<I',blob,optional+28)[0]
+        directories=optional+96
+    else:
+        raise ValueError('Expected PE32 or PE32+')
     sections=[]
     for index in range(count):
         offset=optional+size+40*index
@@ -37,14 +44,14 @@ def imports(blob):
         start=position(rva)
         return blob[start:blob.index(b'\0',start)].decode('ascii').lower()
     result=set()
-    rva=struct.unpack_from('<I',blob,optional+112+8)[0]
+    rva=struct.unpack_from('<I',blob,directories+8)[0]
     if rva:
         offset=position(rva)
         while True:
             entry=struct.unpack_from('<IIIII',blob,offset)
             if not any(entry):break
             result.add(name(entry[3]));offset+=20
-    rva=struct.unpack_from('<I',blob,optional+112+13*8)[0]
+    rva=struct.unpack_from('<I',blob,directories+13*8)[0]
     if rva:
         offset=position(rva)
         while True:

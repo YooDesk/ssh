@@ -1,0 +1,49 @@
+name: Publish verified existing artifacts
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Completed build run containing verified native archives
+        type: string
+        required: true
+      reuse_run_id:
+        description: Optional completed run containing other exact-source archives
+        type: string
+        default: ''
+      source_ref:
+        description: Exact runtime source SHA shared by every archive
+        type: string
+        required: true
+      release_id:
+        description: Existing release ID prepared at that source SHA
+        type: string
+        required: true
+permissions:
+  contents: write
+  actions: read
+jobs:
+  release:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        if: inputs.reuse_run_id != ''
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.reuse_run_id }}
+          pattern: native-*
+          path: dist/
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.run_id }}
+          pattern: native-*
+          path: dist/
+          merge-multiple: true
+      - name: Verify archives and upload without changing release metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_ref }}
+          RELEASE_ID: ${{ inputs.release_id }}
+        run: python3 ci/publish_verified_plugins.py

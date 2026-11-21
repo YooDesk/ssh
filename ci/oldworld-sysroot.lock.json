@@ -1,0 +1,2588 @@
+{
+  "schema_version": 1,
+  "platform": "linux-loong64-oldworld",
+  "glibc": "2.28",
+  "base_url": "https://mirrors.nju.edu.cn/loongnix/20/",
+  "index_url": "https://pkg.loongnix.cn/loongnix/20/dists/DaoXiangHu-stable/main/binary-loongarch64/Packages.gz",
+  "index_sha256": "f1511d007d4d45a80de3b18be55b79b7aea211c396d9d8ccb71362eb22682383",
+  "roots": [
+    "libc6-dev",
+    "linux-libc-dev",
+    "libstdc++6",
+    "libavcodec-dev",
+    "libavformat-dev",
+    "libavutil-dev",
+    "libswresample-dev",
+    "libaom-dev",
+    "libopus-dev",
+    "libsodium-dev",
+    "libx264-dev",
+    "libx265-dev",
+    "libvpx-dev",
+    "libgtk-3-dev",
+    "libasound2-dev",
+    "libpulse-dev",
+    "libgstreamer1.0-dev",
+    "libgstreamer-plugins-base1.0-dev",
+    "libgbm-dev",
+    "libdrm-dev",
+    "libxkbcommon-dev",
+    "libxdo-dev",
+    "libudev-dev",
+    "libdbus-1-dev",
+    "libva-dev",
+    "libvdpau-dev",
+    "libegl1-mesa-dev",
+    "libgles2-mesa-dev",
+    "libxcb1-dev",
+    "libxcb-randr0-dev",
+    "libxcb-shm0-dev",
+    "libxcb-xfixes0-dev",
+    "libxcb-shape0-dev",
+    "libxfixes-dev",
+    "libxrandr-dev",
+    "libxtst-dev",
+    "libwayland-dev",
+    "libx11-dev",
+    "libxext-dev",
+    "libxi-dev",
+    "libxinerama-dev",
+    "libxcursor-dev",
+    "libxrender-dev",
+    "libxss-dev",
+    "libstdc++-8-dev",
+    "libharfbuzz-dev",
+    "libgraphite2-dev",
+    "libxcb-shape0-dev",
+    "libatk-bridge2.0-dev",
+    "libxcomposite-dev",
+    "liblz4-dev",
+    "libxcomposite-dev",
+    "libxdamage-dev",
+    "liblzma-dev",
+    "libzstd-dev"
+  ],
+  "files": [
+    {
+      "name": "adwaita-icon-theme",
+      "version": "3.30.1-1.1",
+      "filename": "pool/main/a/adwaita-icon-theme/adwaita-icon-theme_3.30.1-1.1_all.deb",
+      "sha256": "1fc30e19b41312b2995a0b544d31c289e2f87848d5d5dbf1d195f34f8534535e"
+    },
+    {
+      "name": "binfmt-support",
+      "version": "2.2.0-2.1",
+      "filename": "pool/main/b/binfmt-support/binfmt-support_2.2.0-2.1_loongarch64.deb",
+      "sha256": "c9049b1f52a6ab62c8f8fab87157685f6d4ecc173ca8393cefea8c20d85bdeaf"
+    },
+    {
+      "name": "coreutils",
+      "version": "8.30-3.lnd.2",
+      "filename": "pool/main/c/coreutils/coreutils_8.30-3.lnd.2_loongarch64.deb",
+      "sha256": "72fd1c3620d0e7110f060f79b66a3ae03291119333f1005fdaa62a4756804650"
+    },
+    {
+      "name": "dconf-gsettings-backend",
+      "version": "0.30.1-2.1",
+      "filename": "pool/main/d/dconf/dconf-gsettings-backend_0.30.1-2.1_loongarch64.deb",
+      "sha256": "b3d6919b5a2200f0887ce7e68396a13a190f945b6ea9f3f91d86b968f53d03a7"
+    },
+    {
+      "name": "dconf-service",
+      "version": "0.30.1-2.1",
+      "filename": "pool/main/d/dconf/dconf-service_0.30.1-2.1_loongarch64.deb",
+      "sha256": "f943245858e4cf734fc6c987eed7aa61f21514153be48c77601cc43b548709a3"
+    },
+    {
+      "name": "debconf",
+      "version": "1.5.71+nmu1",
+      "filename": "pool/main/d/debconf/debconf_1.5.71+nmu1_all.deb",
+      "sha256": "666425b0d8d77591e41a046ce1c4301dd3e56990c1f0fa72e55b8f1b0b6e12d5"
+    },
+    {
+      "name": "dpkg",
+      "version": "1.19.7.lnd.2+nmu1",
+      "filename": "pool/main/d/dpkg/dpkg_1.19.7.lnd.2+nmu1_loongarch64.deb",
+      "sha256": "4d0598dec5724ce21e74898e71a6573c52e35207bb57bd8e75a03ba119d2ba1e"
+    },
+    {
+      "name": "fontconfig",
+      "version": "2.13.1-2.1",
+      "filename": "pool/main/f/fontconfig/fontconfig_2.13.1-2.1_loongarch64.deb",
+      "sha256": "46b82e582ac2d4b2da309e58fdddb16c4c7842ab80c6152b658dc7461187634e"
+    },
+    {
+      "name": "fontconfig-config",
+      "version": "2.13.1-2.1",
+      "filename": "pool/main/f/fontconfig/fontconfig-config_2.13.1-2.1_all.deb",
+      "sha256": "a03f7406868d330e6f74ce4cd7789854a030fba55c48d27e06015702cc0ed62f"
+    },
+    {
+      "name": "fonts-dejavu-core",
+      "version": "2.37-1.1",
+      "filename": "pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-1.1_all.deb",
+      "sha256": "719985b087afe08b8dc835aaf08192127a5485d93e4bd692a17766ce88abe51a"
+    },
+    {
+      "name": "gcc-8-base",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/gcc-8-base_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "60d0b267c58550130c62fa9088dcede2b6776d7bf1744728a285af14ca994879"
+    },
+    {
+      "name": "gir1.2-atk-1.0",
+      "version": "2.30.0-2.1",
+      "filename": "pool/main/a/atk1.0/gir1.2-atk-1.0_2.30.0-2.1_loongarch64.deb",
+      "sha256": "3fbe8f2a9d04b048fe6b5faa76a8e31e7f7b2cb9e60e35e1276d74e29ebb4e9c"
+    },
+    {
+      "name": "gir1.2-atspi-2.0",
+      "version": "2.30.0-7.1",
+      "filename": "pool/main/a/at-spi2-core/gir1.2-atspi-2.0_2.30.0-7.1_loongarch64.deb",
+      "sha256": "4fdba8be8733cf9f3b41d2d3835a20ae2e7ca932f93fbf5c136efdf936c695ff"
+    },
+    {
+      "name": "gir1.2-freedesktop",
+      "version": "1.58.3-2.1",
+      "filename": "pool/main/g/gobject-introspection/gir1.2-freedesktop_1.58.3-2.1_loongarch64.deb",
+      "sha256": "0ab1974cf3b65481df027b8a84828ac91d6f4d8e377dfe16f63dbb4d5f11229d"
+    },
+    {
+      "name": "gir1.2-gdkpixbuf-2.0",
+      "version": "2.38.1+dfsg-1.1",
+      "filename": "pool/main/g/gdk-pixbuf/gir1.2-gdkpixbuf-2.0_2.38.1+dfsg-1.1_loongarch64.deb",
+      "sha256": "7277bd2b0e90d63b2ac088e2665340242281cc4f25f304b1754343dafcc99d9c"
+    },
+    {
+      "name": "gir1.2-glib-2.0",
+      "version": "1.58.3-2.1",
+      "filename": "pool/main/g/gobject-introspection/gir1.2-glib-2.0_1.58.3-2.1_loongarch64.deb",
+      "sha256": "c47870951199073abc29b5c44af34f7d172221aa76b495904bcdc6ce8c04a06b"
+    },
+    {
+      "name": "gir1.2-gst-plugins-base-1.0",
+      "version": "1.14.4-2.1.lnd.2",
+      "filename": "pool/main/g/gst-plugins-base1.0/gir1.2-gst-plugins-base-1.0_1.14.4-2.1.lnd.2_loongarch64.deb",
+      "sha256": "8be4b234a91e021ec816d704de6389f154d8c9cc31e814b60ed65d114335005a"
+    },
+    {
+      "name": "gir1.2-gstreamer-1.0",
+      "version": "1.14.4-1.lnd.3",
+      "filename": "pool/main/g/gstreamer1.0/gir1.2-gstreamer-1.0_1.14.4-1.lnd.3_loongarch64.deb",
+      "sha256": "cdf71e51e5125417c42da86c467b1e9d4d20ebf42263b7d9851821d6467b34b0"
+    },
+    {
+      "name": "gir1.2-gtk-3.0",
+      "version": "2:3.24.5-1.lnd.1",
+      "filename": "pool/main/g/gtk+3.0/gir1.2-gtk-3.0_3.24.5-1.lnd.1_loongarch64.deb",
+      "sha256": "6991cc89978ca381ff37904d90af1c26d57f0d18f8110f6533b6d5c9a395c4af"
+    },
+    {
+      "name": "gir1.2-harfbuzz-0.0",
+      "version": "2.3.1-1.1",
+      "filename": "pool/main/h/harfbuzz/gir1.2-harfbuzz-0.0_2.3.1-1.1_loongarch64.deb",
+      "sha256": "90429db96aba2e5a718b733c22546a17dd7fc78f055122996e9ab770c734947e"
+    },
+    {
+      "name": "gir1.2-pango-1.0",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/gir1.2-pango-1.0_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "73277327d3dd1eb76a3bd543547830446e98c9214372de62e45d9a195998323f"
+    },
+    {
+      "name": "glib-networking",
+      "version": "2.58.0-2.1",
+      "filename": "pool/main/g/glib-networking/glib-networking_2.58.0-2.1_loongarch64.deb",
+      "sha256": "1f78cdc18a67cf12d7dda4b290f8516d97ce2b568e0822db0fcc746ce7ac2e04"
+    },
+    {
+      "name": "glib-networking-common",
+      "version": "2.58.0-2.1",
+      "filename": "pool/main/g/glib-networking/glib-networking-common_2.58.0-2.1_all.deb",
+      "sha256": "dba8b681223772f30f5670ed1680131b10fe8301b11e07027da9cfc3b295e322"
+    },
+    {
+      "name": "glib-networking-services",
+      "version": "2.58.0-2.1",
+      "filename": "pool/main/g/glib-networking/glib-networking-services_2.58.0-2.1_loongarch64.deb",
+      "sha256": "e9854fa4844fe35caae4c97e0b322f2365428bad4736cbb6961ac4e52f212f4f"
+    },
+    {
+      "name": "gsettings-desktop-schemas",
+      "version": "3.28.1-1.1",
+      "filename": "pool/main/g/gsettings-desktop-schemas/gsettings-desktop-schemas_3.28.1-1.1_all.deb",
+      "sha256": "1146ff54a525a1400fe6c2db779e42e4a9ab237ffd323847ffbeae707603a363"
+    },
+    {
+      "name": "gtk-update-icon-cache",
+      "version": "2:3.24.5-1.lnd.1",
+      "filename": "pool/main/g/gtk+3.0/gtk-update-icon-cache_3.24.5-1.lnd.1_loongarch64.deb",
+      "sha256": "36d7b62dd4d7ee76dda3a3ddc3daa0468cfd46821e38c6d802a8c5138a88d864"
+    },
+    {
+      "name": "hicolor-icon-theme",
+      "version": "0.17-2.1",
+      "filename": "pool/main/h/hicolor-icon-theme/hicolor-icon-theme_0.17-2.1_all.deb",
+      "sha256": "781d94631fff619161dbd8b92e9ca13fb93d90410397493fb087d0f9de4c5a40"
+    },
+    {
+      "name": "icu-devtools",
+      "version": "67.1-7.lnd.1",
+      "filename": "pool/main/i/icu/icu-devtools_67.1-7.lnd.1_loongarch64.deb",
+      "sha256": "19f9581994836768db35da2aef39aad03b94c4fa036d94b5f18756f61f6ed701"
+    },
+    {
+      "name": "iso-codes",
+      "version": "4.2-1.lnd.4",
+      "filename": "pool/main/i/iso-codes/iso-codes_4.2-1.lnd.4_all.deb",
+      "sha256": "720f69c3177546ad40dd19e168936bfd2d01cfb822bc8db8391f7e29da7c562c"
+    },
+    {
+      "name": "libacl1",
+      "version": "2.2.53-4.1",
+      "filename": "pool/main/a/acl/libacl1_2.2.53-4.1_loongarch64.deb",
+      "sha256": "3ab6c72e96ff7cd69c8d0589a1553e92b3aa47ac9f7e490ba461c24367b6e9b1"
+    },
+    {
+      "name": "libaom-dev",
+      "version": "1.0.0-3.lnd.2",
+      "filename": "pool/main/a/aom/libaom-dev_1.0.0-3.lnd.2_loongarch64.deb",
+      "sha256": "04f8d1c414f9b469745ae5ee1b5c2ed88d892cc66a018b11c667c3b3385ad82e"
+    },
+    {
+      "name": "libaom0",
+      "version": "1.0.0-3.lnd.2",
+      "filename": "pool/main/a/aom/libaom0_1.0.0-3.lnd.2_loongarch64.deb",
+      "sha256": "62f24a5d4965ea7adf2dd3055245054e815aaca5f083885f29e776cf316faabd"
+    },
+    {
+      "name": "libasan5",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libasan5_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "0daa4ec848b9592c6c8244d5174ea7456e0ca16db5c98fd3524b2b2c2d19fc94"
+    },
+    {
+      "name": "libasound2",
+      "version": "1.1.8-1.lnd.1",
+      "filename": "pool/main/a/alsa-lib/libasound2_1.1.8-1.lnd.1_loongarch64.deb",
+      "sha256": "285d80556efea275736a58f3a7c3fb0c2ccfc110e0d846d8c258e21bfcc780eb"
+    },
+    {
+      "name": "libasound2-data",
+      "version": "1.1.8-1.lnd.1",
+      "filename": "pool/main/a/alsa-lib/libasound2-data_1.1.8-1.lnd.1_all.deb",
+      "sha256": "20d006e1da4aaea774b4c6c99d36069bede8ec1fcb80d053783b84af799a424b"
+    },
+    {
+      "name": "libasound2-dev",
+      "version": "1.1.8-1.lnd.1",
+      "filename": "pool/main/a/alsa-lib/libasound2-dev_1.1.8-1.lnd.1_loongarch64.deb",
+      "sha256": "b566cc3726693af19403d16acc157dc0a4fde4dd8f765ba1c27596e604d23cf8"
+    },
+    {
+      "name": "libasyncns0",
+      "version": "0.8-6.1",
+      "filename": "pool/main/liba/libasyncns/libasyncns0_0.8-6.1_loongarch64.deb",
+      "sha256": "473d9c59668734786465644f007bfc181b390002ca4166a8953ae789d0e6b04c"
+    },
+    {
+      "name": "libatk-bridge2.0-0",
+      "version": "2.30.0-5.1",
+      "filename": "pool/main/a/at-spi2-atk/libatk-bridge2.0-0_2.30.0-5.1_loongarch64.deb",
+      "sha256": "c29fa31f8d614a61f17ec779ec64e3b59db2a3779b25d12f27ed49b7f3454e68"
+    },
+    {
+      "name": "libatk-bridge2.0-dev",
+      "version": "2.30.0-5.1",
+      "filename": "pool/main/a/at-spi2-atk/libatk-bridge2.0-dev_2.30.0-5.1_loongarch64.deb",
+      "sha256": "74ce3899ba1b0694e7364df9d859f56929ee7c915890623db6302f57cba2130c"
+    },
+    {
+      "name": "libatk1.0-0",
+      "version": "2.30.0-2.1",
+      "filename": "pool/main/a/atk1.0/libatk1.0-0_2.30.0-2.1_loongarch64.deb",
+      "sha256": "0ec1c19f5201da08001c48c9c5e900af88ac12b24620fc84723f32f7a28de93e"
+    },
+    {
+      "name": "libatk1.0-data",
+      "version": "2.30.0-2.1",
+      "filename": "pool/main/a/atk1.0/libatk1.0-data_2.30.0-2.1_all.deb",
+      "sha256": "86f8534e9204e7c64c6c007f767942d05dc19fc887eb5a44e8d743db4bd9be8d"
+    },
+    {
+      "name": "libatk1.0-dev",
+      "version": "2.30.0-2.1",
+      "filename": "pool/main/a/atk1.0/libatk1.0-dev_2.30.0-2.1_loongarch64.deb",
+      "sha256": "4bcdee6676d6b35b077a4a3a7b9f1a7b413d0eef92fd1226b34e2da4190431c3"
+    },
+    {
+      "name": "libatomic1",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libatomic1_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "c1f22b1b35271cf5067e39510be3d5bc4c1df9da5f2606c1cb2c1a3eb86aefc2"
+    },
+    {
+      "name": "libatspi2.0-0",
+      "version": "2.30.0-7.1",
+      "filename": "pool/main/a/at-spi2-core/libatspi2.0-0_2.30.0-7.1_loongarch64.deb",
+      "sha256": "3faeadad5baf43c35d7b0c35bff2a35cabde29dd2bcd611c95d399b90293b76b"
+    },
+    {
+      "name": "libatspi2.0-dev",
+      "version": "2.30.0-7.1",
+      "filename": "pool/main/a/at-spi2-core/libatspi2.0-dev_2.30.0-7.1_loongarch64.deb",
+      "sha256": "f511445474972e3ab34c3dd865456b3dcf60e2dcb4b26138fd2802e2c0e43912"
+    },
+    {
+      "name": "libattr1",
+      "version": "1:2.4.48-4.1",
+      "filename": "pool/main/a/attr/libattr1_2.4.48-4.1_loongarch64.deb",
+      "sha256": "6e29e7db358056e072f6577147832ae4e849f5648b13b9ffa57d4e954096174c"
+    },
+    {
+      "name": "libavahi-client3",
+      "version": "0.7-4.1",
+      "filename": "pool/main/a/avahi/libavahi-client3_0.7-4.1_loongarch64.deb",
+      "sha256": "6c80388ad23b11e5c0129d0b75043a23648781a305685ade8f3bcf0b35bf8135"
+    },
+    {
+      "name": "libavahi-common-data",
+      "version": "0.7-4.1",
+      "filename": "pool/main/a/avahi/libavahi-common-data_0.7-4.1_loongarch64.deb",
+      "sha256": "f9d264d8ea6762c31efd7e9845fa300197ecf854d073d75901f5e2080ca72f31"
+    },
+    {
+      "name": "libavahi-common3",
+      "version": "0.7-4.1",
+      "filename": "pool/main/a/avahi/libavahi-common3_0.7-4.1_loongarch64.deb",
+      "sha256": "576eca44dc432b96185b944d12383911176a12d9f2e7dcbd071e19a90639c77f"
+    },
+    {
+      "name": "libavcodec-dev",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libavcodec-dev_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "508a1e34ff9483abd35970596bfd233ea2e8280bb876347bc01800eb9e6282b3"
+    },
+    {
+      "name": "libavcodec58",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libavcodec58_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "8b785d399c0b264c6f8c4b1ee0a4fea44cfc62582effc378b522d62640ea7ef7"
+    },
+    {
+      "name": "libavformat-dev",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libavformat-dev_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "03a1ac173ae55f42c4d9f1a800bef1da5e9661b3f3a60b260214aacff80fa631"
+    },
+    {
+      "name": "libavformat58",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libavformat58_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "f86ba06c8e709fbe0c4956538bc0db57fab2081a3feff0249d6945a191c16b9a"
+    },
+    {
+      "name": "libavutil-dev",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libavutil-dev_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "b4dfd39fb18b36ba427719cdd6bece3d6294fd5ff2f73183ec9721c7a8c41e95"
+    },
+    {
+      "name": "libavutil56",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libavutil56_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "48c53927a0da658a18be2a88d4bcc9d59dabbf5eec30c03e2e0c31d1291e708a"
+    },
+    {
+      "name": "libblkid-dev",
+      "version": "2.38.1-5.lnd.2",
+      "filename": "pool/main/u/util-linux/libblkid-dev_2.38.1-5.lnd.2_loongarch64.deb",
+      "sha256": "72bf5f4a91680cb552e52a6e2e75e717daf2738397ee32ed06c8a64123547e2f"
+    },
+    {
+      "name": "libblkid1",
+      "version": "2.38.1-5.lnd.2",
+      "filename": "pool/main/u/util-linux/libblkid1_2.38.1-5.lnd.2_loongarch64.deb",
+      "sha256": "91a3e98c5219b8af8426ff229b6e7bdb11714049287d64069dd203ed68b73aed"
+    },
+    {
+      "name": "libbluray2",
+      "version": "1:1.1.0-1.1",
+      "filename": "pool/main/libb/libbluray/libbluray2_1.1.0-1.1_loongarch64.deb",
+      "sha256": "c88860320c47f81d73d541cfea201fd790592740a28483a1395ca5a25b3de858"
+    },
+    {
+      "name": "libbsd0",
+      "version": "0.9.1-2.lnd.4",
+      "filename": "pool/main/libb/libbsd/libbsd0_0.9.1-2.lnd.4_loongarch64.deb",
+      "sha256": "0935a086e1ab23d28a850487e11629373862c2e20e6d0828644743a33d9ede49"
+    },
+    {
+      "name": "libbz2-1.0",
+      "version": "1.0.6-9.2~deb10u1.1",
+      "filename": "pool/main/b/bzip2/libbz2-1.0_1.0.6-9.2~deb10u1.1_loongarch64.deb",
+      "sha256": "74b0bf57e98d61e47d95b1d172761caa482a73ee1eaaf59248065a4ba402f0cd"
+    },
+    {
+      "name": "libc-dev-bin",
+      "version": "2.28-10.lnd.38",
+      "filename": "pool/main/g/glibc/libc-dev-bin_2.28-10.lnd.38_loongarch64.deb",
+      "sha256": "d87868c2b84b9c48917130e0bf7849976b432945e64fa1b96a0a554a7d8d2de2"
+    },
+    {
+      "name": "libc6",
+      "version": "2.28-10.lnd.38",
+      "filename": "pool/main/g/glibc/libc6_2.28-10.lnd.38_loongarch64.deb",
+      "sha256": "15e8d179b8ff024e68af9ba74db5eb0f0527e59e64867c7f93554e5f72043220"
+    },
+    {
+      "name": "libc6-dev",
+      "version": "2.28-10.lnd.38",
+      "filename": "pool/main/g/glibc/libc6-dev_2.28-10.lnd.38_loongarch64.deb",
+      "sha256": "7e7bf547e1fd9dfeba06b78119faff80e6460f924e7b0449c295d22bed2d9129"
+    },
+    {
+      "name": "libcairo-gobject2",
+      "version": "1.16.0-4.1",
+      "filename": "pool/main/c/cairo/libcairo-gobject2_1.16.0-4.1_loongarch64.deb",
+      "sha256": "b816ab412d5fcadedc8aa4ba56b46f382669ded3a6d023e9282fc4b345891fff"
+    },
+    {
+      "name": "libcairo-script-interpreter2",
+      "version": "1.16.0-4.1",
+      "filename": "pool/main/c/cairo/libcairo-script-interpreter2_1.16.0-4.1_loongarch64.deb",
+      "sha256": "591e85d475e08f86d40e0a71bca866f4062a2e43ce7bfa628326bb6f1807b3a3"
+    },
+    {
+      "name": "libcairo2",
+      "version": "1.16.0-4.1",
+      "filename": "pool/main/c/cairo/libcairo2_1.16.0-4.1_loongarch64.deb",
+      "sha256": "544156cd9949a2cce995e21a53409282f338e626605e303d19a97b34e742c2f6"
+    },
+    {
+      "name": "libcairo2-dev",
+      "version": "1.16.0-4.1",
+      "filename": "pool/main/c/cairo/libcairo2-dev_1.16.0-4.1_loongarch64.deb",
+      "sha256": "350780b80af51c08f4a51c0ec6a9b970edcb138c9a0557aff02c5b3458e3c841"
+    },
+    {
+      "name": "libcap2",
+      "version": "1:2.25-2.1",
+      "filename": "pool/main/libc/libcap2/libcap2_2.25-2.1_loongarch64.deb",
+      "sha256": "08158a666e6673870432ddaf30192e75fbe8ef73822c7adb9cf6725d4ecf616b"
+    },
+    {
+      "name": "libcap2-bin",
+      "version": "1:2.25-2.1",
+      "filename": "pool/main/libc/libcap2/libcap2-bin_2.25-2.1_loongarch64.deb",
+      "sha256": "f8a0c3b85112978be73b8ce3ed4155b4f41e819d754d18cd1b14b000a986d0c8"
+    },
+    {
+      "name": "libchromaprint1",
+      "version": "1.4.3-3.1",
+      "filename": "pool/main/c/chromaprint/libchromaprint1_1.4.3-3.1_loongarch64.deb",
+      "sha256": "2884441755342024fa67bb25d0c044dbffb3e4cc37656e634d4e2c1b2cec89bf"
+    },
+    {
+      "name": "libcodec2-0.8.1",
+      "version": "0.8.1-2.1",
+      "filename": "pool/main/c/codec2/libcodec2-0.8.1_0.8.1-2.1_loongarch64.deb",
+      "sha256": "64d04767d11c96021f490e370698db576fc889a44ebd12bd4af8802367546e49"
+    },
+    {
+      "name": "libcolord2",
+      "version": "1.4.3-4.1",
+      "filename": "pool/main/c/colord/libcolord2_1.4.3-4.1_loongarch64.deb",
+      "sha256": "a69cdaa69effb753b28e6e3271e039afff26f7e09317174db850aa8e83115c77"
+    },
+    {
+      "name": "libcom-err2",
+      "version": "1.44.5-1+deb10u3.1",
+      "filename": "pool/main/e/e2fsprogs/libcom-err2_1.44.5-1+deb10u3.1_loongarch64.deb",
+      "sha256": "88e89fe3b5c0d7675a2f7d27c265a2f1b941295bd3a90ccd8b8133b6531f0564"
+    },
+    {
+      "name": "libcroco3",
+      "version": "0.6.12-3.1",
+      "filename": "pool/main/libc/libcroco/libcroco3_0.6.12-3.1_loongarch64.deb",
+      "sha256": "2bb711fd071b614532a4ce0c52a02e79f261426f8b0a68b56e760f6c7521dd39"
+    },
+    {
+      "name": "libcups2",
+      "version": "2.2.10-6+deb10u10.lnd.1",
+      "filename": "pool/main/c/cups/libcups2_2.2.10-6+deb10u10.lnd.1_loongarch64.deb",
+      "sha256": "a71e48a187891e313dddc7be5dce44903e5c63ea3e1f29aa6883f177b6058195"
+    },
+    {
+      "name": "libdatrie1",
+      "version": "0.2.12-2.1",
+      "filename": "pool/main/libd/libdatrie/libdatrie1_0.2.12-2.1_loongarch64.deb",
+      "sha256": "879bc8d26d9a95e689021810c656e0e02f717662b40878ce22ea4416c8e3f664"
+    },
+    {
+      "name": "libdav1d5",
+      "version": "0.9.2-1.lnd.2",
+      "filename": "pool/main/d/dav1d/libdav1d5_0.9.2-1.lnd.2_loongarch64.deb",
+      "sha256": "cd3a6f7b48bb9a5dd528602d5a6e184ff2debd6695233abf5a671d083043b77e"
+    },
+    {
+      "name": "libdb5.3",
+      "version": "5.3.28+dfsg1-0.6",
+      "filename": "pool/main/d/db5.3/libdb5.3_5.3.28+dfsg1-0.6_loongarch64.deb",
+      "sha256": "f93f744a07348d98432121c5705c2494bc9be551e338637030946c939d4849a7"
+    },
+    {
+      "name": "libdbus-1-3",
+      "version": "1.12.16-lnd.1",
+      "filename": "pool/main/d/dbus/libdbus-1-3_1.12.16-lnd.1_loongarch64.deb",
+      "sha256": "cec0d3a08aaed15abea6eacb8de7f5f46dedc64a5efec95c4c69a0a520e4bc77"
+    },
+    {
+      "name": "libdbus-1-dev",
+      "version": "1.12.16-lnd.1",
+      "filename": "pool/main/d/dbus/libdbus-1-dev_1.12.16-lnd.1_loongarch64.deb",
+      "sha256": "0fe584caa5222b4445e8ef7003b4c186391673f3b5f9e9ade1833d49c2a9d9d6"
+    },
+    {
+      "name": "libdconf1",
+      "version": "0.30.1-2.1",
+      "filename": "pool/main/d/dconf/libdconf1_0.30.1-2.1_loongarch64.deb",
+      "sha256": "9b8e1b996d223aff034a20fda11af1db8bad4461b6244db35b0328f7160a583e"
+    },
+    {
+      "name": "libdpkg-perl",
+      "version": "1.19.7.lnd.2+nmu1",
+      "filename": "pool/main/d/dpkg/libdpkg-perl_1.19.7.lnd.2+nmu1_all.deb",
+      "sha256": "1b6f7b0221c6843ef53370ebaa65528db6321a612dccfd15bbfcb3459eccbe24"
+    },
+    {
+      "name": "libdrm-amdgpu1",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-amdgpu1_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "0f245b5e1aade7fee7a88b1bd413b7cbb812a2ce1b602f6db4eb8976b95f13c3"
+    },
+    {
+      "name": "libdrm-common",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-common_2.4.97-1.lnd.6_all.deb",
+      "sha256": "6e4ddca8a3a37d3e9e33d78cf32e295c5465b3fc222a4fae3d5f9bae3e671d55"
+    },
+    {
+      "name": "libdrm-dev",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-dev_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "0d35ab974ba62637d41a9792155008bff3738035706d1ab2c4b48f017df84eb2"
+    },
+    {
+      "name": "libdrm-etnaviv1",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-etnaviv1_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "57d60942d0d6c8896936ad14914f8d00982be7f616fa998009e39077c239e27e"
+    },
+    {
+      "name": "libdrm-gsgpu1",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-gsgpu1_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "2d2c746cbd1b2ba7c9ac333b75fe184a944f4e9af400c7b76f1e168b7feb400b"
+    },
+    {
+      "name": "libdrm-nouveau2",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-nouveau2_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "8477f4451ca0b77ced3268ab61179362a278aa6336c7392ac009905dc293574b"
+    },
+    {
+      "name": "libdrm-radeon1",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-radeon1_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "811d4371597b6baf473cc63998884c0ec06f1cfefc30bf0f5e45461abc0c3b78"
+    },
+    {
+      "name": "libdrm-utils",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm-utils_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "f1c3cc84e678e86f2b9f32a7c612286900712901150378ae7a8a753a0d60e867"
+    },
+    {
+      "name": "libdrm2",
+      "version": "2.4.97-1.lnd.6",
+      "filename": "pool/main/libd/libdrm/libdrm2_2.4.97-1.lnd.6_loongarch64.deb",
+      "sha256": "a9f007258ea71a97bd6533b777297789dd4412511d3bf335c451b39127805717"
+    },
+    {
+      "name": "libedit2",
+      "version": "3.1-20181209-1.1",
+      "filename": "pool/main/libe/libedit/libedit2_3.1-20181209-1.1_loongarch64.deb",
+      "sha256": "a60b63329e6423a52cc73acd3f7da3b54e384eb9f9f4852c931b7245a7da165c"
+    },
+    {
+      "name": "libegl-mesa0",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libegl-mesa0_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "794c1275db99ebdc840520500bd123433b8ebf9aaf8ff20bbb7c73ea620eb0a6"
+    },
+    {
+      "name": "libegl1",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libegl1_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "88d1009a42e5d692536661e916dc1c763e76bd372aeed4482739fe967b410dec"
+    },
+    {
+      "name": "libegl1-mesa-dev",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libegl1-mesa-dev_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "0da5128a0c492aff96f0e19af6be74ccbaa97a27cd16bb520f5cc0a1df6246ee"
+    },
+    {
+      "name": "libelf1",
+      "version": "0.176-1.2.lnd.1",
+      "filename": "pool/main/e/elfutils/libelf1_0.176-1.2.lnd.1_loongarch64.deb",
+      "sha256": "b214be9b75fd81f23aa5d22e6de440ca05d2da305dcc23225e3a2d40950b77ce"
+    },
+    {
+      "name": "libepoxy-dev",
+      "version": "1.5.3-0.1.lnd.2",
+      "filename": "pool/main/libe/libepoxy/libepoxy-dev_1.5.3-0.1.lnd.2_loongarch64.deb",
+      "sha256": "db7f35bb15c625175ec08251cd662bcbc44b2500bb25a667514cec997f5b1252"
+    },
+    {
+      "name": "libepoxy0",
+      "version": "1.5.3-0.1.lnd.2",
+      "filename": "pool/main/libe/libepoxy/libepoxy0_1.5.3-0.1.lnd.2_loongarch64.deb",
+      "sha256": "ef99385f1cb757e07265ccc91fe869a08d6ee095772b0552a4a2284baeb44781"
+    },
+    {
+      "name": "libexpat1",
+      "version": "2.2.10-2+deb11u6",
+      "filename": "pool/main/e/expat/libexpat1_2.2.10-2+deb11u6_loongarch64.deb",
+      "sha256": "eb85871ccae5d184601127b302f4975ab33e1cbe6b4991634f38886b1d751332"
+    },
+    {
+      "name": "libexpat1-dev",
+      "version": "2.2.10-2+deb11u6",
+      "filename": "pool/main/e/expat/libexpat1-dev_2.2.10-2+deb11u6_loongarch64.deb",
+      "sha256": "6619dac27e7b8cc9109214b2aaf5c2ba2f066cff121270b2127b6ec83011d07c"
+    },
+    {
+      "name": "libffi-dev",
+      "version": "3.3-5.lnd.4",
+      "filename": "pool/main/libf/libffi/libffi-dev_3.3-5.lnd.4_loongarch64.deb",
+      "sha256": "3d7135297fdd13e3e35c497e794f68cf18c351715a17f344be28105917b8c9de"
+    },
+    {
+      "name": "libffi7",
+      "version": "3.3-5.lnd.4",
+      "filename": "pool/main/libf/libffi/libffi7_3.3-5.lnd.4_loongarch64.deb",
+      "sha256": "049db6bf9d6aedb81baddef0403520b46337ae16cf576be1760e3e113a3a9c2e"
+    },
+    {
+      "name": "libflac8",
+      "version": "1.3.2-3.lnd.1",
+      "filename": "pool/main/f/flac/libflac8_1.3.2-3.lnd.1_loongarch64.deb",
+      "sha256": "7be1918de4832f6a8be2ca2b1f2f2ec9e3d7035b2e2b16c9b271a773764318fd"
+    },
+    {
+      "name": "libfontconfig1",
+      "version": "2.13.1-2.1",
+      "filename": "pool/main/f/fontconfig/libfontconfig1_2.13.1-2.1_loongarch64.deb",
+      "sha256": "1dfdd7cc4beb0a9f595ad4bab65575f66716a9a75fd1e0eca9cb8145fea9e789"
+    },
+    {
+      "name": "libfontconfig1-dev",
+      "version": "2.13.1-2.1",
+      "filename": "pool/main/f/fontconfig/libfontconfig1-dev_2.13.1-2.1_loongarch64.deb",
+      "sha256": "2e925a851f17366c22211f1cbb463e345b1bd2706441792d9e4c911d9b73f330"
+    },
+    {
+      "name": "libfreetype6",
+      "version": "2.9.1-3+deb10u1.lnd.2",
+      "filename": "pool/main/f/freetype/libfreetype6_2.9.1-3+deb10u1.lnd.2_loongarch64.deb",
+      "sha256": "7317f2736eb2800fcc8be89442092d9e71ddc8ce228c58a48306cd3c227c60ac"
+    },
+    {
+      "name": "libfreetype6-dev",
+      "version": "2.9.1-3+deb10u1.lnd.2",
+      "filename": "pool/main/f/freetype/libfreetype6-dev_2.9.1-3+deb10u1.lnd.2_loongarch64.deb",
+      "sha256": "b8a077595fc232c9f3d83a80482314a2cbae27eddd36c376638388ecb211ef8f"
+    },
+    {
+      "name": "libfribidi-dev",
+      "version": "1.0.5-3.1+deb10u1.1",
+      "filename": "pool/main/f/fribidi/libfribidi-dev_1.0.5-3.1+deb10u1.1_loongarch64.deb",
+      "sha256": "7cd21eca09bcdd2b65a50c74f8b479157f199e7d83d8758e2e223b235c5c8e50"
+    },
+    {
+      "name": "libfribidi0",
+      "version": "1.0.5-3.1+deb10u1.1",
+      "filename": "pool/main/f/fribidi/libfribidi0_1.0.5-3.1+deb10u1.1_loongarch64.deb",
+      "sha256": "40d11ec65240967a3cbcf06f339dc6e37002ee291b9d6755de430c5b65944d7f"
+    },
+    {
+      "name": "libgbm-dev",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libgbm-dev_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "633e51b308e310e40c2c06ab37f8f021051f629b79f3940aa058ccdc28d97dbc"
+    },
+    {
+      "name": "libgbm1",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libgbm1_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "41fc12891f996f8510914e75ec6306c652788529a7f34a033de8139f8f609ff7"
+    },
+    {
+      "name": "libgcc-8-dev",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libgcc-8-dev_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "9e8ddfd15788ae312b527f8c9343b6758e90fc10557bf8c6e2567d89f2c6f3b8"
+    },
+    {
+      "name": "libgcc1",
+      "version": "1:8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libgcc1_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "0b05486adeb2a361e4194fa874ff03520bfae0cc78099e31151b9b4f2ddd98e4"
+    },
+    {
+      "name": "libgcrypt20",
+      "version": "1.8.4-5.lnd.1",
+      "filename": "pool/main/libg/libgcrypt20/libgcrypt20_1.8.4-5.lnd.1_loongarch64.deb",
+      "sha256": "746899aa2f40843d4874bb54bc256f4be846610e462902614c5aa69e214efe41"
+    },
+    {
+      "name": "libgdbm-compat4",
+      "version": "1.18.1-4.1",
+      "filename": "pool/main/g/gdbm/libgdbm-compat4_1.18.1-4.1_loongarch64.deb",
+      "sha256": "d60c882780863b8f06938d1225f701aecb04031b760d43e850d2d325adceb20b"
+    },
+    {
+      "name": "libgdbm6",
+      "version": "1.18.1-4.1",
+      "filename": "pool/main/g/gdbm/libgdbm6_1.18.1-4.1_loongarch64.deb",
+      "sha256": "8137f8f7aa72b65bd453f1821fa28170a7c31d8d961135f69fcc398c75663da0"
+    },
+    {
+      "name": "libgdk-pixbuf2.0-0",
+      "version": "2.38.1+dfsg-1.1",
+      "filename": "pool/main/g/gdk-pixbuf/libgdk-pixbuf2.0-0_2.38.1+dfsg-1.1_loongarch64.deb",
+      "sha256": "beaa6bd75e9895376a79cdb18b00502109b9da6cf00c8ff0d5b9fdc374cb122e"
+    },
+    {
+      "name": "libgdk-pixbuf2.0-bin",
+      "version": "2.38.1+dfsg-1.1",
+      "filename": "pool/main/g/gdk-pixbuf/libgdk-pixbuf2.0-bin_2.38.1+dfsg-1.1_loongarch64.deb",
+      "sha256": "c7ce4e7d0e9da420931a5d43e948533f8f8789aea092319c4d495369a4dcc313"
+    },
+    {
+      "name": "libgdk-pixbuf2.0-common",
+      "version": "2.38.1+dfsg-1.1",
+      "filename": "pool/main/g/gdk-pixbuf/libgdk-pixbuf2.0-common_2.38.1+dfsg-1.1_all.deb",
+      "sha256": "b29b9f596e7196d27eae1ad532a86be633da4bbedbf684d3478783d6cb32a98f"
+    },
+    {
+      "name": "libgdk-pixbuf2.0-dev",
+      "version": "2.38.1+dfsg-1.1",
+      "filename": "pool/main/g/gdk-pixbuf/libgdk-pixbuf2.0-dev_2.38.1+dfsg-1.1_loongarch64.deb",
+      "sha256": "3c3a702ff7e6031d7d480309316d2d4ee926c635bb72cc1d040a98f20596a892"
+    },
+    {
+      "name": "libgirepository-1.0-1",
+      "version": "1.58.3-2.1",
+      "filename": "pool/main/g/gobject-introspection/libgirepository-1.0-1_1.58.3-2.1_loongarch64.deb",
+      "sha256": "53909b2edc940e679a65b937a601b7b511023944a43dc23db84220ae748e0897"
+    },
+    {
+      "name": "libgl1",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libgl1_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "97c16a6150304d605f7b85f6e109956f7cb55ea0bd13339270a706d435b675ab"
+    },
+    {
+      "name": "libgl1-mesa-dev",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libgl1-mesa-dev_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "6624da9c5503e50dd4a8a9194233238e9bc005bdb28bff54e5ed328156e48724"
+    },
+    {
+      "name": "libgl1-mesa-dri",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libgl1-mesa-dri_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "9576174dc0c249c07b93d650deed87a913bcd80b13517e246ffc94216393a044"
+    },
+    {
+      "name": "libglapi-mesa",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libglapi-mesa_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "e86fe1479410e0b1cf0f483b02b292b400a1aa4fba29e40edffbf6ffccd2a2cf"
+    },
+    {
+      "name": "libgles1",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libgles1_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "c238a014eeecdfedc3746fe3dcab37efc8ff0cca6840723f369552d638744c46"
+    },
+    {
+      "name": "libgles2",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libgles2_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "9c32bb55f1e97f481d33efbc46fb504717c20548673c6ac0d9e5cba79f60b386"
+    },
+    {
+      "name": "libgles2-mesa-dev",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libgles2-mesa-dev_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "3f50747364d30a48dffa6bd85ff5dd9b626a8793dbe20ab9b031d512f3a4e361"
+    },
+    {
+      "name": "libglib2.0-0",
+      "version": "2.58.3-2+deb10u2.1",
+      "filename": "pool/main/g/glib2.0/libglib2.0-0_2.58.3-2+deb10u2.1_loongarch64.deb",
+      "sha256": "8833802fad17d8574a999182c397c280703d8fe180ad403d8efcce1958fb7e02"
+    },
+    {
+      "name": "libglib2.0-bin",
+      "version": "2.58.3-2+deb10u2.1",
+      "filename": "pool/main/g/glib2.0/libglib2.0-bin_2.58.3-2+deb10u2.1_loongarch64.deb",
+      "sha256": "e5efdb7c0eee6c46c1fd97347da446645810e6d73cc2af60f3c8439e90ff70c2"
+    },
+    {
+      "name": "libglib2.0-data",
+      "version": "2.58.3-2+deb10u2.1",
+      "filename": "pool/main/g/glib2.0/libglib2.0-data_2.58.3-2+deb10u2.1_all.deb",
+      "sha256": "3e5b27368cb8ea3c249e21d6ec365406687c7a3fe40beeab9d883dbceb9901d2"
+    },
+    {
+      "name": "libglib2.0-dev",
+      "version": "2.58.3-2+deb10u2.1",
+      "filename": "pool/main/g/glib2.0/libglib2.0-dev_2.58.3-2+deb10u2.1_loongarch64.deb",
+      "sha256": "ae26e606bcbb335a22f4ad52bf6901dc0594383dc654e68fc42dd4d8969521fa"
+    },
+    {
+      "name": "libglib2.0-dev-bin",
+      "version": "2.58.3-2+deb10u2.1",
+      "filename": "pool/main/g/glib2.0/libglib2.0-dev-bin_2.58.3-2+deb10u2.1_loongarch64.deb",
+      "sha256": "92e63cd7bc11ac9cd9801e86e005368375a29c4fec9e1f4b082e28e3458645c9"
+    },
+    {
+      "name": "libglvnd-core-dev",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libglvnd-core-dev_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "b2e4dde2b95056ec9610a26a190fcb65b5b01d1868ae94f6f2b74fac050f3b8e"
+    },
+    {
+      "name": "libglvnd-dev",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libglvnd-dev_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "bc0b89c7bd20d9c66cfd69275061652eac75cc7673d599b966f63cd7bacd5906"
+    },
+    {
+      "name": "libglvnd0",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libglvnd0_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "f26967d910494c0459783cac1b75b4945399243453dfa827079f43cdb2137098"
+    },
+    {
+      "name": "libglx-mesa0",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/libglx-mesa0_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "aa395eef79e3b8ab38f86210752ee8a75441de07bc4be1aec1ad635da5a54750"
+    },
+    {
+      "name": "libglx0",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libglx0_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "5f67e41c80ffdaab66eb62f476993e81b5e4e75f1dcf061de339b8607e20e1ee"
+    },
+    {
+      "name": "libgme0",
+      "version": "0.6.2-1.1",
+      "filename": "pool/main/g/game-music-emu/libgme0_0.6.2-1.1_loongarch64.deb",
+      "sha256": "b4be5adb3f2ccf3a06dfe0d165c5f5e3737b6681ce86d09ae04e5cb0f75fbccc"
+    },
+    {
+      "name": "libgmp10",
+      "version": "2:6.1.2+dfsg-4.lnd.2",
+      "filename": "pool/main/g/gmp/libgmp10_6.1.2+dfsg-4.lnd.2_loongarch64.deb",
+      "sha256": "73194151700a29a4d73628ae37d0a1f3d6f8983810abb8fecfd118485c711b1e"
+    },
+    {
+      "name": "libgnutls30",
+      "version": "3.6.7-4+deb10u3.lnd.4",
+      "filename": "pool/main/g/gnutls28/libgnutls30_3.6.7-4+deb10u3.lnd.4_loongarch64.deb",
+      "sha256": "b37f19c81fd9cc114e90cba75e22bb2e31b6850614b9f32b9efb5d8c672b3ae8"
+    },
+    {
+      "name": "libgomp1",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libgomp1_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "3b560829becdf21ed3769e664c051404410d4bf2e7182292f492f9b9d1a24e71"
+    },
+    {
+      "name": "libgpg-error0",
+      "version": "1.35-1.lnd.1",
+      "filename": "pool/main/libg/libgpg-error/libgpg-error0_1.35-1.lnd.1_loongarch64.deb",
+      "sha256": "d9a9c2d6b5081c3acfdbac17badeed226503871a370a8753dd292838bb94e9d9"
+    },
+    {
+      "name": "libgraphite2-3",
+      "version": "1.3.13-7.1",
+      "filename": "pool/main/g/graphite2/libgraphite2-3_1.3.13-7.1_loongarch64.deb",
+      "sha256": "7d54c73ec0443713e85c6ccacab70a33ac64772ff6ec18b3eb77dcd06e93ba11"
+    },
+    {
+      "name": "libgraphite2-dev",
+      "version": "1.3.13-7.1",
+      "filename": "pool/main/g/graphite2/libgraphite2-dev_1.3.13-7.1_loongarch64.deb",
+      "sha256": "81a5e0b6fec7f70d45055d31dfb0ba606ce6ee877d162060d045fececca8b759"
+    },
+    {
+      "name": "libgsm1",
+      "version": "1.0.18-2.1",
+      "filename": "pool/main/libg/libgsm/libgsm1_1.0.18-2.1_loongarch64.deb",
+      "sha256": "99b42259746b89f1ab329e6c636192be6c4bedae1ad127015bbe1097c1b87c31"
+    },
+    {
+      "name": "libgssapi-krb5-2",
+      "version": "1.17-3.lnd.5",
+      "filename": "pool/main/k/krb5/libgssapi-krb5-2_1.17-3.lnd.5_loongarch64.deb",
+      "sha256": "1000db4b5c1a65ce743bb3bd11cd17c825d48df277be34bb793c8a24bdefb000"
+    },
+    {
+      "name": "libgstreamer-gl1.0-0",
+      "version": "1.14.4-2.1.lnd.2",
+      "filename": "pool/main/g/gst-plugins-base1.0/libgstreamer-gl1.0-0_1.14.4-2.1.lnd.2_loongarch64.deb",
+      "sha256": "b1cef731c14fcb4d1475aae467c22ffec6c0ac915d936f08936efdfc954eceac"
+    },
+    {
+      "name": "libgstreamer-plugins-base1.0-0",
+      "version": "1.14.4-2.1.lnd.2",
+      "filename": "pool/main/g/gst-plugins-base1.0/libgstreamer-plugins-base1.0-0_1.14.4-2.1.lnd.2_loongarch64.deb",
+      "sha256": "b7ef6fbd4c591081183008a4d2628ed19fc2dc9589483a651e5893d7101417bc"
+    },
+    {
+      "name": "libgstreamer-plugins-base1.0-dev",
+      "version": "1.14.4-2.1.lnd.2",
+      "filename": "pool/main/g/gst-plugins-base1.0/libgstreamer-plugins-base1.0-dev_1.14.4-2.1.lnd.2_loongarch64.deb",
+      "sha256": "6cefe218d64684cb693560349a793c1e77fd4d13c8e893d6a8c09d089c065f6a"
+    },
+    {
+      "name": "libgstreamer1.0-0",
+      "version": "1.14.4-1.lnd.3",
+      "filename": "pool/main/g/gstreamer1.0/libgstreamer1.0-0_1.14.4-1.lnd.3_loongarch64.deb",
+      "sha256": "03a54fca300d329802a87573c06acf717a06cf22b4c6635fdd420761d31382fd"
+    },
+    {
+      "name": "libgstreamer1.0-dev",
+      "version": "1.14.4-1.lnd.3",
+      "filename": "pool/main/g/gstreamer1.0/libgstreamer1.0-dev_1.14.4-1.lnd.3_loongarch64.deb",
+      "sha256": "f961cced6c9d75b232e8f955a91ff13333cf29d244ca04b6211bfb01a4610085"
+    },
+    {
+      "name": "libgtk-3-0",
+      "version": "2:3.24.5-1.lnd.1",
+      "filename": "pool/main/g/gtk+3.0/libgtk-3-0_3.24.5-1.lnd.1_loongarch64.deb",
+      "sha256": "7fa9a1f744c6c709021eeb68d6965d0216fc2ad5433f1ae79bcfaa930956a627"
+    },
+    {
+      "name": "libgtk-3-common",
+      "version": "2:3.24.5-1.lnd.1",
+      "filename": "pool/main/g/gtk+3.0/libgtk-3-common_3.24.5-1.lnd.1_all.deb",
+      "sha256": "935c72a949547967098e12f08cc94a9a50a8ef355e40f42a06a9fd41dca84aa3"
+    },
+    {
+      "name": "libgtk-3-dev",
+      "version": "2:3.24.5-1.lnd.1",
+      "filename": "pool/main/g/gtk+3.0/libgtk-3-dev_3.24.5-1.lnd.1_loongarch64.deb",
+      "sha256": "b80075870e6d43328b6c94d7d8634fa4fcf28f56cc2e2f3fb83e4976ec307b71"
+    },
+    {
+      "name": "libgudev-1.0-0",
+      "version": "232-2.1",
+      "filename": "pool/main/libg/libgudev/libgudev-1.0-0_232-2.1_loongarch64.deb",
+      "sha256": "133d9ee1f0d8b265dcbac222b178338437d0e74a97c865f6c657f350ae68668a"
+    },
+    {
+      "name": "libharfbuzz-dev",
+      "version": "2.3.1-1.1",
+      "filename": "pool/main/h/harfbuzz/libharfbuzz-dev_2.3.1-1.1_loongarch64.deb",
+      "sha256": "9e3dbf2d3160c9259bc96f97e211f8c3d7b99bb60b1b5c086f9481c0cce0e508"
+    },
+    {
+      "name": "libharfbuzz-gobject0",
+      "version": "2.3.1-1.1",
+      "filename": "pool/main/h/harfbuzz/libharfbuzz-gobject0_2.3.1-1.1_loongarch64.deb",
+      "sha256": "047717d62924660a1655467eb58b705e457eaedd5199713d91fe0bd7b2e6907b"
+    },
+    {
+      "name": "libharfbuzz-icu0",
+      "version": "2.3.1-1.1",
+      "filename": "pool/main/h/harfbuzz/libharfbuzz-icu0_2.3.1-1.1_loongarch64.deb",
+      "sha256": "5d42c9646160239b7dde026e6c14c902132b050eae7bfa624a117051a096d6e7"
+    },
+    {
+      "name": "libharfbuzz0b",
+      "version": "2.3.1-1.1",
+      "filename": "pool/main/h/harfbuzz/libharfbuzz0b_2.3.1-1.1_loongarch64.deb",
+      "sha256": "3853c1f0d86e8b7c606e2c980d79f95104b20e1fc80a5db1f777541b9ce02bdd"
+    },
+    {
+      "name": "libhogweed4",
+      "version": "3.4.1-1.1",
+      "filename": "pool/main/n/nettle/libhogweed4_3.4.1-1.1_loongarch64.deb",
+      "sha256": "2fae527f3a9297cdb9dd1bd1422dec6811c216bc93baa8eb48ab8a519e123e68"
+    },
+    {
+      "name": "libice-dev",
+      "version": "2:1.0.9-2.1",
+      "filename": "pool/main/libi/libice/libice-dev_1.0.9-2.1_loongarch64.deb",
+      "sha256": "9baedbb1d3c9faa4945f286c7e7c000da1e7f914c78e247d1598faf0ea44048b"
+    },
+    {
+      "name": "libice6",
+      "version": "2:1.0.9-2.1",
+      "filename": "pool/main/libi/libice/libice6_1.0.9-2.1_loongarch64.deb",
+      "sha256": "c0365b7d45f9255cf8660b6eed890ab5a395be24f3d1b6fea386aac90610e489"
+    },
+    {
+      "name": "libicu-dev",
+      "version": "67.1-7.lnd.1",
+      "filename": "pool/main/i/icu/libicu-dev_67.1-7.lnd.1_loongarch64.deb",
+      "sha256": "5ca41fcf317c303a828fbdb05a238f1f00f047c9d4271cf29e886d5f3e22daff"
+    },
+    {
+      "name": "libicu63",
+      "version": "63.1-6+deb10u1.lnd.1",
+      "filename": "pool/main/i/icu/libicu63_63.1-6+deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "92f3128e63fbd6894344265e29c78308799d75ecd59d0225e8f3e3657777aabb"
+    },
+    {
+      "name": "libicu67",
+      "version": "67.1-7.lnd.1",
+      "filename": "pool/main/i/icu/libicu67_67.1-7.lnd.1_loongarch64.deb",
+      "sha256": "514b54266f2c94c4e9f2ba81ed5ddf6f4872bd9bd0301c047cd93f6b9c45641f"
+    },
+    {
+      "name": "libidn2-0",
+      "version": "2.0.5-1+deb10u1.1.loongniy",
+      "filename": "pool/main/libi/libidn2/libidn2-0_2.0.5-1+deb10u1.1.loongniy_loongarch64.deb",
+      "sha256": "9ba75fd6109a4c3c96f56d4f766917c753af83e2c632f0b067c1ac9947536476"
+    },
+    {
+      "name": "libitm1",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libitm1_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "de10c00f6699636edd3ee6acc4d603c57a78582071ef70ce902fb4d4ccbb3fd5"
+    },
+    {
+      "name": "libjbig0",
+      "version": "2.1-3.2",
+      "filename": "pool/main/j/jbigkit/libjbig0_2.1-3.2_loongarch64.deb",
+      "sha256": "5ca4f04ee553fd9bdf1090b766a0fd7b2474c1f72eb2d76dbc3f2183d243b0dc"
+    },
+    {
+      "name": "libjpeg62-turbo",
+      "version": "1:1.5.2-2.lnd.4",
+      "filename": "pool/main/libj/libjpeg-turbo/libjpeg62-turbo_1.5.2-2.lnd.4_loongarch64.deb",
+      "sha256": "eb386d5b9dac62bebaf4d8ff6db7c269a2244f6a1c0c8224a3da7007c33f5e24"
+    },
+    {
+      "name": "libjson-glib-1.0-0",
+      "version": "1.4.4-2.1",
+      "filename": "pool/main/j/json-glib/libjson-glib-1.0-0_1.4.4-2.1_loongarch64.deb",
+      "sha256": "b4e5ed43a6f349e922abc4eae9531d63f53e290c08b1407fe06d60d4ecbb0f10"
+    },
+    {
+      "name": "libjson-glib-1.0-common",
+      "version": "1.4.4-2.1",
+      "filename": "pool/main/j/json-glib/libjson-glib-1.0-common_1.4.4-2.1_all.deb",
+      "sha256": "b2bd1515edde1148d443f7f60df2d8c84f1e02bf64b63fc3883873e5ce3768de"
+    },
+    {
+      "name": "libk5crypto3",
+      "version": "1.17-3.lnd.5",
+      "filename": "pool/main/k/krb5/libk5crypto3_1.17-3.lnd.5_loongarch64.deb",
+      "sha256": "98d9c55d5fcad98cc8e7dc87df834078e3e7b31a60ec560865c4fb1c12fff3df"
+    },
+    {
+      "name": "libkeyutils1",
+      "version": "1.6-6.1",
+      "filename": "pool/main/k/keyutils/libkeyutils1_1.6-6.1_loongarch64.deb",
+      "sha256": "c42d10127b8b69246fb64e7680c68dcb68bda47ec7b2bae1bbc5254b6842978b"
+    },
+    {
+      "name": "libkrb5-3",
+      "version": "1.17-3.lnd.5",
+      "filename": "pool/main/k/krb5/libkrb5-3_1.17-3.lnd.5_loongarch64.deb",
+      "sha256": "ae4aef2131286d6b7c18bf7342b66be514e4c2840c59fc5d7cc424fde9408888"
+    },
+    {
+      "name": "libkrb5support0",
+      "version": "1.17-3.lnd.5",
+      "filename": "pool/main/k/krb5/libkrb5support0_1.17-3.lnd.5_loongarch64.deb",
+      "sha256": "86e550ea87901027041b0440c3123701d695fba32fef892f949f44398977755e"
+    },
+    {
+      "name": "liblcms2-2",
+      "version": "2.9-3.1",
+      "filename": "pool/main/l/lcms2/liblcms2-2_2.9-3.1_loongarch64.deb",
+      "sha256": "8b4a18c5b08616a0e8a26a3134037be4a4965acc86a405818a59b58716147ae7"
+    },
+    {
+      "name": "libllvm8",
+      "version": "1:8.0.1-3~bpo10+1.lnd.39",
+      "filename": "pool/main/l/llvm-toolchain-8/libllvm8_8.0.1-3~bpo10+1.lnd.39_loongarch64.deb",
+      "sha256": "ef5208dbd3fadefbf7f3119aad05d4792377f40396ca5615efa64816ecc85409"
+    },
+    {
+      "name": "liblocale-gettext-perl",
+      "version": "1.07-3.1",
+      "filename": "pool/main/libl/liblocale-gettext-perl/liblocale-gettext-perl_1.07-3.1_loongarch64.deb",
+      "sha256": "494345366145c2af605814602a777c9a2f7f020b744aeef0ab657d6daf9e1352"
+    },
+    {
+      "name": "liblsan0",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/liblsan0_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "725c3338a5be0dfa10f0b7a6e4d7cb5c7dc1e6287c0de2d372a0945f9e01f3cd"
+    },
+    {
+      "name": "liblz4-1",
+      "version": "1.8.3-1.lnd.4",
+      "filename": "pool/main/l/lz4/liblz4-1_1.8.3-1.lnd.4_loongarch64.deb",
+      "sha256": "5510497fd8df0b2784c1ded7ad35689aefc7d147a61358cc3c6687740c46820e"
+    },
+    {
+      "name": "liblz4-dev",
+      "version": "1.8.3-1.lnd.4",
+      "filename": "pool/main/l/lz4/liblz4-dev_1.8.3-1.lnd.4_loongarch64.deb",
+      "sha256": "a82ddc22d0210bcaf949b9c27996c342ee98dbe7f2b3c825ece82a36c488b123"
+    },
+    {
+      "name": "liblzma-dev",
+      "version": "5.2.4-1.1.lnd.1",
+      "filename": "pool/main/x/xz-utils/liblzma-dev_5.2.4-1.1.lnd.1_loongarch64.deb",
+      "sha256": "1274328da20b9204682e7ecad0ecd581538336ff621fb5a095758d177f8d39e1"
+    },
+    {
+      "name": "liblzma5",
+      "version": "5.2.4-1.1.lnd.1",
+      "filename": "pool/main/x/xz-utils/liblzma5_5.2.4-1.1.lnd.1_loongarch64.deb",
+      "sha256": "c07ff838a9a98465c7abf3bbef66f6dedb28e7628058f6d2b4d76d4614799f52"
+    },
+    {
+      "name": "liblzo2-2",
+      "version": "2.10-0.2",
+      "filename": "pool/main/l/lzo2/liblzo2-2_2.10-0.2_loongarch64.deb",
+      "sha256": "fc13155889969b8aa07bec5c45997fadf4b8a355fdc08bc5081dab15895e5557"
+    },
+    {
+      "name": "libmount-dev",
+      "version": "2.38.1-5.lnd.2",
+      "filename": "pool/main/u/util-linux/libmount-dev_2.38.1-5.lnd.2_loongarch64.deb",
+      "sha256": "fa060be44cd10c978a04a6e4ad151bc7a0b6d87c2bccdabe72f738900cba6706"
+    },
+    {
+      "name": "libmount1",
+      "version": "2.38.1-5.lnd.2",
+      "filename": "pool/main/u/util-linux/libmount1_2.38.1-5.lnd.2_loongarch64.deb",
+      "sha256": "a3ff88fee4b8cec245b5e7504319bdaf670e8dbadb1dfb759ff6bcb41e204660"
+    },
+    {
+      "name": "libmp3lame0",
+      "version": "3.100-2.1",
+      "filename": "pool/main/l/lame/libmp3lame0_3.100-2.1_loongarch64.deb",
+      "sha256": "cad4edd769f6c74d1ded7febc6619a64ae690b946c2e20babf3c867152223e6a"
+    },
+    {
+      "name": "libmpdec2",
+      "version": "2.4.2-2.1",
+      "filename": "pool/main/m/mpdecimal/libmpdec2_2.4.2-2.1_loongarch64.deb",
+      "sha256": "02bd70a99ab59b84cc89cbb3756e8ed749de3ec10fd7ed0bafdefd0d6d8f68eb"
+    },
+    {
+      "name": "libmpg123-0",
+      "version": "1.25.10-2.1",
+      "filename": "pool/main/m/mpg123/libmpg123-0_1.25.10-2.1_loongarch64.deb",
+      "sha256": "d35b279c4eac1e92cbfc7cfe6cab4710f41ca54d5781b75f3ed10501bd7c6184"
+    },
+    {
+      "name": "libncurses-dev",
+      "version": "6.1+20181013-2+deb10u2.1",
+      "filename": "pool/main/n/ncurses/libncurses-dev_6.1+20181013-2+deb10u2.1_loongarch64.deb",
+      "sha256": "c6f29f2fd9f6d60d02b9ee3f9442df5d074ddc156481f0d64e2a599b88f82ee2"
+    },
+    {
+      "name": "libncurses6",
+      "version": "6.1+20181013-2+deb10u2.1",
+      "filename": "pool/main/n/ncurses/libncurses6_6.1+20181013-2+deb10u2.1_loongarch64.deb",
+      "sha256": "93f049af4c0685d6b7b36311c251d2ff775c43879f0c33fd6b6624685736c002"
+    },
+    {
+      "name": "libncursesw6",
+      "version": "6.1+20181013-2+deb10u2.1",
+      "filename": "pool/main/n/ncurses/libncursesw6_6.1+20181013-2+deb10u2.1_loongarch64.deb",
+      "sha256": "6a41008391a0d5eec3e3a53c02a9d43cba2910153a064649e8fdbd4bc4f4387d"
+    },
+    {
+      "name": "libnettle6",
+      "version": "3.4.1-1.1",
+      "filename": "pool/main/n/nettle/libnettle6_3.4.1-1.1_loongarch64.deb",
+      "sha256": "320cc0f02e2f696d2f9904e413353161724852007d8abe7a899ffcc863addb4b"
+    },
+    {
+      "name": "libnorm1",
+      "version": "1.5.8+dfsg2-1.1",
+      "filename": "pool/main/n/norm/libnorm1_1.5.8+dfsg2-1.1_loongarch64.deb",
+      "sha256": "3fd8b9b36783ccda0ef6d6b20521cb37389349a801ac3cbcf8aacef7d08e5ac7"
+    },
+    {
+      "name": "libogg0",
+      "version": "1.3.2-1-lnd.2",
+      "filename": "pool/main/libo/libogg/libogg0_1.3.2-1-lnd.2_loongarch64.deb",
+      "sha256": "aa6af34425935e6829d5bac6fa885e91c6952382052bdc80cee1928902b7ffc4"
+    },
+    {
+      "name": "libopengl0",
+      "version": "1.1.0-1.lnd.6",
+      "filename": "pool/main/libg/libglvnd/libopengl0_1.1.0-1.lnd.6_loongarch64.deb",
+      "sha256": "bd3d80a447f464a5a82032828ec2dfc3c3d898430fcbd638f29a0051bdc9961a"
+    },
+    {
+      "name": "libopenjp2-7",
+      "version": "2.3.0-2+deb10u1.lnd.5",
+      "filename": "pool/main/o/openjpeg2/libopenjp2-7_2.3.0-2+deb10u1.lnd.5_loongarch64.deb",
+      "sha256": "9a6d77e848598595801a3c2c636a0f99ca93b19eb2a9c4c6d83f6919cbfd6b9b"
+    },
+    {
+      "name": "libopenmpt0",
+      "version": "0.4.3-1.lnd.3",
+      "filename": "pool/main/libo/libopenmpt/libopenmpt0_0.4.3-1.lnd.3_loongarch64.deb",
+      "sha256": "c601cbab52852767c8689a2ad5f53b1a607e2cc8b5256c41b90882b6a1663808"
+    },
+    {
+      "name": "libopus-dev",
+      "version": "1.3-1.lnd.2",
+      "filename": "pool/main/o/opus/libopus-dev_1.3-1.lnd.2_loongarch64.deb",
+      "sha256": "4254d9d64c4e488722a752060dccc5f16b6fabacd2b30062bf69ff22d1a44bd0"
+    },
+    {
+      "name": "libopus0",
+      "version": "1.3-1.lnd.2",
+      "filename": "pool/main/o/opus/libopus0_1.3-1.lnd.2_loongarch64.deb",
+      "sha256": "7137c351a5264683418d01274c8b9f4d89d61a5583fe20a07e66dc4838af3227"
+    },
+    {
+      "name": "liborc-0.4-0",
+      "version": "1:0.4.28-3.2",
+      "filename": "pool/main/o/orc/liborc-0.4-0_0.4.28-3.2_loongarch64.deb",
+      "sha256": "509baf227bf08d0616be0388702d133e4eed33ac750f53c606071875545743b8"
+    },
+    {
+      "name": "liborc-0.4-dev",
+      "version": "1:0.4.28-3.2",
+      "filename": "pool/main/o/orc/liborc-0.4-dev_0.4.28-3.2_loongarch64.deb",
+      "sha256": "838b030f768a05ada0968e2978bd1aa9e99c517e7dd091767e57fdaf233b0497"
+    },
+    {
+      "name": "liborc-0.4-dev-bin",
+      "version": "1:0.4.28-3.2",
+      "filename": "pool/main/o/orc/liborc-0.4-dev-bin_0.4.28-3.2_loongarch64.deb",
+      "sha256": "7b037cc9de55eb84afd1913364bc1b0e6f9cc720be3e20ee3965a649b67cf2a4"
+    },
+    {
+      "name": "libp11-kit0",
+      "version": "0.23.15-2.1",
+      "filename": "pool/main/p/p11-kit/libp11-kit0_0.23.15-2.1_loongarch64.deb",
+      "sha256": "7fa6c1e95ab6228d286aa4ac2540a28e8d7958b9423bcf5d694124715c778af6"
+    },
+    {
+      "name": "libpango-1.0-0",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/libpango-1.0-0_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "a2f1ded933d3dcdd3b3fc060c65abb57c47881684b36c05090fdaa75ceb42e05"
+    },
+    {
+      "name": "libpango1.0-dev",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/libpango1.0-dev_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "7dc0037a189fb766cebb10d65c6723968865ca73034bde3adbaa0c7978562bd2"
+    },
+    {
+      "name": "libpangocairo-1.0-0",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/libpangocairo-1.0-0_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "774f3b26620495e67d2236bcec9df00476777bb8a3093de352db1cf57c000d49"
+    },
+    {
+      "name": "libpangoft2-1.0-0",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/libpangoft2-1.0-0_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "9f6c0cf7a4ba1012af3c867831c06fe6674620552233e8460858beecf2183b92"
+    },
+    {
+      "name": "libpangoxft-1.0-0",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/libpangoxft-1.0-0_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "21721ea416c7763ae8d5e8da558e7f1294c51f400e646f133e6188dc6236b157"
+    },
+    {
+      "name": "libpcre16-3",
+      "version": "2:8.39-12.1",
+      "filename": "pool/main/p/pcre3/libpcre16-3_8.39-12.1_loongarch64.deb",
+      "sha256": "edd93348844187b5f2b9f364a342b16d4e9cc99ed7f63800b1f7eebaea9125cc"
+    },
+    {
+      "name": "libpcre3",
+      "version": "2:8.39-12.1",
+      "filename": "pool/main/p/pcre3/libpcre3_8.39-12.1_loongarch64.deb",
+      "sha256": "f894c502dc6b23ff413ebb279bb51bfbe54208d68a2bca8f0f36209f32bef816"
+    },
+    {
+      "name": "libpcre3-dev",
+      "version": "2:8.39-12.1",
+      "filename": "pool/main/p/pcre3/libpcre3-dev_8.39-12.1_loongarch64.deb",
+      "sha256": "3d441eebe8ad36e327cbc87adbacfee7eaf348426fa3b15ad85cb75aa15cc3ac"
+    },
+    {
+      "name": "libpcre32-3",
+      "version": "2:8.39-12.1",
+      "filename": "pool/main/p/pcre3/libpcre32-3_8.39-12.1_loongarch64.deb",
+      "sha256": "9e4cd7ba9cad0a49493da6f87e806a7144bce58775eef6a80d7f331cd69f11fe"
+    },
+    {
+      "name": "libpcrecpp0v5",
+      "version": "2:8.39-12.1",
+      "filename": "pool/main/p/pcre3/libpcrecpp0v5_8.39-12.1_loongarch64.deb",
+      "sha256": "0ffe52ff2dd65a5a23e58f1c6a745c2621077a063167e6fbf88ac2f49b192d3e"
+    },
+    {
+      "name": "libperl5.28",
+      "version": "5.28.1-6.1.lnd.1",
+      "filename": "pool/main/p/perl/libperl5.28_5.28.1-6.1.lnd.1_loongarch64.deb",
+      "sha256": "e8ea3dcdf12554a6388c96af8c7186478d356700e213512d6be542078787a826"
+    },
+    {
+      "name": "libpfm4",
+      "version": "4.10.1+git10-gd2a5b56-1.1",
+      "filename": "pool/main/libp/libpfm4/libpfm4_4.10.1+git10-gd2a5b56-1.1_loongarch64.deb",
+      "sha256": "35f0818c5a5f1a496e196cd5788fc34a3b2c52eb91c6ba13222bc45bdb501c63"
+    },
+    {
+      "name": "libpgm-5.2-0",
+      "version": "5.2.122~dfsg-3.1",
+      "filename": "pool/main/libp/libpgm/libpgm-5.2-0_5.2.122~dfsg-3.1_loongarch64.deb",
+      "sha256": "fa78ba3792ebd0607e1d64c982e83cef82ffb297c94129ea993513fbad8bfcb4"
+    },
+    {
+      "name": "libpipeline1",
+      "version": "1.5.1-2.1",
+      "filename": "pool/main/libp/libpipeline/libpipeline1_1.5.1-2.1_loongarch64.deb",
+      "sha256": "704ac28ae84fb1fc7e9ace70cf16ef8051ac3bd0126e7f65f71eceb2437011ca"
+    },
+    {
+      "name": "libpixman-1-0",
+      "version": "0.36.0-1.lnd.6",
+      "filename": "pool/main/p/pixman/libpixman-1-0_0.36.0-1.lnd.6_loongarch64.deb",
+      "sha256": "a262f43cfbc9673086cfee0f4c1b0ac952d9d0e49d513d7280de96cc7c03e918"
+    },
+    {
+      "name": "libpixman-1-dev",
+      "version": "0.36.0-1.lnd.6",
+      "filename": "pool/main/p/pixman/libpixman-1-dev_0.36.0-1.lnd.6_loongarch64.deb",
+      "sha256": "2ae6f69ad277fd6671ffd3c31e54aebcce1451dc95cd518bc1d3ae73dfcf5781"
+    },
+    {
+      "name": "libpng-dev",
+      "version": "1.6.37-3.lnd.2",
+      "filename": "pool/main/libp/libpng1.6/libpng-dev_1.6.37-3.lnd.2_loongarch64.deb",
+      "sha256": "e0605fa6fa3797359f0fe875c582162e84ace4814e5ac78b34ebf9ba4774790f"
+    },
+    {
+      "name": "libpng16-16",
+      "version": "1.6.37-3.lnd.2",
+      "filename": "pool/main/libp/libpng1.6/libpng16-16_1.6.37-3.lnd.2_loongarch64.deb",
+      "sha256": "172b7a01caee6868adb1881bec486450fa6432a34e87c67ad4f764850ef04a59"
+    },
+    {
+      "name": "libproxy1v5",
+      "version": "0.4.15-5.lnd.1",
+      "filename": "pool/main/libp/libproxy/libproxy1v5_0.4.15-5.lnd.1_loongarch64.deb",
+      "sha256": "8dea403c71e9dbfaaac0b4883477e92daf44194fa361208294e0b628505323e2"
+    },
+    {
+      "name": "libpsl5",
+      "version": "0.20.2-2.1",
+      "filename": "pool/main/libp/libpsl/libpsl5_0.20.2-2.1_loongarch64.deb",
+      "sha256": "e4463ef8b7a18bd9b95f90489cd190fb6dd136718dd94b3077d9d86565e22634"
+    },
+    {
+      "name": "libpthread-stubs0-dev",
+      "version": "0.4-1.1",
+      "filename": "pool/main/libp/libpthread-stubs/libpthread-stubs0-dev_0.4-1.1_loongarch64.deb",
+      "sha256": "256d451383a7fc6878525dc4691d010ca44d239f947ed8d9a1414febeef977ec"
+    },
+    {
+      "name": "libpulse-dev",
+      "version": "12.2-4+deb10u1.1.lnd.9",
+      "filename": "pool/main/p/pulseaudio/libpulse-dev_12.2-4+deb10u1.1.lnd.9_loongarch64.deb",
+      "sha256": "932611fbfd7c98704351747180fc6b35f231e7f6933d011aa288cd26c75aa4b0"
+    },
+    {
+      "name": "libpulse-mainloop-glib0",
+      "version": "12.2-4+deb10u1.1.lnd.9",
+      "filename": "pool/main/p/pulseaudio/libpulse-mainloop-glib0_12.2-4+deb10u1.1.lnd.9_loongarch64.deb",
+      "sha256": "dc013275010bb7a9f384cbe61a8b98ca3b776b487fc6e84a14e298932a189150"
+    },
+    {
+      "name": "libpulse0",
+      "version": "12.2-4+deb10u1.1.lnd.9",
+      "filename": "pool/main/p/pulseaudio/libpulse0_12.2-4+deb10u1.1.lnd.9_loongarch64.deb",
+      "sha256": "9b4052bd46b0e0e82fa1992d289ce3b7b54e0a95d0ad4c106098d68f1503b8f7"
+    },
+    {
+      "name": "libpython3-stdlib",
+      "version": "3.7.3-1.1",
+      "filename": "pool/main/p/python3-defaults/libpython3-stdlib_3.7.3-1.1_loongarch64.deb",
+      "sha256": "bc45c498f8e4f409511f537c7a503e3dce429be023a56971232cd56413621ae0"
+    },
+    {
+      "name": "libpython3.7-minimal",
+      "version": "3.7.3-2.lnd.4",
+      "filename": "pool/main/p/python3.7/libpython3.7-minimal_3.7.3-2.lnd.4_loongarch64.deb",
+      "sha256": "c89502dd1e498bd9fc26778e6e231494bace0e423ac0a1a800b5bb6d5416a4ea"
+    },
+    {
+      "name": "libpython3.7-stdlib",
+      "version": "3.7.3-2.lnd.4",
+      "filename": "pool/main/p/python3.7/libpython3.7-stdlib_3.7.3-2.lnd.4_loongarch64.deb",
+      "sha256": "08a3217bbd4d18ecf9749ab77aba8af2129f88ae366477378a21e06d964ca51a"
+    },
+    {
+      "name": "libreadline7",
+      "version": "7.0-5.1",
+      "filename": "pool/main/r/readline/libreadline7_7.0-5.1_loongarch64.deb",
+      "sha256": "5e66387982d858c96dfbe9e0e58933bcea78bffb25a4e60663d9bad27db4183f"
+    },
+    {
+      "name": "librest-0.7-0",
+      "version": "0.8.1-1.1",
+      "filename": "pool/main/libr/librest/librest-0.7-0_0.8.1-1.1_loongarch64.deb",
+      "sha256": "bfda930c377a5d6c907aa9fba4e6655a43bc089480a291a6ae3c9bc721fdc823"
+    },
+    {
+      "name": "librsvg2-2",
+      "version": "2.44.10-2.1.lnd.3",
+      "filename": "pool/main/libr/librsvg/librsvg2-2_2.44.10-2.1.lnd.3_loongarch64.deb",
+      "sha256": "3c29485a2c6f045cb3eac50227116f6fd70bd5a89a8f0a9e3c04b7451a928d14"
+    },
+    {
+      "name": "librsvg2-common",
+      "version": "2.44.10-2.1.lnd.3",
+      "filename": "pool/main/libr/librsvg/librsvg2-common_2.44.10-2.1.lnd.3_loongarch64.deb",
+      "sha256": "48cc0513884ea25712b1ea5d51ad37fbbdc6b2a06ec71cd4adfe231180bc7ee1"
+    },
+    {
+      "name": "libselinux1",
+      "version": "2.8-1.lnd.1",
+      "filename": "pool/main/libs/libselinux/libselinux1_2.8-1.lnd.1_loongarch64.deb",
+      "sha256": "c41afcbf2f93b7447e2d7ceba1ac52e22c5eff4d16cfb07f84e6b04ad8ae6af1"
+    },
+    {
+      "name": "libselinux1-dev",
+      "version": "2.8-1.lnd.1",
+      "filename": "pool/main/libs/libselinux/libselinux1-dev_2.8-1.lnd.1_loongarch64.deb",
+      "sha256": "c2c02c68ac33c25a370e48f9f003f40563369c983ed88dddf3574abe3169ce7b"
+    },
+    {
+      "name": "libsensors-config",
+      "version": "1:3.5.0-3.1",
+      "filename": "pool/main/l/lm-sensors/libsensors-config_3.5.0-3.1_all.deb",
+      "sha256": "b979b349b9fc829dec99288f0466f222325a127c94ec1d34b67c581e31c6af2b"
+    },
+    {
+      "name": "libsensors5",
+      "version": "1:3.5.0-3.1",
+      "filename": "pool/main/l/lm-sensors/libsensors5_3.5.0-3.1_loongarch64.deb",
+      "sha256": "6c309716fe13b3be8112ae942a266500e09ba406e7253431952811c8da339b81"
+    },
+    {
+      "name": "libsepol1",
+      "version": "2.8-1.1",
+      "filename": "pool/main/libs/libsepol/libsepol1_2.8-1.1_loongarch64.deb",
+      "sha256": "3520fcb1e24302945bb5df8f1b773326fb15f528d340d495591fb851adaccf93"
+    },
+    {
+      "name": "libsepol1-dev",
+      "version": "2.8-1.1",
+      "filename": "pool/main/libs/libsepol/libsepol1-dev_2.8-1.1_loongarch64.deb",
+      "sha256": "127b7e793b31db5a6363f299cf1f8ac4fa759bef9cd03f2c9741d61c81d22761"
+    },
+    {
+      "name": "libset-scalar-perl",
+      "version": "1.29-2.1",
+      "filename": "pool/main/libs/libset-scalar-perl/libset-scalar-perl_1.29-2.1_all.deb",
+      "sha256": "229857df33a9804228ef73b684b283c11c9a1d4cf89e8667edec25d9bc79010b"
+    },
+    {
+      "name": "libshine3",
+      "version": "3.1.1-2.1",
+      "filename": "pool/main/s/shine/libshine3_3.1.1-2.1_loongarch64.deb",
+      "sha256": "5598b9649fe3918ca1a923839277df427cb8a104b661041aa7af4c16415c4035"
+    },
+    {
+      "name": "libsm-dev",
+      "version": "2:1.2.3-1.1",
+      "filename": "pool/main/libs/libsm/libsm-dev_1.2.3-1.1_loongarch64.deb",
+      "sha256": "83ccb2d84f927680257fdfe6da4f86159026803e07a0c00e11b36d9447860c9a"
+    },
+    {
+      "name": "libsm6",
+      "version": "2:1.2.3-1.1",
+      "filename": "pool/main/libs/libsm/libsm6_1.2.3-1.1_loongarch64.deb",
+      "sha256": "331ef9e755396475fd97c605a19b626d6d5e5dce74381d1cae8679abb5c12605"
+    },
+    {
+      "name": "libsnappy1v5",
+      "version": "1.1.7-1.1",
+      "filename": "pool/main/s/snappy/libsnappy1v5_1.1.7-1.1_loongarch64.deb",
+      "sha256": "78afdfbb470b777ef96bfa829129a7c51d9806c0e283804f733e25d0fbf2d75b"
+    },
+    {
+      "name": "libsndfile1",
+      "version": "1.0.28-6.lnd.2",
+      "filename": "pool/main/libs/libsndfile/libsndfile1_1.0.28-6.lnd.2_loongarch64.deb",
+      "sha256": "b776506e344f97c011bee715a96bcd1344100d9999ba4989975569daf1f3c2ff"
+    },
+    {
+      "name": "libsodium-dev",
+      "version": "1.0.17-1.1",
+      "filename": "pool/main/libs/libsodium/libsodium-dev_1.0.17-1.1_loongarch64.deb",
+      "sha256": "9a5a6be5a86cb4d07fd3c433f4e1e2b7b9a03955cdbe70c9e017d15502902da6"
+    },
+    {
+      "name": "libsodium23",
+      "version": "1.0.17-1.1",
+      "filename": "pool/main/libs/libsodium/libsodium23_1.0.17-1.1_loongarch64.deb",
+      "sha256": "f71a704020450c3e4ad048dd381365a87febea782b8adecb982a1f2dfecc53b7"
+    },
+    {
+      "name": "libsoup-gnome2.4-1",
+      "version": "2.64.2-2.1.lnd.1",
+      "filename": "pool/main/libs/libsoup2.4/libsoup-gnome2.4-1_2.64.2-2.1.lnd.1_loongarch64.deb",
+      "sha256": "1786dce3f70c73cf9f83641ea191346ca5c03435491fd2300f962f1ff4116101"
+    },
+    {
+      "name": "libsoup2.4-1",
+      "version": "2.64.2-2.1.lnd.1",
+      "filename": "pool/main/libs/libsoup2.4/libsoup2.4-1_2.64.2-2.1.lnd.1_loongarch64.deb",
+      "sha256": "1d6e8552591ad054ae66aff2ec7c879ddff04f25e3ea5f91407901b1b3468280"
+    },
+    {
+      "name": "libsoxr0",
+      "version": "0.1.2-3.1",
+      "filename": "pool/main/libs/libsoxr/libsoxr0_0.1.2-3.1_loongarch64.deb",
+      "sha256": "622597ff1b246563c697e7ac3848df5d1e1f1e6a55fcd0a4f812a0bfd66c2891"
+    },
+    {
+      "name": "libspeex1",
+      "version": "1.2~rc1.2-1.1",
+      "filename": "pool/main/s/speex/libspeex1_1.2~rc1.2-1.1_loongarch64.deb",
+      "sha256": "2a99fc98582c767741f5026a05015296037fc0e9edd8022a3fd24469cc7baacd"
+    },
+    {
+      "name": "libsqlite3-0",
+      "version": "3.27.2-3.1.lnd.1",
+      "filename": "pool/main/s/sqlite3/libsqlite3-0_3.27.2-3.1.lnd.1_loongarch64.deb",
+      "sha256": "fa0cd90260f08047dc90cb5d80dac25c82a1c7ffea6d06b12f47ab08c49195f9"
+    },
+    {
+      "name": "libssh-gcrypt-4",
+      "version": "0.8.7-1+deb10u1.lnd.3",
+      "filename": "pool/main/libs/libssh/libssh-gcrypt-4_0.8.7-1+deb10u1.lnd.3_loongarch64.deb",
+      "sha256": "3f093edf89c76b0655b957c6018dfcbfbb9d5348872b81beb139b02dc8441b96"
+    },
+    {
+      "name": "libssl1.1",
+      "version": "1.1.1d-0+lnd.13",
+      "filename": "pool/main/o/openssl/libssl1.1_1.1.1d-0+lnd.13_loongarch64.deb",
+      "sha256": "4caa882c469bd402a06b5b05360cc96dd1bb14f36bc929b8d3a901fc06892690"
+    },
+    {
+      "name": "libstdc++-8-dev",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libstdc++-8-dev_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "96f5af5e6c65b113817aaaf4a7ec522f59a8d9951b3a2b590ec93af2d7bad677"
+    },
+    {
+      "name": "libstdc++6",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libstdc++6_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "91d909af44439fefe5d914ed2b3da778e3893d9980b8ed8fdb976215b2739033"
+    },
+    {
+      "name": "libswresample-dev",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libswresample-dev_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "643608dd5f6a658bae48c6b167358d35451c5348cc2c8da3e036283219a08b99"
+    },
+    {
+      "name": "libswresample3",
+      "version": "7:4.4.2-1.lnd.3",
+      "filename": "pool/main/f/ffmpeg/libswresample3_4.4.2-1.lnd.3_loongarch64.deb",
+      "sha256": "2c3dc2a97c362283e8ecf5b88dd4dda796c8c56f1129ae1eb07f9c6eb4ccd612"
+    },
+    {
+      "name": "libsystemd0",
+      "version": "241-7.lnd.13",
+      "filename": "pool/main/s/systemd/libsystemd0_241-7.lnd.13_loongarch64.deb",
+      "sha256": "3094b422e3de48d2e0dd56f18685be7e573cc2470c025169cf34661f198a8457"
+    },
+    {
+      "name": "libtasn1-6",
+      "version": "4.13-3.1.lnd.1",
+      "filename": "pool/main/libt/libtasn1-6/libtasn1-6_4.13-3.1.lnd.1_loongarch64.deb",
+      "sha256": "76384e9e63a611faf814b20449abc79d783329fa3d77d2b6c3f524a0352ecb40"
+    },
+    {
+      "name": "libtext-charwidth-perl",
+      "version": "0.04-7.2",
+      "filename": "pool/main/libt/libtext-charwidth-perl/libtext-charwidth-perl_0.04-7.2_loongarch64.deb",
+      "sha256": "b2d75327ff6b50af0cd66bffc61f85e773cd568497b5153b05fa6023a114f975"
+    },
+    {
+      "name": "libtext-iconv-perl",
+      "version": "1.7-5.1",
+      "filename": "pool/main/libt/libtext-iconv-perl/libtext-iconv-perl_1.7-5.1_loongarch64.deb",
+      "sha256": "6c8dc33e50a4c18f9e5fb6bd6e81cd70c150acc653cd8eef01e420318c7ef509"
+    },
+    {
+      "name": "libthai-data",
+      "version": "0.1.28-2.1",
+      "filename": "pool/main/libt/libthai/libthai-data_0.1.28-2.1_all.deb",
+      "sha256": "6bd9124f0fa52d7a65cf7221e47941303b34dfd4873d56e4a63ceb6f26c122a8"
+    },
+    {
+      "name": "libthai0",
+      "version": "0.1.28-2.1",
+      "filename": "pool/main/libt/libthai/libthai0_0.1.28-2.1_loongarch64.deb",
+      "sha256": "200f255c69fc2640c3eafe2b17f4cefab0f14f4607ab2aaf4d19eefd1900c4e1"
+    },
+    {
+      "name": "libtheora0",
+      "version": "1.1.1+dfsg.1-15.1",
+      "filename": "pool/main/libt/libtheora/libtheora0_1.1.1+dfsg.1-15.1_loongarch64.deb",
+      "sha256": "229e854b5ffcd0eaf538a7836d1fffaefea18086e90ec7b7ff7ce5a2cff37683"
+    },
+    {
+      "name": "libtiff5",
+      "version": "4.1.0+git191117-2~deb10u1.lnd.6",
+      "filename": "pool/main/t/tiff/libtiff5_4.1.0+git191117-2~deb10u1.lnd.6_loongarch64.deb",
+      "sha256": "fdc7e7797de607bcaf334f7f368f267de5819ce44075f2c84df74f77b9e4f56e"
+    },
+    {
+      "name": "libtinfo-dev",
+      "version": "6.1+20181013-2+deb10u2.1",
+      "filename": "pool/main/n/ncurses/libtinfo-dev_6.1+20181013-2+deb10u2.1_loongarch64.deb",
+      "sha256": "b082ac9a18e249bcd693c240c7dbee4c43f69b4613b2a2fe78813651b96f287b"
+    },
+    {
+      "name": "libtinfo6",
+      "version": "6.1+20181013-2+deb10u2.1",
+      "filename": "pool/main/n/ncurses/libtinfo6_6.1+20181013-2+deb10u2.1_loongarch64.deb",
+      "sha256": "0c2f1dd0a19fc5bd150309dba0be19d6d6e18dd72fbc1e6d35842b79e20da1ba"
+    },
+    {
+      "name": "libtsan0",
+      "version": "8.3.0-6.lnd.vec.44",
+      "filename": "pool/main/g/gcc-8/libtsan0_8.3.0-6.lnd.vec.44_loongarch64.deb",
+      "sha256": "415b67074431b2dc6aba4244f9a88300f78b573bc08be51ea631e288631020f2"
+    },
+    {
+      "name": "libtwolame0",
+      "version": "0.3.13-4.1",
+      "filename": "pool/main/t/twolame/libtwolame0_0.3.13-4.1_loongarch64.deb",
+      "sha256": "62d0d5180d90a9e100d588dcc3990108e60f539b84456125a82adcc88058dd3a"
+    },
+    {
+      "name": "libudev-dev",
+      "version": "241-7.lnd.13",
+      "filename": "pool/main/s/systemd/libudev-dev_241-7.lnd.13_loongarch64.deb",
+      "sha256": "85c841713cb54cacdf493100928aa2a162ca296e6681071a21cafe11753ae404"
+    },
+    {
+      "name": "libudev1",
+      "version": "241-7.lnd.13",
+      "filename": "pool/main/s/systemd/libudev1_241-7.lnd.13_loongarch64.deb",
+      "sha256": "4e889bd360a33deae4c255c1a4a098c5c34e8172ad13592c3dbfa4334168fbd9"
+    },
+    {
+      "name": "libunistring2",
+      "version": "0.9.10-1.1",
+      "filename": "pool/main/libu/libunistring/libunistring2_0.9.10-1.1_loongarch64.deb",
+      "sha256": "abfde5e06c07a4c85b0dd5bc42469f9d672227ddd10682c4f8b9fbed530f12d7"
+    },
+    {
+      "name": "libuuid1",
+      "version": "2.38.1-5.lnd.2",
+      "filename": "pool/main/u/util-linux/libuuid1_2.38.1-5.lnd.2_loongarch64.deb",
+      "sha256": "4a33e26144eb19db6af13b0a216dc7a3ad105ad0132fd93519dc9f8e26ce09ef"
+    },
+    {
+      "name": "libva-dev",
+      "version": "2.10.0-1.lnd.1",
+      "filename": "pool/main/libv/libva/libva-dev_2.10.0-1.lnd.1_loongarch64.deb",
+      "sha256": "76f604a947b184dc9a6a273d1ed7321e871ebf677d286053ab93f3babd0bde85"
+    },
+    {
+      "name": "libva-drm2",
+      "version": "2.10.0-1.lnd.1",
+      "filename": "pool/main/libv/libva/libva-drm2_2.10.0-1.lnd.1_loongarch64.deb",
+      "sha256": "74e6afa79817e57e59a3b644c2a874998391b112cf0330832b75fb3c654c7d11"
+    },
+    {
+      "name": "libva-glx2",
+      "version": "2.10.0-1.lnd.1",
+      "filename": "pool/main/libv/libva/libva-glx2_2.10.0-1.lnd.1_loongarch64.deb",
+      "sha256": "ff593d132bc31128aa9b7a5d5d2ab65329eeb2431dea277da0aadc2e5027e6c4"
+    },
+    {
+      "name": "libva-wayland2",
+      "version": "2.10.0-1.lnd.1",
+      "filename": "pool/main/libv/libva/libva-wayland2_2.10.0-1.lnd.1_loongarch64.deb",
+      "sha256": "7e1bf2d337212dbe45a3a7b82c1dd2931606e453be8bf4fd54a5750e28fdd380"
+    },
+    {
+      "name": "libva-x11-2",
+      "version": "2.10.0-1.lnd.1",
+      "filename": "pool/main/libv/libva/libva-x11-2_2.10.0-1.lnd.1_loongarch64.deb",
+      "sha256": "053939ac24cda94795b863df8f70fd45f915c119bd75b06bffa36a57eea95452"
+    },
+    {
+      "name": "libva2",
+      "version": "2.10.0-1.lnd.1",
+      "filename": "pool/main/libv/libva/libva2_2.10.0-1.lnd.1_loongarch64.deb",
+      "sha256": "d3c911668d6f85425fc19b1a4c28736103301493392bcdf1eba8fc12b6c2e676"
+    },
+    {
+      "name": "libvdpau-dev",
+      "version": "1.1.1-10.1",
+      "filename": "pool/main/libv/libvdpau/libvdpau-dev_1.1.1-10.1_loongarch64.deb",
+      "sha256": "02549410cc3bf2b23edf76b328a029a2fec23a625fb4be92d73a6be31ab2fa89"
+    },
+    {
+      "name": "libvdpau1",
+      "version": "1.1.1-10.1",
+      "filename": "pool/main/libv/libvdpau/libvdpau1_1.1.1-10.1_loongarch64.deb",
+      "sha256": "2164af0506ec7437f4da3d55984895fb2cb646e0ad34dd4add9a7995bfc1167a"
+    },
+    {
+      "name": "libvorbis0a",
+      "version": "1.3.6-2.1",
+      "filename": "pool/main/libv/libvorbis/libvorbis0a_1.3.6-2.1_loongarch64.deb",
+      "sha256": "50c108c1bf650d9806d1130ea232f689d48c549281d9392b0b909b346018c850"
+    },
+    {
+      "name": "libvorbisenc2",
+      "version": "1.3.6-2.1",
+      "filename": "pool/main/libv/libvorbis/libvorbisenc2_1.3.6-2.1_loongarch64.deb",
+      "sha256": "98d575328d9c4b3ed4c6dcadbd9ac64c4757421cc6730e149f37f092ca7334fe"
+    },
+    {
+      "name": "libvorbisfile3",
+      "version": "1.3.6-2.1",
+      "filename": "pool/main/libv/libvorbis/libvorbisfile3_1.3.6-2.1_loongarch64.deb",
+      "sha256": "9cdbb99473f9769e3b2e746dfdc5b7fc925be89c56a9fceeabd44fc4baf74e79"
+    },
+    {
+      "name": "libvpx-dev",
+      "version": "1.7.0-4+deb10u1.lnd.5",
+      "filename": "pool/main/libv/libvpx/libvpx-dev_1.7.0-4+deb10u1.lnd.5_loongarch64.deb",
+      "sha256": "814308a919163f4f649c12991511f4623c4aef84a3c247553670e6a3a1a5613b"
+    },
+    {
+      "name": "libvpx5",
+      "version": "1.7.0-4+deb10u1.lnd.5",
+      "filename": "pool/main/libv/libvpx/libvpx5_1.7.0-4+deb10u1.lnd.5_loongarch64.deb",
+      "sha256": "0beeea2fa5851d404c10e0716a30d5f6b97fd172b48243689d74511a153fe644"
+    },
+    {
+      "name": "libwayland-bin",
+      "version": "1.16.0-1.1",
+      "filename": "pool/main/w/wayland/libwayland-bin_1.16.0-1.1_loongarch64.deb",
+      "sha256": "636a9123a9100f7d3b9f08588d054ada58483302246b70e74d406c4b0cb1f09b"
+    },
+    {
+      "name": "libwayland-client0",
+      "version": "1.16.0-1.1",
+      "filename": "pool/main/w/wayland/libwayland-client0_1.16.0-1.1_loongarch64.deb",
+      "sha256": "593dc0751eaacd8eb1b6b7eee51a3b8befd13d18d57d005ade4f855c58fd5073"
+    },
+    {
+      "name": "libwayland-cursor0",
+      "version": "1.16.0-1.1",
+      "filename": "pool/main/w/wayland/libwayland-cursor0_1.16.0-1.1_loongarch64.deb",
+      "sha256": "9fc2c3b9760bcbbff9c5070b7739e13e8d3a1556fd61c7ae2d0a3afa8d26b6c6"
+    },
+    {
+      "name": "libwayland-dev",
+      "version": "1.16.0-1.1",
+      "filename": "pool/main/w/wayland/libwayland-dev_1.16.0-1.1_loongarch64.deb",
+      "sha256": "fdd4cf49a48c2be47e7322602ccca72868e0002605ed98efc6c59dfd72283ce8"
+    },
+    {
+      "name": "libwayland-egl1",
+      "version": "1.16.0-1.1",
+      "filename": "pool/main/w/wayland/libwayland-egl1_1.16.0-1.1_loongarch64.deb",
+      "sha256": "a826b824bcf4d27b560d7248b73adb6080f1d312e204162aa7a57506a1c0e3b7"
+    },
+    {
+      "name": "libwayland-server0",
+      "version": "1.16.0-1.1",
+      "filename": "pool/main/w/wayland/libwayland-server0_1.16.0-1.1_loongarch64.deb",
+      "sha256": "6021ef3244ea28930b6ab4695cfef82044bf9ad8b70da0b062999c67da9d3577"
+    },
+    {
+      "name": "libwebp6",
+      "version": "0.6.1-2.lnd.2",
+      "filename": "pool/main/libw/libwebp/libwebp6_0.6.1-2.lnd.2_loongarch64.deb",
+      "sha256": "83d13941521085054ad78bfd8c67006a01009d086dae0f9b42c4e0bd28e2761a"
+    },
+    {
+      "name": "libwebpmux3",
+      "version": "0.6.1-2.lnd.2",
+      "filename": "pool/main/libw/libwebp/libwebpmux3_0.6.1-2.lnd.2_loongarch64.deb",
+      "sha256": "8056c0b412be8c1dc98a4df6bd58d222f985927d9a1e5d2f654e5525216b7234"
+    },
+    {
+      "name": "libwrap0",
+      "version": "7.6.q-28.1",
+      "filename": "pool/main/t/tcp-wrappers/libwrap0_7.6.q-28.1_loongarch64.deb",
+      "sha256": "f1b9e0945992219cde085c03489ecc41d65aabdd462853161068428e0b06ad79"
+    },
+    {
+      "name": "libx11-6",
+      "version": "4:1.6.7-1.lnd.4",
+      "filename": "pool/main/libx/libx11/libx11-6_1.6.7-1.lnd.4_loongarch64.deb",
+      "sha256": "0cd94219b59ca78d94b9564a49cdd715c7881a441d46ca70f03bbf8f5d6be293"
+    },
+    {
+      "name": "libx11-data",
+      "version": "4:1.6.7-1.lnd.4",
+      "filename": "pool/main/libx/libx11/libx11-data_1.6.7-1.lnd.4_all.deb",
+      "sha256": "8cfeaf94359a7ce5e91ca65e60e4f03f73bdc0c040349edbbf2b2d83b1c92094"
+    },
+    {
+      "name": "libx11-dev",
+      "version": "4:1.6.7-1.lnd.4",
+      "filename": "pool/main/libx/libx11/libx11-dev_1.6.7-1.lnd.4_loongarch64.deb",
+      "sha256": "0f422ce0ec85878dd262df9fdae7697ffbe31ccf4546bb524338645d202a721d"
+    },
+    {
+      "name": "libx11-xcb-dev",
+      "version": "4:1.6.7-1.lnd.4",
+      "filename": "pool/main/libx/libx11/libx11-xcb-dev_1.6.7-1.lnd.4_loongarch64.deb",
+      "sha256": "b692459efd7074e6bcfc76dadc1ec29e18e4ea1ff5a8581facf44b81481f9977"
+    },
+    {
+      "name": "libx11-xcb1",
+      "version": "4:1.6.7-1.lnd.4",
+      "filename": "pool/main/libx/libx11/libx11-xcb1_1.6.7-1.lnd.4_loongarch64.deb",
+      "sha256": "9af494354cbe4e09623c840439ff4b1273904bf3da8f4da24e2ea369d0668de3"
+    },
+    {
+      "name": "libx264-155",
+      "version": "2:0.155.2917+git0a84d98-2.lnd.14",
+      "filename": "pool/main/x/x264/libx264-155_0.155.2917+git0a84d98-2.lnd.14_loongarch64.deb",
+      "sha256": "7a59fbb26f17ba0d0ee4738f56bef299e150c049e24c7da0da23fcbe1d423034"
+    },
+    {
+      "name": "libx264-dev",
+      "version": "2:0.155.2917+git0a84d98-2.lnd.14",
+      "filename": "pool/main/x/x264/libx264-dev_0.155.2917+git0a84d98-2.lnd.14_loongarch64.deb",
+      "sha256": "ff42cdc8f83621663e30cf21dd22bd5a917864d0a83a548bc5187854904f47cd"
+    },
+    {
+      "name": "libx265-165",
+      "version": "2.9-4.1.lnd.2",
+      "filename": "pool/main/x/x265/libx265-165_2.9-4.1.lnd.2_loongarch64.deb",
+      "sha256": "c7c1e4cb25fd6e673123ba983e271001bcb82f8fa27d2a08aa22f25271e0f7dd"
+    },
+    {
+      "name": "libx265-dev",
+      "version": "2.9-4.1.lnd.2",
+      "filename": "pool/main/x/x265/libx265-dev_2.9-4.1.lnd.2_loongarch64.deb",
+      "sha256": "4e74cda808ec8ced35aaef07de7077fce525c6d5904736c45b379d90fa0902f1"
+    },
+    {
+      "name": "libxau-dev",
+      "version": "1:1.0.8-1.1",
+      "filename": "pool/main/libx/libxau/libxau-dev_1.0.8-1.1_loongarch64.deb",
+      "sha256": "a3b0b015e6078b7c02454716f45f209a7f21dddb696d76301b6c1575ea457147"
+    },
+    {
+      "name": "libxau6",
+      "version": "1:1.0.8-1.1",
+      "filename": "pool/main/libx/libxau/libxau6_1.0.8-1.1_loongarch64.deb",
+      "sha256": "40269590f69d4b904c712b81cd3fe7396d53c6d01ab575e189ae93a590c287f3"
+    },
+    {
+      "name": "libxcb-dri2-0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-dri2-0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "73598550c8c4009117679c29c0c11e4f867f709a19033b99d345808c4b0a2b49"
+    },
+    {
+      "name": "libxcb-dri2-0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-dri2-0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "54029ba26dcb8c2046496e3359e1980b40e7db5ff1eee54f8ff94e2051003f4b"
+    },
+    {
+      "name": "libxcb-dri3-0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-dri3-0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "a723fc8d8ce4417d9e8888a26407fe8bb3f7eb7aa861cd10a3713af5fc7bf218"
+    },
+    {
+      "name": "libxcb-dri3-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-dri3-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "e11b2989fbfe77601f8bb08c61b03de6b6675ffc652e74fcae50a759964755fe"
+    },
+    {
+      "name": "libxcb-glx0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-glx0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "99a62c72a7691f496a5a26e28ce45c5acb1d0efcba0ee7aa0f218fe8cac72f88"
+    },
+    {
+      "name": "libxcb-glx0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-glx0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "3629e27a593d8bf28392751b92dd7e7e51559170ba9624d13a1ec933074ec626"
+    },
+    {
+      "name": "libxcb-present-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-present-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "b43ebe046e28c0d812506dae1f9cfc14106c08a33f191a065758534228e40fb5"
+    },
+    {
+      "name": "libxcb-present0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-present0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "c9ef4cc06d343fe308d2b51c107deb246e7910e22899205eb0e56fe2905a9e9c"
+    },
+    {
+      "name": "libxcb-randr0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-randr0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "880c35b63bfc5b7d5654013566b7720c619476057e62813f9ad310a09175be55"
+    },
+    {
+      "name": "libxcb-randr0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-randr0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "c05478015ff54f1a751848103b269be8bdd83147da16ebd81d9240d7d48f61f5"
+    },
+    {
+      "name": "libxcb-render0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-render0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "b224efc7371efa6c0e3c3973e54eb2437a1d0ccfe5652f0ec9e09ca8858dbf49"
+    },
+    {
+      "name": "libxcb-render0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-render0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "e8458510ea2e9ce3282d01deb259a4445bc53f418aa19ad761431781033e27b5"
+    },
+    {
+      "name": "libxcb-shape0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-shape0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "296512d0b9e81fff1af171ee3fbf2ab9024d620f4ce8be2c626f1d7ecf9b5562"
+    },
+    {
+      "name": "libxcb-shape0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-shape0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "38ced05290e5432b36d535927f0e19abfb4b020c18461bb7af40c7bff98a44b4"
+    },
+    {
+      "name": "libxcb-shm0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-shm0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "7c14756e30e7e38b5d7b9ee5aa9ec4cbf200146ae58c7bbbdba9ba4ff1271d66"
+    },
+    {
+      "name": "libxcb-shm0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-shm0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "c62edf00bcaa9044ecb7f00617265c8fa18681cd5588f28516cde2d1532751c9"
+    },
+    {
+      "name": "libxcb-sync-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-sync-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "bb68fdb53e969ac78d97c9fbde3bd7e4b26eb47c1a95f8caa9986a3041ea2587"
+    },
+    {
+      "name": "libxcb-sync1",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-sync1_1.13.1-2.1_loongarch64.deb",
+      "sha256": "4525b7350d552098cb9013d47884ff5afe39d99a3e731108417e136bdfcf3af2"
+    },
+    {
+      "name": "libxcb-xfixes0",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-xfixes0_1.13.1-2.1_loongarch64.deb",
+      "sha256": "5e6dc59c995611b1306cb7a54dc6c6bbbc75bf16dbe781808ffcb54b8c289945"
+    },
+    {
+      "name": "libxcb-xfixes0-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb-xfixes0-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "aa00a1b41bc08555c363c429027501cfa0a061e44a02236925fb895696b5fae8"
+    },
+    {
+      "name": "libxcb1",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb1_1.13.1-2.1_loongarch64.deb",
+      "sha256": "d32065e4f3e6fccad2cafa6286c283040704b562f64ccb3e80d11b9a4b95f4b3"
+    },
+    {
+      "name": "libxcb1-dev",
+      "version": "1.13.1-2.1",
+      "filename": "pool/main/libx/libxcb/libxcb1-dev_1.13.1-2.1_loongarch64.deb",
+      "sha256": "131c1e8b3165c0d22f4d8611f087ce04287ca87d4591b1329d164d67e878b1c0"
+    },
+    {
+      "name": "libxcomposite-dev",
+      "version": "1:0.4.4-2.1",
+      "filename": "pool/main/libx/libxcomposite/libxcomposite-dev_0.4.4-2.1_loongarch64.deb",
+      "sha256": "2e86d19cdcaae13f02e10721a23c9951d3003250860b12009bcd36a4f74dc502"
+    },
+    {
+      "name": "libxcomposite1",
+      "version": "1:0.4.4-2.1",
+      "filename": "pool/main/libx/libxcomposite/libxcomposite1_0.4.4-2.1_loongarch64.deb",
+      "sha256": "1a6bc6b96038f344ad47b254797ba75fc9dff3b9f56c0153d68015e1694d6dfe"
+    },
+    {
+      "name": "libxcursor-dev",
+      "version": "1:1.1.15-2.1",
+      "filename": "pool/main/libx/libxcursor/libxcursor-dev_1.1.15-2.1_loongarch64.deb",
+      "sha256": "25631554aed0df6e0d991ea42ea8edfee9750394312bf340df6cebe7356cabf8"
+    },
+    {
+      "name": "libxcursor1",
+      "version": "1:1.1.15-2.1",
+      "filename": "pool/main/libx/libxcursor/libxcursor1_1.1.15-2.1_loongarch64.deb",
+      "sha256": "9e1435a833a0f543974ce9df150cbd8b8e3258b968bb23d999933765c53c54d6"
+    },
+    {
+      "name": "libxdamage-dev",
+      "version": "1:1.1.4-3.1",
+      "filename": "pool/main/libx/libxdamage/libxdamage-dev_1.1.4-3.1_loongarch64.deb",
+      "sha256": "d9bba989d7dc7b0d5f865af4af33a895ba668ccb606886fd2715ece8c5541635"
+    },
+    {
+      "name": "libxdamage1",
+      "version": "1:1.1.4-3.1",
+      "filename": "pool/main/libx/libxdamage/libxdamage1_1.1.4-3.1_loongarch64.deb",
+      "sha256": "5bb547d24eac4fe4eff9fd74b14f3a186f725a394792ec1c33da5cbfb2e9538a"
+    },
+    {
+      "name": "libxdmcp-dev",
+      "version": "1:1.1.2-3.1",
+      "filename": "pool/main/libx/libxdmcp/libxdmcp-dev_1.1.2-3.1_loongarch64.deb",
+      "sha256": "a5eeaa059fb3c478bcaa47027608fabbb4441d48fedbeda1da8ad4337598cd6b"
+    },
+    {
+      "name": "libxdmcp6",
+      "version": "1:1.1.2-3.1",
+      "filename": "pool/main/libx/libxdmcp/libxdmcp6_1.1.2-3.1_loongarch64.deb",
+      "sha256": "a4c8526422c7152f0022eec0e182dbace3acff8b57f9857b013b7c64e3c05527"
+    },
+    {
+      "name": "libxdo-dev",
+      "version": "1:3.20160805.1-4.1",
+      "filename": "pool/main/x/xdotool/libxdo-dev_3.20160805.1-4.1_loongarch64.deb",
+      "sha256": "b7816b760d06a04ac9b6266f77dea2199a6e961a04499903834d98733b03bc39"
+    },
+    {
+      "name": "libxdo3",
+      "version": "1:3.20160805.1-4.1",
+      "filename": "pool/main/x/xdotool/libxdo3_3.20160805.1-4.1_loongarch64.deb",
+      "sha256": "e9158f674cddb9c992a15964bc9caabc726509edcc996a294b128535c5bf5e00"
+    },
+    {
+      "name": "libxext-dev",
+      "version": "2:1.3.3-1.1",
+      "filename": "pool/main/libx/libxext/libxext-dev_1.3.3-1.1_loongarch64.deb",
+      "sha256": "c3a6f2f73f78ecd98fd33f0110da89ac65b17d62347f4cac41aef24e0c17f8bd"
+    },
+    {
+      "name": "libxext6",
+      "version": "2:1.3.3-1.1",
+      "filename": "pool/main/libx/libxext/libxext6_1.3.3-1.1_loongarch64.deb",
+      "sha256": "ed8f6000548b9726a0219086587d184429c0093134cacce89c0e5ab8c84f29e4"
+    },
+    {
+      "name": "libxfixes-dev",
+      "version": "1:5.0.3-1.1",
+      "filename": "pool/main/libx/libxfixes/libxfixes-dev_5.0.3-1.1_loongarch64.deb",
+      "sha256": "9d03b651c1627c6b96ff8453babbd930e97a0e4f15aa6eea38a84f729e35ac48"
+    },
+    {
+      "name": "libxfixes3",
+      "version": "1:5.0.3-1.1",
+      "filename": "pool/main/libx/libxfixes/libxfixes3_5.0.3-1.1_loongarch64.deb",
+      "sha256": "8eeccdc01fd7a8e1aea4f738417e424e69f20b3a2ddb6cff37cd0be4e7fcf362"
+    },
+    {
+      "name": "libxft-dev",
+      "version": "2.3.2-2.1",
+      "filename": "pool/main/x/xft/libxft-dev_2.3.2-2.1_loongarch64.deb",
+      "sha256": "efeef503b2ef985c6bd86acf42ef7745a05f7f66c952c6eeb5809bfaa586a262"
+    },
+    {
+      "name": "libxft2",
+      "version": "2.3.2-2.1",
+      "filename": "pool/main/x/xft/libxft2_2.3.2-2.1_loongarch64.deb",
+      "sha256": "72286410f76e1700aad5ec856c4419b99f0ca2113e25762a2d97515c560850c1"
+    },
+    {
+      "name": "libxi-dev",
+      "version": "2:1.7.9-1.1",
+      "filename": "pool/main/libx/libxi/libxi-dev_1.7.9-1.1_loongarch64.deb",
+      "sha256": "17978d3a78bb1c03cdac26eafc92c31c38f58c3b018ac2f2c307366109dff08b"
+    },
+    {
+      "name": "libxi6",
+      "version": "2:1.7.9-1.1",
+      "filename": "pool/main/libx/libxi/libxi6_1.7.9-1.1_loongarch64.deb",
+      "sha256": "a55e766efe8f957d04dc6d9bedb4d6c1ee71d3d7803af65f6380513ce402fb21"
+    },
+    {
+      "name": "libxinerama-dev",
+      "version": "2:1.1.4-2.1",
+      "filename": "pool/main/libx/libxinerama/libxinerama-dev_1.1.4-2.1_loongarch64.deb",
+      "sha256": "cf11179f6c6b7675ac1139df6cfb2454f00dfd09dd7d86125d7531f9ff89e4cb"
+    },
+    {
+      "name": "libxinerama1",
+      "version": "2:1.1.4-2.1",
+      "filename": "pool/main/libx/libxinerama/libxinerama1_1.1.4-2.1_loongarch64.deb",
+      "sha256": "5673a1aea467ed40e2aeb690cbc01534de366aba0d74dec51f4b11bbc057a7e8"
+    },
+    {
+      "name": "libxkbcommon-dev",
+      "version": "1.0.1-1",
+      "filename": "pool/main/libx/libxkbcommon/libxkbcommon-dev_1.0.1-1_loongarch64.deb",
+      "sha256": "0cec28d7353a8948da2641ff4736477fb06dbeff9a495e81cc1e06ab2ed8c929"
+    },
+    {
+      "name": "libxkbcommon0",
+      "version": "1.0.1-1",
+      "filename": "pool/main/libx/libxkbcommon/libxkbcommon0_1.0.1-1_loongarch64.deb",
+      "sha256": "1d464003ab7aad912b6502d18d9f04793ff6c1b9cc6ada737da2a8f17171d02f"
+    },
+    {
+      "name": "libxml2",
+      "version": "2.9.4+dfsg1-7.1.lnd.1",
+      "filename": "pool/main/libx/libxml2/libxml2_2.9.4+dfsg1-7.1.lnd.1_loongarch64.deb",
+      "sha256": "eabc759f63b96bc1cc22c9f1e9e41aa6cd45e79e32f528b5f0528cefbec9b738"
+    },
+    {
+      "name": "libxrandr-dev",
+      "version": "2:1.5.1-1.1",
+      "filename": "pool/main/libx/libxrandr/libxrandr-dev_1.5.1-1.1_loongarch64.deb",
+      "sha256": "b05986d4d87493760b1523b8f228b3ba0a667fc5aa0de3b6c145b08cc2af6f20"
+    },
+    {
+      "name": "libxrandr2",
+      "version": "2:1.5.1-1.1",
+      "filename": "pool/main/libx/libxrandr/libxrandr2_1.5.1-1.1_loongarch64.deb",
+      "sha256": "9f3365ff26a5a116d6e464dcd4235dd07367b52f1cbe0aba497f644e92be629d"
+    },
+    {
+      "name": "libxrender-dev",
+      "version": "1:0.9.10-1.1",
+      "filename": "pool/main/libx/libxrender/libxrender-dev_0.9.10-1.1_loongarch64.deb",
+      "sha256": "9d52b553b9b6395c7222d2f875f880f69f54ca8dbf89caca06173cf39413fafe"
+    },
+    {
+      "name": "libxrender1",
+      "version": "1:0.9.10-1.1",
+      "filename": "pool/main/libx/libxrender/libxrender1_0.9.10-1.1_loongarch64.deb",
+      "sha256": "a375c3a28bb00d1b2c6e21f915ca43224ab2abde5f7700e67458986409a92c2a"
+    },
+    {
+      "name": "libxshmfence-dev",
+      "version": "1.3-1.1",
+      "filename": "pool/main/libx/libxshmfence/libxshmfence-dev_1.3-1.1_loongarch64.deb",
+      "sha256": "205fe59b4158db1c96d2075d1ff7687652323422a2e6abfdc2c629e7c3d7599b"
+    },
+    {
+      "name": "libxshmfence1",
+      "version": "1.3-1.1",
+      "filename": "pool/main/libx/libxshmfence/libxshmfence1_1.3-1.1_loongarch64.deb",
+      "sha256": "026e8289ec88f7a456ad000f43c1bc8c0f055da200388008c0dbea5587d9205e"
+    },
+    {
+      "name": "libxss-dev",
+      "version": "1:1.2.3-1.1",
+      "filename": "pool/main/libx/libxss/libxss-dev_1.2.3-1.1_loongarch64.deb",
+      "sha256": "d2b8ade4b6806931c8dbef79a28dbd18271966e67cb0a92237d34fb1b5b76a4b"
+    },
+    {
+      "name": "libxss1",
+      "version": "1:1.2.3-1.1",
+      "filename": "pool/main/libx/libxss/libxss1_1.2.3-1.1_loongarch64.deb",
+      "sha256": "5cafb4779fa0e99984400e22932f42fa69e7edfadf9b4cc0299796cd4d8a0e04"
+    },
+    {
+      "name": "libxtst-dev",
+      "version": "2:1.2.3-1.1",
+      "filename": "pool/main/libx/libxtst/libxtst-dev_1.2.3-1.1_loongarch64.deb",
+      "sha256": "798952e40b800906bf8cb00eba5e26e654b59fa88b0e5a960fd00b334be38f24"
+    },
+    {
+      "name": "libxtst6",
+      "version": "2:1.2.3-1.1",
+      "filename": "pool/main/libx/libxtst/libxtst6_1.2.3-1.1_loongarch64.deb",
+      "sha256": "395b87414184040e9bf621caef3248ef22f377531ce01fed8ab036fc7bf4e1a8"
+    },
+    {
+      "name": "libxvidcore4",
+      "version": "2:1.3.5-1.1",
+      "filename": "pool/main/x/xvidcore/libxvidcore4_1.3.5-1.1_loongarch64.deb",
+      "sha256": "f208cc94f3025a61e68e7307ca87fc071171845060dc7f570bb40f98d3d15630"
+    },
+    {
+      "name": "libxxf86vm-dev",
+      "version": "1:1.1.4-1.1",
+      "filename": "pool/main/libx/libxxf86vm/libxxf86vm-dev_1.1.4-1.1_loongarch64.deb",
+      "sha256": "48ca7c25689ec17375431f7db5a0f38e928becf60902abe35c3a8d477b0e1fe9"
+    },
+    {
+      "name": "libxxf86vm1",
+      "version": "1:1.1.4-1.1",
+      "filename": "pool/main/libx/libxxf86vm/libxxf86vm1_1.1.4-1.1_loongarch64.deb",
+      "sha256": "e2492305e72e9b3634a1ed98ed5b36cc5f03195ff01c8ede44ebb9586c878a56"
+    },
+    {
+      "name": "libzmq5",
+      "version": "4.3.1-4+deb10u1.1",
+      "filename": "pool/main/z/zeromq3/libzmq5_4.3.1-4+deb10u1.1_loongarch64.deb",
+      "sha256": "19e8643e89477b88955eb0b88a677d1b9f51dccf1810a5911882ae3c6cf3a9be"
+    },
+    {
+      "name": "libzstd-dev",
+      "version": "1.3.8+dfsg-3.1",
+      "filename": "pool/main/libz/libzstd/libzstd-dev_1.3.8+dfsg-3.1_loongarch64.deb",
+      "sha256": "3eb05e894ef14a25429db8ac61551f156c50ea1f3f2651829782432e26150df5"
+    },
+    {
+      "name": "libzstd1",
+      "version": "1.3.8+dfsg-3.1",
+      "filename": "pool/main/libz/libzstd/libzstd1_1.3.8+dfsg-3.1_loongarch64.deb",
+      "sha256": "529b01efb45c8b9b3468f79709dc3d4b48285fe5205db4a7b385fa932c4d9114"
+    },
+    {
+      "name": "libzvbi-common",
+      "version": "0.2.35-16.1",
+      "filename": "pool/main/z/zvbi/libzvbi-common_0.2.35-16.1_all.deb",
+      "sha256": "b7a0a53c4b568dcb34e6b9a0989b0cb973f7c57e132f17c740bbd918dd92cd38"
+    },
+    {
+      "name": "libzvbi0",
+      "version": "0.2.35-16.1",
+      "filename": "pool/main/z/zvbi/libzvbi0_0.2.35-16.1_loongarch64.deb",
+      "sha256": "17cd500cd9a851c2563556850c3a1deb799feaec76028676eb7e277302709432"
+    },
+    {
+      "name": "linux-libc-dev",
+      "version": "1:4.19.190.8.29-lnd.14",
+      "filename": "pool/main/l/linux/linux-libc-dev_4.19.190.8.29-lnd.14_loongarch64.deb",
+      "sha256": "1ac4c92937dd7cfd7836bc7b0c888ca3e5c52d858d761b69493aee241f69355f"
+    },
+    {
+      "name": "llvm-8",
+      "version": "1:8.0.1-3~bpo10+1.lnd.39",
+      "filename": "pool/main/l/llvm-toolchain-8/llvm-8_8.0.1-3~bpo10+1.lnd.39_loongarch64.deb",
+      "sha256": "12172aa0a302f5e1456a0a985a5f548987b90d45c2245402ed365f13ae850336"
+    },
+    {
+      "name": "llvm-8-dev",
+      "version": "1:8.0.1-3~bpo10+1.lnd.39",
+      "filename": "pool/main/l/llvm-toolchain-8/llvm-8-dev_8.0.1-3~bpo10+1.lnd.39_loongarch64.deb",
+      "sha256": "7a447c32301d53d8e2aefb67a09f10193e0d061502d15833da1a5463deabd784"
+    },
+    {
+      "name": "llvm-8-runtime",
+      "version": "1:8.0.1-3~bpo10+1.lnd.39",
+      "filename": "pool/main/l/llvm-toolchain-8/llvm-8-runtime_8.0.1-3~bpo10+1.lnd.39_loongarch64.deb",
+      "sha256": "40e79df81d41c005e07136fa641db3f6e0169a5bd88325018164be7f73362cef"
+    },
+    {
+      "name": "lsb-base",
+      "version": "10.2019051400+nmu1",
+      "filename": "pool/main/l/lsb/lsb-base_10.2019051400+nmu1_all.deb",
+      "sha256": "22ad3fbd9c75aab508b30937bf9e097d4b6498c61d4cd8cc7c11c3868d00e0b5"
+    },
+    {
+      "name": "mesa-common-dev",
+      "version": "18.3.6-2+deb10u1.lnd.13",
+      "filename": "pool/main/m/mesa/mesa-common-dev_18.3.6-2+deb10u1.lnd.13_loongarch64.deb",
+      "sha256": "d551e79cc97dd6a571e94911e5bd6d7ce92f06f5373e907a9eddd9b61e90ffc7"
+    },
+    {
+      "name": "mime-support",
+      "version": "3.62+nmu1",
+      "filename": "pool/main/m/mime-support/mime-support_3.62+nmu1_all.deb",
+      "sha256": "98cb675a29a22dde4ee845c96feedb6eb3622e56b3d126096025fcdbb41484cc"
+    },
+    {
+      "name": "ncurses-bin",
+      "version": "6.1+20181013-2+deb10u2.1",
+      "filename": "pool/main/n/ncurses/ncurses-bin_6.1+20181013-2+deb10u2.1_loongarch64.deb",
+      "sha256": "57f5bdd7b42fcbb55785a6ca1e8a04608e2ff06cfbaf48dca87b1bccde1cb956"
+    },
+    {
+      "name": "ocl-icd-libopencl1",
+      "version": "2.2.12-2.1",
+      "filename": "pool/main/o/ocl-icd/ocl-icd-libopencl1_2.2.12-2.1_loongarch64.deb",
+      "sha256": "d255a026e9c19774f824844e50d554d555f4608a5c518019ed936bd7887cdedd"
+    },
+    {
+      "name": "pango1.0-tools",
+      "version": "1.42.4-8~deb10u1.lnd.1",
+      "filename": "pool/main/p/pango1.0/pango1.0-tools_1.42.4-8~deb10u1.lnd.1_loongarch64.deb",
+      "sha256": "ef30b36a98d957c291e47f9316ace0d218b47c5671011e1c4acc973388467177"
+    },
+    {
+      "name": "perl",
+      "version": "5.28.1-6.1.lnd.1",
+      "filename": "pool/main/p/perl/perl_5.28.1-6.1.lnd.1_loongarch64.deb",
+      "sha256": "8ef5542b9d9953eaa4a1e0c0011fafa14ae5b36e6ebfbea88cd1ccf754acf13f"
+    },
+    {
+      "name": "perl-base",
+      "version": "5.28.1-6.1.lnd.1",
+      "filename": "pool/main/p/perl/perl-base_5.28.1-6.1.lnd.1_loongarch64.deb",
+      "sha256": "1b102cfc5329b4fce935d96f03af35b7461344d086abb9b015ea19bdd443bc92"
+    },
+    {
+      "name": "perl-modules-5.28",
+      "version": "5.28.1-6.1.lnd.1",
+      "filename": "pool/main/p/perl/perl-modules-5.28_5.28.1-6.1.lnd.1_all.deb",
+      "sha256": "c1c50f6b69dbb80374968d6c475011c6ef83f7c0b0f0947834378d77439a1119"
+    },
+    {
+      "name": "pkg-config",
+      "version": "0.29-6.1",
+      "filename": "pool/main/p/pkg-config/pkg-config_0.29-6.1_loongarch64.deb",
+      "sha256": "476c7566053f14baff3d5d1bc0fa6d634d889241a109465aaeb2a988f22a62bb"
+    },
+    {
+      "name": "python3",
+      "version": "3.7.3-1.1",
+      "filename": "pool/main/p/python3-defaults/python3_3.7.3-1.1_loongarch64.deb",
+      "sha256": "2d769a5e23922a22573ce293fca43b2c2f5ef6b9c63fa90ef4eabe3b42210471"
+    },
+    {
+      "name": "python3-distutils",
+      "version": "3.7.3-1.1",
+      "filename": "pool/main/p/python3-stdlib-extensions/python3-distutils_3.7.3-1.1_all.deb",
+      "sha256": "5600506ee7309c86019c44dcd5d6ab9c0232fd577ffdcc2df2505d9d3a53ed6f"
+    },
+    {
+      "name": "python3-lib2to3",
+      "version": "3.7.3-1.1",
+      "filename": "pool/main/p/python3-stdlib-extensions/python3-lib2to3_3.7.3-1.1_all.deb",
+      "sha256": "1bf3b8e86ce8ad0adb3b407a7d812cc585b4369261b9db3e173ee703fb69f9fd"
+    },
+    {
+      "name": "python3-minimal",
+      "version": "3.7.3-1.1",
+      "filename": "pool/main/p/python3-defaults/python3-minimal_3.7.3-1.1_loongarch64.deb",
+      "sha256": "5d75d3aa9b8f9ca8cfe8fbc29124ef3bfb53fc1f9cdf7cfb28fb26d4f48f09ee"
+    },
+    {
+      "name": "python3.7",
+      "version": "3.7.3-2.lnd.4",
+      "filename": "pool/main/p/python3.7/python3.7_3.7.3-2.lnd.4_loongarch64.deb",
+      "sha256": "f3a9357cf6b436e51a39cab62cb8266fea5efb1980f23d49056bf128139526d1"
+    },
+    {
+      "name": "python3.7-minimal",
+      "version": "3.7.3-2.lnd.4",
+      "filename": "pool/main/p/python3.7/python3.7-minimal_3.7.3-2.lnd.4_loongarch64.deb",
+      "sha256": "71e4ccfb806846c57b4396e32790844eb9bb2e9c7aa1615a3e14025c299c0128"
+    },
+    {
+      "name": "readline-common",
+      "version": "7.0-5.1",
+      "filename": "pool/main/r/readline/readline-common_7.0-5.1_all.deb",
+      "sha256": "b4c6e15d0b8eba06aafeae39fb3c45fa7cfdf734c81ffe227b7b4d21c60a4151"
+    },
+    {
+      "name": "sensible-utils",
+      "version": "0.0.12+nmu1",
+      "filename": "pool/main/s/sensible-utils/sensible-utils_0.0.12+nmu1_all.deb",
+      "sha256": "220ea16dc685318cc89cb8fdb1a9be64ffa47912c44de200f2c91c7d91fa7470"
+    },
+    {
+      "name": "shared-mime-info",
+      "version": "1.10-1.1.lnd.1",
+      "filename": "pool/main/s/shared-mime-info/shared-mime-info_1.10-1.1.lnd.1_loongarch64.deb",
+      "sha256": "9acb26aff6316cf867c3bada070fcf3060213b7e04523992b8b882c452ca0eb5"
+    },
+    {
+      "name": "tar",
+      "version": "1.30+dfsg-6.1.loongniy",
+      "filename": "pool/main/t/tar/tar_1.30+dfsg-6.1.loongniy_loongarch64.deb",
+      "sha256": "400da273819e418838a47a2b4d6c9bd3a8be6bed1dac4a35b6a3112eeeb519d5"
+    },
+    {
+      "name": "ucf",
+      "version": "3.0038+nmu2",
+      "filename": "pool/main/u/ucf/ucf_3.0038+nmu2_all.deb",
+      "sha256": "56144e78281a56b6efcbec8037f8541e678f6a61c58ad6a599454ad025f6f224"
+    },
+    {
+      "name": "uuid-dev",
+      "version": "2.38.1-5.lnd.2",
+      "filename": "pool/main/u/util-linux/uuid-dev_2.38.1-5.lnd.2_loongarch64.deb",
+      "sha256": "4b70a5d62fe9f0ba9ba87b3082c1d0f31817cc1aaaa8c442a220f807305d78a2"
+    },
+    {
+      "name": "wayland-protocols",
+      "version": "1.17-1.1",
+      "filename": "pool/main/w/wayland-protocols/wayland-protocols_1.17-1.1_all.deb",
+      "sha256": "9621037f2ac7c1d92cd6742e8aea4a243b5f375e7e2b88892589e6d36b3e5dfd"
+    },
+    {
+      "name": "x11-common",
+      "version": "1:7.7+19.1",
+      "filename": "pool/main/x/xorg/x11-common_7.7+19.1_all.deb",
+      "sha256": "664950dc856cc5388140bb48078bf9708a4c754a3f3a7205337d1d2a8dd4c304"
+    },
+    {
+      "name": "x11proto-composite-dev",
+      "version": "1:2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-composite-dev_2018.4-4.1_all.deb",
+      "sha256": "91101ff58645d5006bce54a60b34e6fb8bce6e4728c92a69356dd5bd565b8401"
+    },
+    {
+      "name": "x11proto-core-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-core-dev_2018.4-4.1_all.deb",
+      "sha256": "bdf1de03a422a064a3636b839b575cabb922a6fbb8b017c4f74b3c980d8602de"
+    },
+    {
+      "name": "x11proto-damage-dev",
+      "version": "1:2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-damage-dev_2018.4-4.1_all.deb",
+      "sha256": "5c86b926629059bc226161ef58ea461c2d3c13447c6bf084248966d187781d55"
+    },
+    {
+      "name": "x11proto-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-dev_2018.4-4.1_all.deb",
+      "sha256": "7cc91f03c505399cc70412970d7b0ec0fd39131e241dc12adbfc557c2ab98c15"
+    },
+    {
+      "name": "x11proto-fixes-dev",
+      "version": "1:2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-fixes-dev_2018.4-4.1_all.deb",
+      "sha256": "1522629c2b969128d51811d95cfd0724b533b36d69c1b03b64a8d861c6810649"
+    },
+    {
+      "name": "x11proto-input-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-input-dev_2018.4-4.1_all.deb",
+      "sha256": "15c60e921e27b6b0be9d445ac6bfb8d7a450b1fbfb97af55e2ac5430fe09dd4e"
+    },
+    {
+      "name": "x11proto-kb-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-kb-dev_2018.4-4.1_all.deb",
+      "sha256": "94e6844ef8a57ca905b7d0640a6f9049c0024700212d898df6318c10ee8fbdbd"
+    },
+    {
+      "name": "x11proto-randr-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-randr-dev_2018.4-4.1_all.deb",
+      "sha256": "6b8d9f924b6459ce97e67c0e260c049aa0f711d4780e6b825f2404e79653a6a8"
+    },
+    {
+      "name": "x11proto-record-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-record-dev_2018.4-4.1_all.deb",
+      "sha256": "14da7e91799e786f911d2ccede8825658ba532cdf33228725cc588d61d790dff"
+    },
+    {
+      "name": "x11proto-render-dev",
+      "version": "2:2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-render-dev_2018.4-4.1_all.deb",
+      "sha256": "f0b1b31e9dce6fec8bdd84d52c057f97ef494f2ae40070b7ee22ced8c24f50b0"
+    },
+    {
+      "name": "x11proto-scrnsaver-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-scrnsaver-dev_2018.4-4.1_all.deb",
+      "sha256": "a3503a09bb45f3ba9e3e816fde25e180f83b5c3f584f701df7e584a2bf19dfda"
+    },
+    {
+      "name": "x11proto-xext-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-xext-dev_2018.4-4.1_all.deb",
+      "sha256": "6c338a2e41c4bcdd0cb1aa91f47ab9b683056149c6115c2444961a86a3fc0140"
+    },
+    {
+      "name": "x11proto-xf86vidmode-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-xf86vidmode-dev_2018.4-4.1_all.deb",
+      "sha256": "0f60ea1890f334c60c2fa8c20b22584f9b0ed537a42f91cddf7ae9e76c5eab04"
+    },
+    {
+      "name": "x11proto-xinerama-dev",
+      "version": "2018.4-4.1",
+      "filename": "pool/main/x/xorgproto/x11proto-xinerama-dev_2018.4-4.1_all.deb",
+      "sha256": "3e06ee2ea9b3b3563a182699f04aeb6dc2371e71c0d52e4bf2c8d84debf213d8"
+    },
+    {
+      "name": "xkb-data",
+      "version": "2.26-2.1.lnd.3",
+      "filename": "pool/main/x/xkeyboard-config/xkb-data_2.26-2.1.lnd.3_all.deb",
+      "sha256": "b4dbd099b4b41c1d048dbc4b776861496721bc7881fc47b6fe8a40c46fa8841f"
+    },
+    {
+      "name": "xorg-sgml-doctools",
+      "version": "1:1.11-1.1",
+      "filename": "pool/main/x/xorg-sgml-doctools/xorg-sgml-doctools_1.11-1.1_all.deb",
+      "sha256": "c01e6be0e3ddd121784495fde27a65c858f2929ffae284d8246178ebe2cf7d6e"
+    },
+    {
+      "name": "xtrans-dev",
+      "version": "1.3.5-1.1",
+      "filename": "pool/main/x/xtrans/xtrans-dev_1.3.5-1.1_all.deb",
+      "sha256": "e372bc0bbba5eeb8cf73e0dc3b7b72fff0acb3d6850e922e63aebc6381ef7e05"
+    },
+    {
+      "name": "zlib1g",
+      "version": "1:1.2.11.dfsg-1.lnd.4",
+      "filename": "pool/main/z/zlib/zlib1g_1.2.11.dfsg-1.lnd.4_loongarch64.deb",
+      "sha256": "d828eaab2663f36bd7af0131e76b9b767fc19b2966949d210b52840bb3b455f7"
+    },
+    {
+      "name": "zlib1g-dev",
+      "version": "1:1.2.11.dfsg-1.lnd.4",
+      "filename": "pool/main/z/zlib/zlib1g-dev_1.2.11.dfsg-1.lnd.4_loongarch64.deb",
+      "sha256": "e1bb8a4f8b22abc6e40dd51d29e6382f816858696bdb49ed965c5f207e55550a"
+    }
+  ],
+  "upstream_base_url": "https://pkg.loongnix.cn/loongnix/20/"
+}
