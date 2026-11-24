@@ -14,7 +14,7 @@
   {
     "name": "one_viewer_many_streams",
     "steps": [
-      "Create one SID at 1250000 bytes/s",
+      "Create one SID at 1250000 bytes/s on a WSS or TURN relay",
       "Open concurrent HTTP file transfers and a business WebSocket"
     ],
     "expect": [
@@ -62,11 +62,11 @@
     ]
   },
   {
-    "name": "candidate_handoff_preserves_credit",
+    "name": "relay_handoff_preserves_state",
     "steps": [
       "Consume tokens under negotiation generation 1",
       "Prepare generation 2 with the identical snapshot",
-      "Fail one candidate, then successfully switch transport",
+      "Fail one candidate, then switch between authorized WSS and TURN carriers",
       "Deliver delayed generation-1 close and ACK"
     ],
     "expect": [
@@ -200,6 +200,32 @@
       "Account retained backing buffers, not just slice lengths",
       "No double debit on outer WSS relay or TURN hop",
       "No RTT, TLS or SCTP retransmission bytes falsely counted as extra application payload"
+    ]
+  },
+  {
+    "name": "direct_business_bypasses_relay_rate",
+    "steps": [
+      "Create a signed SID at 1024 bytes/s in both directions",
+      "Select a locally verified direct host/srflx/prflx pair",
+      "Upload, download and echo 8192 bytes through a business WebSocket",
+      "Accept a newer WSS or TURN carrier, then deliver a stale direct carrier"
+    ],
+    "expect": [
+      "Direct business is unthrottled and does not consume relay tokens",
+      "WSS and actual relay-candidate TURN traffic obey the signed rate",
+      "Returning to relay has no credit earned during direct transport",
+      "Stale, failed and merely prepared carriers cannot change active throttling",
+      "The original SID snapshot, authorization and revocation remain effective"
+    ]
+  },
+  {
+    "name": "retired_aggregate_configuration_rejected",
+    "steps": [
+      "Decode a profile with enterprise.aggregate, pool.limits or node ingress/egress bandwidth fields"
+    ],
+    "expect": [
+      "Reject obsolete bandwidth fields instead of retaining an inactive policy",
+      "Retain directory ownership, node eligibility and TURN authorization"
     ]
   }
 ]

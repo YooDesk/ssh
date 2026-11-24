@@ -231,22 +231,15 @@ export function filePanel(current, error) {
       });
       task.id = created.transfer_id;
       check(task);
-      while (task.offset < file.size) {
-        const bytes = await file.slice(task.offset, task.offset + 1048576).arrayBuffer();
-        check(task);
-        await request(`${task.url}transfers/${task.id}/content/`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/octet-stream',
-            'Upload-Offset': String(task.offset),
-          },
-          body: bytes,
-          signal: task.controller.signal,
-        });
-        check(task);
-        task.offset += bytes.byteLength;
-        update(task);
-      }
+      await request(`${task.url}transfers/${task.id}/content/`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/octet-stream', 'Upload-Offset': '0', 'Upload-Stream': '1' },
+        body: file,
+        signal: task.controller.signal,
+      });
+      check(task);
+      task.offset = file.size;
+      update(task);
       await request(`${task.url}transfers/${task.id}/complete/`, {
         method: 'POST',
         body: { size: String(file.size) },
@@ -285,22 +278,28 @@ export function filePanel(current, error) {
         });
         task.id = created.transfer_id;
         check(task);
-        while (task.offset < task.total) {
-          const end = Math.min(task.total, task.offset + 1048576) - 1;
-          const response = await fetch(`${task.url}transfers/${task.id}/content/`, {
-            headers: { Range: `bytes=${task.offset}-${end}` },
-            signal: task.controller.signal,
-          });
-          if (!response.ok) {
-            const v = await response.json();
-            throw new Error(v.error?.message || `HTTP ${response.status}`);
+        const response = await fetch(`${task.url}transfers/${task.id}/content/`, { signal: task.controller.signal });
+        if (!response.ok) {
+          const v = await response.json();
+          throw new Error(v.error?.message || `HTTP ${response.status}`);
+        }
+        const reader = response.body.getReader();
+        let finished = false;
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            check(task);
+            if (done) { finished = true; break; }
+            if (task.offset + value.byteLength > task.total) throw new Error('SFTP download exceeds expected size');
+            if (sink) await sink.write(value);
+            else chunks.push(value);
+            task.offset += value.byteLength;
+            update(task);
           }
-          const bytes = await response.arrayBuffer();
-          check(task);
-          if (sink) await sink.write(bytes);
-          else chunks.push(bytes);
-          task.offset += bytes.byteLength;
-          update(task);
+          if (task.offset !== task.total) throw new Error('SFTP download interrupted');
+        } finally {
+          if (!finished) await reader.cancel().catch(() => {});
+          reader.releaseLock();
         }
         check(task);
         await request(`${task.url}transfers/${task.id}/complete/`, {

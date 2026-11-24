@@ -32,6 +32,7 @@ pub struct Transfer {
     pub file: Option<File>,
     /// 确认偏移。
     pub offset: u64,
+    pub(crate) read_position_valid: bool,
     /// 文件总字节。
     pub total: u64,
     /// 当前状态。
@@ -492,6 +493,7 @@ pub(crate) async fn create_tracked(
                         version: String::new(),
                         hash: Sha256::new(),
                         last: None,
+                        read_position_valid: false,
                     });
                 }
                 return Err(error(err));
@@ -528,6 +530,7 @@ pub(crate) async fn create_tracked(
         version: version_text,
         hash: Sha256::new(),
         last: None,
+        read_position_valid: false,
     })
 }
 /// 上传块按确认偏移顺序执行，同一 offset 相同内容可重试。
@@ -548,6 +551,9 @@ pub async fn upload(t: &mut Transfer, offset: u64, bytes: &[u8]) -> Result<(), A
         ));
     }
     let file = t.file.as_mut().ok_or_else(invalid)?;
+    // If the HTTP stream is cancelled during a remote write, its progress is
+    // unknown. A later request must not replay that write as a fresh block.
+    t.state = "failed".into();
     let written = async {
         file.write_all(bytes).await?;
         file.flush().await
@@ -558,6 +564,7 @@ pub async fn upload(t: &mut Transfer, offset: u64, bytes: &[u8]) -> Result<(), A
         t.state = "failed".into();
         return Err(error(err));
     }
+    t.state = "active".into();
     t.hash.update(bytes);
     t.offset += bytes.len() as u64;
     t.last = Some((offset, bytes.to_vec()));
@@ -573,19 +580,28 @@ pub async fn download(
     if t.direction != "download" || t.state != "active" || length > 1 << 20 || offset > t.total {
         return Err(invalid());
     }
-    if version(&sftp.metadata(&t.path).await.map_err(error)?) != t.version {
+    let continuous = t.read_position_valid && offset == t.offset;
+    // Cancellation can leave the file cursor between block boundaries.
+    t.read_position_valid = false;
+    let file = t.file.as_mut().ok_or_else(invalid)?;
+    if !continuous {
+        file.seek(std::io::SeekFrom::Start(offset)).await.map_err(error)?;
+    }
+    let mut bytes = vec![0; length.min((t.total - offset) as usize)];
+    // Preserve the per-block source-version check, but overlap its RTT with
+    // the already pipelined SFTP reads. Sequential blocks keep the read-ahead queue.
+    let (metadata, _) = tokio::try_join!(
+        async { sftp.metadata(&t.path).await.map_err(error) },
+        async { file.read_exact(&mut bytes).await.map_err(error) },
+    )?;
+    if version(&metadata) != t.version {
         return Err(ApiError::new(
             409,
             "state_conflict",
             "source changed during transfer",
         ));
     }
-    let file = t.file.as_mut().ok_or_else(invalid)?;
-    file.seek(std::io::SeekFrom::Start(offset))
-        .await
-        .map_err(error)?;
-    let mut bytes = vec![0; length.min((t.total - offset) as usize)];
-    file.read_exact(&mut bytes).await.map_err(error)?;
+    t.read_position_valid = true;
     t.offset = offset + bytes.len() as u64;
     Ok(bytes)
 }
@@ -1028,6 +1044,7 @@ mod directory_tests {
             version: String::new(),
             hash: Sha256::new(),
             last: None,
+            read_position_valid: false,
         };
         {
             let publication = publish_upload(&mut transfer, std::future::pending());

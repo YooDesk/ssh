@@ -543,6 +543,7 @@ mod tests {
                         version: String::new(),
                         hash: sha2::Sha256::new(),
                         last: None,
+                        read_position_valid: false,
                     })),
                 );
             }

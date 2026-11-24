@@ -5,13 +5,18 @@ use super::{
 };
 use crate::{business::remote::RemoteSession, json::ApiError, sftp};
 use axum::{
-    body::Bytes,
-    extract::{Path, Query, State},
+    body::{Body, Bytes},
+    extract::{Path, Query, State, Request},
     http::{header, HeaderMap, Method, StatusCode},
     response::{IntoResponse, Response},
 };
 use serde_json::json;
 use std::sync::Arc;
+use futures_util::{StreamExt, stream};
+
+#[cfg(test)]
+#[path = "sftp_stream_tests.rs"]
+mod streaming_tests;
 
 async fn context(
     state: &AppState,
@@ -306,11 +311,21 @@ pub async fn content(
     Path(TransferPath { id, tid }): Path<TransferPath>,
     method: Method,
     headers: HeaderMap,
-    body: Bytes,
+    request: Request,
 ) -> Response {
     let result = async {
         let write = method == Method::PATCH;
         let (s, ftp) = context(&state, &headers, &id, write).await?;
+        if write && headers.get("upload-stream").is_some_and(|v| v == "1") {
+            return upload_stream(state.clone(), headers.clone(), id, tid, request.into_body())
+                .await;
+        }
+        if !write && !headers.contains_key(header::RANGE) {
+            return download_stream(state.clone(), headers.clone(), id, tid).await;
+        }
+        let body = axum::body::to_bytes(request.into_body(), 1 << 20)
+            .await
+            .map_err(|_| ApiError::new(400, "invalid_request", "content exceeds one MiB"))?;
         let mut t = s.lock_live_transfer(&tid).await?;
         if write {
             let offset = headers
@@ -365,6 +380,151 @@ pub async fn content(
         Err(e) => reply(Err(e), &headers),
     }
 }
+
+async fn upload_stream(
+    state: Arc<AppState>,
+    headers: HeaderMap,
+    id: String,
+    tid: String,
+    body: Body,
+) -> Result<Response, ApiError> {
+    let (session, _) = context(&state, &headers, &id, true).await?;
+    let mut offset = headers
+        .get("upload-offset")
+        .and_then(|v| v.to_str().ok())
+        .and_then(|v| v.parse::<u64>().ok())
+        .ok_or_else(|| ApiError::new(400, "invalid_request", "Upload-Offset required"))?;
+    let mut input = body.into_data_stream();
+    let mut pending = Vec::with_capacity(1 << 20);
+    loop {
+        let next = tokio::select! {
+            biased;
+            _ = session.cancelled() => return Err(session_closed()),
+            value = tokio::time::timeout(std::time::Duration::from_secs(30), input.next()) =>
+                value.map_err(|_| ApiError::new(408, "upstream_error", "upload body stalled"))?,
+        };
+        let Some(bytes) = next else { break };
+        let bytes =
+            bytes.map_err(|_| ApiError::new(400, "invalid_request", "upload body interrupted"))?;
+        let mut rest = bytes.as_ref();
+        while !rest.is_empty() {
+            let count = rest.len().min((1 << 20) - pending.len());
+            pending.extend_from_slice(&rest[..count]);
+            rest = &rest[count..];
+            if pending.len() == 1 << 20 {
+                upload_stream_block(&state, &headers, &id, &tid, offset, &pending).await?;
+                offset += pending.len() as u64;
+                pending.clear();
+            }
+        }
+    }
+    if !pending.is_empty() {
+        upload_stream_block(&state, &headers, &id, &tid, offset, &pending).await?;
+        offset += pending.len() as u64;
+    }
+    let transfer = session.lock_live_transfer(&tid).await?;
+    if transfer.direction != "upload" || offset != transfer.total || transfer.offset != offset {
+        return Err(ApiError::new(
+            409,
+            "state_conflict",
+            "incomplete streamed upload",
+        ));
+    }
+    Ok((
+        StatusCode::NO_CONTENT,
+        [("upload-offset", offset.to_string())],
+    )
+        .into_response())
+}
+
+async fn upload_stream_block(
+    state: &AppState,
+    headers: &HeaderMap,
+    id: &str,
+    tid: &str,
+    offset: u64,
+    bytes: &[u8],
+) -> Result<(), ApiError> {
+    let (session, _) = context(state, headers, id, true).await?;
+    let mut transfer = session.lock_live_transfer(tid).await?;
+    tokio::select! {
+        biased;
+        _ = session.cancelled() => Err(session_closed()),
+        result = sftp::upload(&mut transfer, offset, bytes) => result,
+    }
+}
+
+async fn download_stream(
+    state: Arc<AppState>,
+    headers: HeaderMap,
+    id: String,
+    tid: String,
+) -> Result<Response, ApiError> {
+    let (session, _) = context(&state, &headers, &id, false).await?;
+    let total = {
+        let transfer = session.lock_live_transfer(&tid).await?;
+        if transfer.direction != "download" || transfer.state != "active" {
+            return Err(ApiError::new(409, "state_conflict", "download unavailable"));
+        }
+        transfer.total
+    };
+    // Fetch the first block before committing the response, preserving the initial
+    // source-version/authentication error status. Subsequent blocks remain streaming.
+    let first = download_stream_block(&state, &headers, &id, &tid, 0, total).await?;
+    let initial = (state, headers, id, tid, first.len() as u64, Some(first));
+    let chunks = stream::try_unfold(
+        initial,
+        move |(state, headers, id, tid, offset, pending)| async move {
+            if let Some(bytes) = pending {
+                if bytes.is_empty() {
+                    return Ok(None);
+                }
+                return Ok(Some((
+                    Bytes::from(bytes),
+                    (state, headers, id, tid, offset, None),
+                )));
+            }
+            if offset == total {
+                return Ok(None);
+            }
+            let bytes = download_stream_block(&state, &headers, &id, &tid, offset, total)
+                .await
+                .map_err(|_| std::io::Error::other("SFTP streamed download failed"))?;
+            let next = offset + bytes.len() as u64;
+            Ok::<_, std::io::Error>(Some((
+                Bytes::from(bytes),
+                (state, headers, id, tid, next, None),
+            )))
+        },
+    );
+    Ok((
+        [
+            ("content-type", "application/octet-stream".to_string()),
+            ("content-length", total.to_string()),
+            ("cache-control", "no-store".to_string()),
+        ],
+        Body::from_stream(chunks),
+    )
+        .into_response())
+}
+
+async fn download_stream_block(
+    state: &AppState,
+    headers: &HeaderMap,
+    id: &str,
+    tid: &str,
+    offset: u64,
+    total: u64,
+) -> Result<Vec<u8>, ApiError> {
+    let (session, ftp) = context(state, headers, id, false).await?;
+    let mut transfer = session.lock_live_transfer(tid).await?;
+    tokio::select! {
+        biased;
+        _ = session.cancelled() => Err(session_closed()),
+        result = sftp::download(&ftp, &mut transfer, offset, ((total-offset).min(1 << 20)) as usize) => result,
+    }
+}
+
 pub async fn complete(
     State(state): State<Arc<AppState>>,
     Path(TransferPath { id, tid }): Path<TransferPath>,
@@ -555,7 +715,7 @@ mod tests {
                 }),
                 method,
                 content_headers,
-                Bytes::from_static(b"abc"),
+                Request::new(Body::from(Bytes::from_static(b"abc"))),
             )
             .await;
             assert_eq!(
@@ -740,6 +900,7 @@ async fn abandoned_creation_cleans_registered_remote_temporary() {
         version: String::new(),
         hash: sha2::Sha256::new(),
         last: None,
+        read_position_valid: false,
     };
     let (reply, receiver) = tokio::sync::oneshot::channel();
     drop(receiver);

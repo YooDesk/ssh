@@ -1308,12 +1308,13 @@
             "in": "header",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": false
           }
         ],
         "responses": {
           "200": {
-            "description": "File bytes",
+            "description": "Full streaming download",
             "content": {
               "application/octet-stream": {
                 "schema": {
@@ -1345,7 +1346,8 @@
             }
           }
         },
-        "x-origin-required-with-cookie": true
+        "x-origin-required-with-cookie": true,
+        "description": "Without Range, stream the entire download with Content-Length; bounded Range requests remain supported. Source version and authorization are checked per bounded block."
       },
       "patch": {
         "operationId": "uploadChunk",
@@ -1385,6 +1387,17 @@
               "type": "string",
               "pattern": "^(0|[1-9][0-9]{0,19})$"
             }
+          },
+          {
+            "name": "Upload-Stream",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -1422,7 +1435,8 @@
             }
           }
         },
-        "x-origin-required-with-cookie": true
+        "x-origin-required-with-cookie": true,
+        "description": "Ordinary PATCH accepts at most 1 MiB. Upload-Stream: 1 accepts a continuous body from Upload-Offset, checks bounded blocks, and requires the exact remaining length. Do not automatically replay uncertain writes. Completion remains a separate request."
       }
     },
     "/access/v2/bootstrap/": {

@@ -28,6 +28,7 @@ const FLAG_FIN = 4;
 const FLAG_RST = 8;
 
 const DEFAULT_CREDIT = 256 * 1024;
+const MAX_RECEIVE_CREDIT = 4 * 1024 * 1024;
 
 // 单连接最多允许的并发流数。**必须与 HOST 侧 `host/src/mux.rs::MAX_STREAMS` 一致。**
 //
@@ -100,12 +101,10 @@ export class YamuxStream {
     this.sendWindow = sendWindow;
     // 我们对对端（HOST）的接收承诺，也就是 HOST→浏览器 方向的发送额度。
     //
-    // yamux 协议默认每条流 256 KiB。TURN 上一次 credit 往返是秒级，256 KiB 一发满
-    // 就要干等——实测 8 MiB 下载固定卡在 229 KiB 处约 4 秒，单流吞吐被压到
-    // 0.5~1 MiB/s（`diag-turn.mjs`）。放大到 1 MiB 让正常响应能一口气发完。
-    //
-    // 差额在流建立后通过一次 WindowUpdate 补足（见 `_grantInitialCredit`）。
+    // 初始承诺256 KiB；实际消费后才从连接共享预算借用额外窗口，单流最多4 MiB。
+    // 空闲控制流不借用，未读完的数据仍占用信用，最终关闭后归还。
     this.recvWindow = DEFAULT_CREDIT;
+    this.borrowedCredit = 0;
     this.pendingReceived = 0;
     this.consumedCredit = 0;
     this.sendBuffer = [];
@@ -198,7 +197,7 @@ export class YamuxStream {
     if (this.closing && !this.closed) {
       if (!this.conn._sendFrame(TAG_DATA, FLAG_FIN, this.id, new Uint8Array(0))) return;
       this.closed = true;
-      if (this.remoteClosed) this.conn.streams.delete(this.id);
+      if (this.remoteClosed) { this._releaseCredit(); this.conn.streams.delete(this.id); }
     }
     if (!this.writable) {
       this.writable = true;
@@ -227,7 +226,7 @@ export class YamuxStream {
     if (flags & FLAG_FIN) {
       this.remoteClosed = true;
       this._notifyClose();
-      if (this.closed) this.conn.streams.delete(this.id);
+      if (this.closed) { this._releaseCredit(); this.conn.streams.delete(this.id); }
     }
   }
 
@@ -247,14 +246,27 @@ export class YamuxStream {
     this.pendingReceived -= n;
     this.consumedCredit += n;
     if (this.consumedCredit >= DEFAULT_CREDIT / 4) {
-      const credit = this.consumedCredit;
+      // Only a consuming data stream borrows credit; an idle bind/control stream
+      // cannot monopolize the spare window. All 256 streams retain their base credit.
+      const growth = Math.min(this.conn.spareReceiveCredit, MAX_RECEIVE_CREDIT - DEFAULT_CREDIT - this.borrowedCredit);
+      this.conn.spareReceiveCredit -= growth;
+      this.borrowedCredit += growth;
+      const credit = this.consumedCredit + growth;
       this.consumedCredit = 0;
       this.recvWindow += credit;
       this.conn._sendFrame(TAG_WINDOW_UPDATE, 0, this.id, new Uint8Array(0), credit);
     }
+    if (this.closed && this.remoteClosed && this.pendingReceived === 0) this._releaseCredit();
+  }
+
+  _releaseCredit(force = false) {
+    if (!force && this.pendingReceived !== 0) return;
+    this.conn.spareReceiveCredit += this.borrowedCredit;
+    this.borrowedCredit = 0;
   }
 
   _terminate() {
+    this._releaseCredit(true);
     this.closed = true;
     this.sendBuffer = [];
     this.sendBufferLen = 0;
@@ -291,6 +303,8 @@ export class YamuxConnection {
     this.autoConsume = opts.autoConsume ?? true;
     this.maxStreams = opts.maxStreams ?? MAX_STREAMS;
     this.maxSendQueue = opts.maxSendQueue ?? 1024 * 1024;
+    // Same bounded spare as Connector's inner yamux, above the per-stream bases.
+    this.spareReceiveCredit = MAX_RECEIVE_CREDIT - DEFAULT_CREDIT;
     this.onStream = null; // (YamuxStream) => void   收到对端开的流
     this.onClose = null;
   }
@@ -427,7 +441,7 @@ export class YamuxConnection {
       if (h.flags & FLAG_FIN) {
         s.remoteClosed = true;
         s._notifyClose();
-        if (s.closed) this.streams.delete(s.id);
+        if (s.closed) { s._releaseCredit(); this.streams.delete(s.id); }
       }
     }
   }
