@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Build an ABI 1.0 component with released, checksummed host tools and sysroot.
+# QEMU release policy: no full suites or throughput gates.
 set -euo pipefail
 kind="${1:?component required}"
 workspace="$PWD"
@@ -137,7 +138,6 @@ for entry in "$workspace" /proc /dev; do
     sudo mount --bind "$entry" "$root$entry"
     mounts+=("$root$entry")
 done
-cargo test --locked --lib
 cleanup
 for entry in "${mounts[@]}"; do
     if mountpoint -q "$entry"; then

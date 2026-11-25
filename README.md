@@ -38,3 +38,5 @@ SFTP 按字段名提取 `id`、`tid`，兼容动态插件前缀带来的额外 `
 ## 2026-11-21 MIPS plugin startup correction
 
 WebService dynamic-plugin acceptance exposed startup failure in released MIPS plugins. Vendor the exact libc 0.2.191 archive with Connector's reviewed five MIPS64 architecture-selector corrections (socket options/types, signals, sigaction and pthread mutex ABI). Keep upstream licenses and PATCHES provenance. Remove the old MIPS socket-test exclusions. Add an exported-C-ABI startup regression that binds the actual plugin loopback listener, verifies missing transport token returns HTTP 403, stops the runtime and checks the listener is released. Full platform builds and WebService dynamic integration remain required before replacing released dependencies.
+
+QEMU release acceptance (2026-11-25, explicit user decision): cross-compile, inspect target ABI/static or shared-library dependencies, and perform bounded startup/config/plugin-load smoke checks. Do not run full Rust/Go test suites or throughput gates under emulation. Existing native-runner regression policy is unchanged. Full-suite results and physical throughput must be established on native hardware.
