@@ -11,4 +11,9 @@
 *.key
 *.pem
 /.ci-cache/
+/.ci-tmp/
+/.codegraph/
+.env
+.env.*
+!.env.example
 /browser/
